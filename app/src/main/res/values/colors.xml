@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorHeader">#0F36AA</color>
+    <color name="colorNotificationBar">#0D2F94</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorBackground">#000000</color>
+    <color name="colorBackgroundFloating">#181C1D</color>
+    <color name="colorFontWhite">#FFFFFF</color>
+    <color name="colorFontBlack">#000000</color>
+</resources>

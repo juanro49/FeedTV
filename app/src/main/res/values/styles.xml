@@ -1,0 +1,42 @@
+<resources
+	xmlns:tools="http://schemas.android.com/tools"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<attr format="reference" name="cardStyle"/>
+
+	<!-- Base application theme Light. -->
+	<style name="TemaClaro" parent="Theme.AppCompat.Light.DarkActionBar">
+		<!-- Customize your theme here. -->
+		<item name="colorPrimary">@color/colorHeader</item>
+		<item name="colorPrimaryDark">@color/colorNotificationBar</item>
+		<item name="colorAccent">@color/colorAccent</item>
+		<!--<item name="android:textColor">@color/colorFontBlack</item>-->
+	</style>
+
+	<!-- Base application theme Dark. -->
+	<style name="TemaOscuro" parent="Theme.AppCompat">
+		<!-- Customize your theme here. -->
+		<item name="android:colorBackground">@color/colorBackground</item>
+		<item name="colorBackgroundFloating">@color/colorBackgroundFloating</item>
+		<item name="android:colorBackgroundFloating" tools:targetApi="m">@color/colorBackgroundFloating</item>
+		<item name="actionOverflowMenuStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Menu</item>
+		<item name="android:textColor">@color/colorFontWhite</item>
+	</style>
+
+
+
+	<style name="TemaClaro.NoActionBar">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+	<style name="TemaOscuro.NoActionBar">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+</resources>

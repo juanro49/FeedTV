@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.prof.rssparser:rssparser:2.0.3@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c31ef609fdbf0cb642d64bab76d2f421/rssparser-2.0.3/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c31ef609fdbf0cb642d64bab76d2f421/rssparser-2.0.3/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
