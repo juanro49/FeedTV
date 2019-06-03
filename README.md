@@ -14,3 +14,15 @@ Este proyecto es posible gracias a [RSS-Parser](https://github.com/prof18/RSS-Pa
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on-es-es.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/org.juanro.feedtv) [<img src="https://user-images.githubusercontent.com/663460/26973090-f8fdc986-4d14-11e7-995a-e7c5e79ed925.png" alt="Download APK from GitHub" height="80">](https://github.com/juanro49/FeedTV/releases/latest) [<img src="https://www.4shared.com/images/logos/logo-web-big.png" alt="Get it on 4shared" height="60">](https://www.4shared.com/mobile/UlAIPNuida/FeedTV.html)
 
 Para descargar FeedTV desde F-Droid, necesitas tener añadido el [repo de IzzyOnDroid](https://apt.izzysoft.de/fdroid/repo?fingerprint=3BF0D6ABFEAE2F401707B6D966BE743BF0EEE49C2561B9BA39073711F628937A).
+
+# Contribuir
+### Donaciones
+| Método | Dirección |
+| --- | --- |
+| **Paypal** | https://www.paypal.me/juanro49 |
+| **Bitcoin** | 1QJfiEAxa1A4TbEgtbVMHPXPWXJXxEpUvi |
+| **Ethereum y tokens** | 0xb9d9958e73b44325082a2870830dca0d881490d2 |
+| **Stellar** | GCOHJZYRBOQYIV265UDAB75VU3O2RFQ3TWHFPER32MSOKZCCKRKVBWEH |
+| **Litecoin** | LYsyYEmxnRaCY3ML2tKYZpQA6zhndpuuQ4 |
+| **Dash** | XxhbofmRrJSm5t4Lp9zSjECbe2v9LVdZcK |
+| **Tube** | bxcce6cjtJZ7QPKvTBczG7hWKzL5pjKRxQyJThcakFPafJsFqn8j9hZGRjsMac6ASgHVMrw9552YZgqnuqr8VZgx15ABPh4nY |
