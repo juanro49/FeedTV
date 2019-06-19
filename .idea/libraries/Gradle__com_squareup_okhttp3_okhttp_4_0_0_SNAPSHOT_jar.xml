@@ -1,10 +1,10 @@
 <component name="libraryTable">
   <library name="Gradle: com.squareup.okhttp3:okhttp:4.0.0-SNAPSHOT@jar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/4.0.0-SNAPSHOT/8a8fa8dd987ae8fe0a90aeebca52d5e787060366/okhttp-4.0.0-SNAPSHOT.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/4.0.0-SNAPSHOT/90192e4409b6a3443227a24b88125f05b906c7bd/okhttp-4.0.0-SNAPSHOT.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/4.0.0-SNAPSHOT/594421e3d8572c0ebd254947a59c9a70933490fb/okhttp-4.0.0-SNAPSHOT-javadoc.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/4.0.0-SNAPSHOT/273e233fc6fdf46dd9e883bcc7245a5cfa0c35ba/okhttp-4.0.0-SNAPSHOT-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/4.0.0-SNAPSHOT/93efd8b0006bf33abf406ebf79595591d2c8ff73/okhttp-4.0.0-SNAPSHOT-sources.jar!/" />
