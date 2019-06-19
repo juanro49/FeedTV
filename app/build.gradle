@@ -63,7 +63,7 @@ dependencies
 	implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'dev.dworks.libs:volleyplus:0.1.4'
 	//implementation 'com.squareup.okhttp3:okhttp:3.14.1'
-	implementation 'com.squareup.okhttp3:okhttp:4.0.0-SNAPSHOT'
+	implementation 'com.squareup.okhttp3:okhttp:4.0.0-RC1'
 	implementation 'androidx.browser:browser:1.0.0'
 	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 	implementation 'androidx.preference:preference:1.1.0-beta01'
