@@ -83,7 +83,7 @@ public class SettingsActivity extends AppCompatActivity
 	{
 		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
-		if(sharedPref.getString("tema", "Oscuro").equals("Claro"))
+		if(sharedPref.getString("tema", "Claro").equals("Claro"))
 		{
 			setTheme(R.style.TemaClaro);
 		}

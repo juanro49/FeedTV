@@ -25,7 +25,7 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
-import com.android.volley.request.JsonArrayRequest;
+import com.android.volley.request.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,165 +34,162 @@ import org.juanro.feedtv.Http.VolleyController;
 
 import java.util.ArrayList;
 
+
 /**
  * Clase que se encarga de parsear el JSON en objetos Java
  */
 public class JSONParser
 {
-    public static final String TAG = JSONParser.class.getSimpleName();
-    private static JSONParser instance;
-    private ArrayList<Canal> canalesTV;
-    private String url = "http://91.121.64.179/tdt_project/output/channels.json";
+	public static final String TAG = JSONParser.class.getSimpleName();
+	private static JSONParser instance;
+	private ArrayList<Canal> canalesTV;
+	private String url = "http://91.121.64.179/tdt_project/output/channels.json";
 
-    /**
-     * Método que carga la lista de objetos parseados a la interfaz que lo envía a TvActivity
-     *
-     * @param forceUpdate
-     * @param context
-     * @param responseServerCallback
-     */
-    public void loadChannels(boolean forceUpdate, final Context context, final ResponseServerCallback responseServerCallback)
-    {
-        if (!forceUpdate && canalesTV != null && !canalesTV.isEmpty())
-        {
-            Log.i(TAG, "Cargar canales desde la cache");
-            responseServerCallback.onChannelsLoadServer(canalesTV);
-        }
-        else
-        {
-            Log.i(TAG, "Cargar canales desde el servidor: " + url);
-            canalesTV = new ArrayList<>();
-            downloadChannels(url, canalesTV, context, responseServerCallback);
-        }
-    }
 
-    private JSONParser()
-    {
-    }
+	/**
+	 * Método que carga la lista de objetos parseados a la interfaz que lo envía a TvActivity
+	 *
+	 * @param forceUpdate
+	 * @param context
+	 * @param responseServerCallback
+	 */
+	public void loadChannels(boolean forceUpdate, final Context context, final ResponseServerCallback responseServerCallback)
+	{
+		if (!forceUpdate && canalesTV != null && !canalesTV.isEmpty())
+		{
+			Log.i(TAG, "Cargar canales desde la cache");
+			responseServerCallback.onChannelsLoadServer(canalesTV);
+		}
+		else
+		{
+			Log.i(TAG, "Cargar canales desde el servidor: " + url);
+			canalesTV = new ArrayList<>();
+			downloadChannels(url, canalesTV, context, responseServerCallback);
+		}
+	}
 
-    /**
-     * Método para obtener una instancia única
-     *
-     * @return
-     */
-    public static JSONParser getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new JSONParser();
-        }
+	private JSONParser()
+	{
+	}
 
-        return instance;
-    }
+	/**
+	 * Método para obtener una instancia única
+	 *
+	 * @return
+	 */
+	public static JSONParser getInstance()
+	{
+		if (instance == null)
+		{
+			instance = new JSONParser();
+		}
 
-    /**
-     * Método que se encarga de parsear el JSON
-     *
-     * @param URL
-     * @param canales
-     * @param context
-     * @param responseServerCallback
-     */
-    private void downloadChannels(final String URL, final ArrayList<Canal> canales, final Context context, final ResponseServerCallback responseServerCallback)
-    {
-        // Petición del JSON
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
-                Request.Method.GET,
-                URL,
-                null,
-                new Response.Listener<JSONArray>()
-                {
-                    /**
-                     * Cosas a hacer cuando la respuesta es correcta
-                     *
-                     * @param response
-                     */
-                    @Override
-                    public void onResponse(JSONArray response)
-                    {
-                        Log.i(TAG, "Response OK");
+		return instance;
+	}
 
-                        // Parsear elementos del JSON
-                        try
-                        {
-                            for (int i = 0; i < response.length(); i++)
-                            {
-                                JSONObject jsonElement = response.getJSONObject(i);
+	/**
+	 * Método que se encarga de parsear el JSON
+	 *
+	 * @param URL
+	 * @param canales
+	 * @param context
+	 * @param responseServerCallback
+	 */
+	private void downloadChannels(final String URL, final ArrayList<Canal> canales, final Context context, final ResponseServerCallback responseServerCallback)
+	{
+		// Petición del JSON
+		JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(
+				Request.Method.GET,
+				URL,
+				null,
+				new Response.Listener<JSONObject>()
+				{
+					/**
+					 * Cosas a hacer cuando la respuesta es correcta
+					 *
+					 * @param response
+					 */
+					@Override
+					public void onResponse(JSONObject response)
+					{
+						Log.i(TAG, "Response OK");
 
-                                boolean isCountry = jsonElement.has("name");
+						// Parsear elementos del JSON
+						try
+						{
+							JSONArray countries = response.getJSONArray("countries");
 
-                                if (isCountry)
-                                {
-                                    JSONArray ambitsArray = jsonElement.getJSONArray("ambits");
+							for (int i = 0; i < countries.length(); i++)
+							{
+								JSONObject jsonElement = countries.getJSONObject(i);
+								JSONArray ambitsArray = jsonElement.getJSONArray("ambits");
 
-                                    for (int j = 0; j < ambitsArray.length(); j++)
-                                    {
-                                        JSONObject ambitJson = ambitsArray.getJSONObject(j);
-                                        JSONArray channelsArray = ambitJson.getJSONArray("channels");
+								for (int j = 0; j < ambitsArray.length(); j++)
+								{
+									JSONObject ambitJson = ambitsArray.getJSONObject(j);
+									JSONArray channelsArray = ambitJson.getJSONArray("channels");
 
-                                        for (int k = 0; k < channelsArray.length(); k++)
-                                        {
-                                            JSONObject channelJson = channelsArray.getJSONObject(k);
+									for (int k = 0; k < channelsArray.length(); k++)
+									{
+										JSONObject channelJson = channelsArray.getJSONObject(k);
 
-                                            String channelName = channelJson.getString("name");
-                                            String channelWeb = channelJson.getString("web");
-                                            String channelLogo = channelJson.getString("logo");
+										String channelName = channelJson.getString("name");
+										String channelWeb = channelJson.getString("web");
+										String channelLogo = channelJson.getString("logo");
 
-                                            JSONArray channelOptionsJson = channelJson.getJSONArray("options");
-                                            ArrayList<Opciones> channelOptions = new ArrayList<>();
+										JSONArray channelOptionsJson = channelJson.getJSONArray("options");
+										ArrayList<Opciones> channelOptions = new ArrayList<>();
 
-                                            for (int l = 0; l < channelOptionsJson.length(); l++)
-                                            {
-                                                JSONObject optionJson = channelOptionsJson.getJSONObject(l);
+										for (int l = 0; l < channelOptionsJson.length(); l++)
+										{
+											JSONObject optionJson = channelOptionsJson.getJSONObject(l);
 
-                                                String optionFormat = optionJson.getString("format");
-                                                String optionURL = optionJson.getString("url");
+											String optionFormat = optionJson.getString("format");
+											String optionURL = optionJson.getString("url");
 
-                                                channelOptions.add(new Opciones(optionFormat, optionURL));
-                                            }
+											channelOptions.add(new Opciones(optionFormat, optionURL));
+										}
 
-                                            // Añadir canal obtenido a la lista
-                                            canales.add(new Canal(channelName, channelWeb, channelLogo, channelOptions));
-                                        }
-                                    }
-                                }
-                            }
+										// Añadir canal obtenido a la lista
+										canales.add(new Canal(channelName, channelWeb, channelLogo, channelOptions));
+									}
+								}
+							}
 
-                            // Enviar lista de canales al método de carga en la actividad principal
-                            responseServerCallback.onChannelsLoadServer(canales);
-                        }
-                        catch (JSONException e)
-                        {
-                            Log.e(TAG, "ERROR al parsear el JSON");
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    /**
-                     * Cosas a hacer cuando la respuesta es incorrecta
-                     *
-                     * @param error
-                     */
-                    @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
+							// Enviar lista de canales al método de carga en la actividad principal
+							responseServerCallback.onChannelsLoadServer(canales);
+						}
+						catch (JSONException e)
+						{
+							Log.e(TAG, "ERROR al parsear el JSON");
+							e.printStackTrace();
+						}
+					}
+				},
+				new Response.ErrorListener()
+				{
+					/**
+					 * Cosas a hacer cuando la respuesta es incorrecta
+					 *
+					 * @param error
+					 */
+					@Override
+					public void onErrorResponse(VolleyError error)
+					{
+						Log.e(TAG, "Error al acceder a la URL " + URL);
+					}
+				}
+		);
 
-                        Log.e(TAG, "Error al acceder a la URL " + URL);
-                    }
-                }
-        );
+		// Añadir JSON a la cola de peticiones
+		VolleyController.getInstance(context).addToQueue(jsonArrayRequest);
+	}
 
-        // Añadir JSON a la cola de peticiones
-        VolleyController.getInstance(context).addToQueue(jsonArrayRequest);
-    }
-
-    /**
-     * Interfaz para comunicar respuestas de las peticiones
-     */
-    public interface ResponseServerCallback
-    {
-        void onChannelsLoadServer(ArrayList<Canal> canales);
-    }
+	/**
+	 * Interfaz para comunicar respuestas de las peticiones
+	 */
+	public interface ResponseServerCallback
+	{
+		void onChannelsLoadServer(ArrayList<Canal> canales);
+	}
 }
