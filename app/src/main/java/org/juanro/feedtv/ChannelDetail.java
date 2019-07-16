@@ -127,6 +127,7 @@ public class ChannelDetail extends AppCompatActivity
 						Bundle extras = new Bundle();
 						extras.putString("url", source);
 						i.putExtras(extras);
+						i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 						getApplicationContext().startActivity(i);
 					}
 				}

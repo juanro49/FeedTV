@@ -110,6 +110,7 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
 				// Inicia la activity de detalles del canal seleccionado
 				Intent intent = new Intent(mContext, ChannelDetail.class);
 				intent.putExtra("canal", canalesFiltrados.get(position));
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				mContext.startActivity(intent);
 			}
 		});
