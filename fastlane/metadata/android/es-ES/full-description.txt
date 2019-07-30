@@ -1,0 +1,3 @@
+FeedTV es una aplicación que te permite leer noticias de cualquier medio mediante RSS además de poder ver canales públicos de TV en cualquier lugar.
+
+Este proyecto es posible gracias a RSS-Parser, una librería para el parseo de feeds RSS y TDTChannels, repo que provee los canales de TV.
