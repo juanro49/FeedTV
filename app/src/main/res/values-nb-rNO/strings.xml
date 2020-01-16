@@ -16,4 +16,13 @@
     <string name="nombre_canal_lista">Kanalnavn</string>
     <string name="titulo_lista_noticias">Tittel</string>
     <string name="fecha_lista_noticias">Dato</string>
+    <string name="alert_title">Advarsel!</string>
+    <string name="alert_message">Umulig å få tak i data.
+\nSjekk tilkoblingen din.</string>
+    <string name="about">FeedTV er et program som lar deg lese nyheter fra alle medier via RSS i tillegg til å kunne se offentlige TV-kanaler hvor som helst.</string>
+    <string name="title_activity_settings">Innstillinger</string>
+    <string name="reproductor_externo_on">Du bruker en ekstern spiller for å spille av kanalene</string>
+    <string name="reproductor_externo_off">Du bruker den innebygde spilleren til å spille av kanalene</string>
+    <string name="titulo_addfeed">Skriv inn navnet og adressen til RSS-strømmen</string>
+    <string name="enlaces_disponibles">Tilgjengelige lenker</string>
 </resources>
