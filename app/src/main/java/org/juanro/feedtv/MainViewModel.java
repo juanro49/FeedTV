@@ -23,6 +23,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.prof.rssparser.Article;
+import com.prof.rssparser.Channel;
 import com.prof.rssparser.OnTaskCompleted;
 import com.prof.rssparser.Parser;
 
@@ -33,6 +34,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import org.jetbrains.annotations.NotNull;
 import org.juanro.feedtv.BBDD.FeedDatabase;
 
 /**
@@ -127,40 +129,45 @@ public class MainViewModel extends ViewModel
 		{
 			// Cosas a hacer cuando el parseo del RSS es correcto
 			@Override
-			public void onTaskCompleted(List<Article> list)
+			public void onTaskCompleted(@NotNull Channel channel)
 			{
-				new Thread(new Runnable()
+				List<Article> list = channel.getArticles();
+
+				// Caching
+				FeedDatabase.getInstance(context.getApplicationContext()).
+						sincronizarEntradas(list);
+
+				// Obtener entradas de la base de datos
+				Cursor c = FeedDatabase.getInstance(context.getApplicationContext()).obtenerEntradas();
+				list.clear();
+
+				c.moveToFirst();
+
+				do
 				{
-					@Override
-					public void run()
+					Article articulo = new Article();
+					articulo.setTitle(c.getString(COLUMN_TITULO));
+					articulo.setLink(c.getString(COLUMN_URL));
+					articulo.setPubDate(c.getString(COLUMN_FEC));
+
+					//Mostrar la imagen del feed si el articulo no tiene imagen
+					if(c.getString(COLUMN_IMG) == null)
 					{
-						// Caching
-						FeedDatabase.getInstance(context.getApplicationContext()).
-								sincronizarEntradas(list);
-
-						// Obtener entradas de la base de datos
-						Cursor c = FeedDatabase.getInstance(context.getApplicationContext()).obtenerEntradas();
-						list.clear();
-
-						c.moveToFirst();
-
-						do
-						{
-							Article articulo = new Article();
-							articulo.setTitle(c.getString(COLUMN_TITULO));
-							articulo.setLink(c.getString(COLUMN_URL));
-							articulo.setPubDate(c.getString(COLUMN_FEC));
-							articulo.setImage(c.getString(COLUMN_IMG));
-
-							list.add(articulo);
-						} while(c.moveToNext());
-
-						// Añadir artículos obtenidos a la lista
-						setArticleList(list);
-
-						snackbar.postValue(context.getString(R.string.update_feed_success));
+						articulo.setImage(channel.getImage().getUrl());
 					}
-				}).start();
+					else
+					{
+						articulo.setImage(c.getString(COLUMN_IMG));
+					}
+
+
+					list.add(articulo);
+				} while(c.moveToNext());
+
+				// Añadir artículos obtenidos a la lista
+				setArticleList(list);
+
+				snackbar.postValue(context.getString(R.string.update_feed_success));
 			}
 
 			// Cosas a hacer cuando hay error en el parseo del RSS
@@ -169,7 +176,7 @@ public class MainViewModel extends ViewModel
 			{
 				setArticleList(new ArrayList<Article>());
 				e.printStackTrace();
-				snackbar.postValue(context.getString(R.string.update_feed_success) + e.getMessage());
+				snackbar.postValue(context.getString(R.string.update_feed_failed) + e.getMessage());
 			}
 		});
 	}

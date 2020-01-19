@@ -49,7 +49,7 @@ dependencies
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
     
 	// RSS Parser
-	implementation 'com.prof.rssparser:rssparser:2.0.5'
+	implementation 'com.prof.rssparser:rssparser:2.1.1'
     
 	// UI
 	implementation 'androidx.appcompat:appcompat:1.2.0-alpha01'
