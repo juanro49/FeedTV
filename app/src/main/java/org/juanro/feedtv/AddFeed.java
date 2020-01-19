@@ -78,7 +78,7 @@ public class AddFeed extends AppCompatActivity
 			fuentes = new RssList(this);
 			fuentes.insertarEntrada(nombre.getText().toString(), url.getText().toString());
 
-			FeedDatabase.getInstance(getApplicationContext()).crearTabla(nombre.getText().toString());
+			FeedDatabase.getInstance(getApplicationContext()).crearTabla(nombre.getText().toString() + "_");
 			Toast.makeText(this, "Fuente añadida correctamente", Toast.LENGTH_LONG).show();
 		}
 	}

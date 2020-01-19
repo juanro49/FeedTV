@@ -117,7 +117,7 @@ public class RssList extends SQLiteOpenHelper
 	{
 		getWritableDatabase().delete(
 				FEED_TABLE_NAME,
-				ColumnFeeds.NOMBRE + "=?",
+				ColumnFeeds.NOMBRE + "=? OR " + ColumnFeeds.NOMBRE + "=? + '_'",
 				new String[]{String.valueOf(fuente)});
 	}
 }
