@@ -155,11 +155,11 @@ public class MainActivity extends AppCompatActivity
 				elemento = parent.getItemAtPosition(pos).toString();
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-				builder.setMessage("¿Desea eliminar la fuente de noticias " + elemento + "?");
-				builder.setTitle("Confirmar eliminación");
+				builder.setMessage(getString(R.string.dialog_rss_list) + " " + elemento + "?");
+				builder.setTitle(getString(R.string.title_dialog_rss_list));
 				builder.setCancelable(true);
 				builder.setIcon(android.R.drawable.ic_dialog_alert);
-				builder.setPositiveButton("Eliminar", new DialogInterface.OnClickListener()
+				builder.setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener()
 					{
 						@Override
 						public void onClick(DialogInterface dialog, int id)
@@ -173,11 +173,11 @@ public class MainActivity extends AppCompatActivity
 							fuente.close();
 
 							adapter.notifyDataSetChanged();
-							Toast.makeText(MainActivity.this, "Fuente eliminada", Toast.LENGTH_LONG).show();
+							Toast.makeText(MainActivity.this, getString(R.string.delete_feed_success), Toast.LENGTH_LONG).show();
 						}
 					});
 
-				builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener()
+				builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener()
 					{
 						@Override
 						public void onClick(DialogInterface dialog, int id)
@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity
 				}
 				else
 				{
-					Toast.makeText(getApplicationContext(), "No se han obtenido artículos", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), getString(R.string.no_feeds), Toast.LENGTH_LONG).show();
 					mSwipeRefreshLayout.setRefreshing(false);
 				}
 			}
@@ -323,7 +323,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "La conexión a internet no está disponible", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.no_connection), Toast.LENGTH_LONG).show();
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
@@ -334,7 +334,7 @@ public class MainActivity extends AppCompatActivity
         	// Cargar artículos al inicio
 			if(listaFeeds.getAdapter().isEmpty())
 			{
-				Toast.makeText(this, "Añade fuentes desde el menú lateral izquierdo para comenzar", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getString(R.string.first_start), Toast.LENGTH_LONG).show();
 				drawerLayout.openDrawer(Gravity.LEFT);
 			}
 			else

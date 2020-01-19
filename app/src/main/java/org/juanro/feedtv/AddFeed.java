@@ -71,7 +71,7 @@ public class AddFeed extends AppCompatActivity
 	{
 		if(nombre.getText().toString().isEmpty() || url.getText().toString().isEmpty())
 		{
-			Toast.makeText(this, "Ambos campos son obligatorios", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, this.getString(R.string.add_feed_empty), Toast.LENGTH_LONG).show();
 		}
 		else
 		{
@@ -79,7 +79,7 @@ public class AddFeed extends AppCompatActivity
 			fuentes.insertarEntrada(nombre.getText().toString(), url.getText().toString());
 
 			FeedDatabase.getInstance(getApplicationContext()).crearTabla(nombre.getText().toString() + "_");
-			Toast.makeText(this, "Fuente añadida correctamente", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, this.getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
 		}
 	}
 

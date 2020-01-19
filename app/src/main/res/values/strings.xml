@@ -37,6 +37,8 @@
 	<string name="reproductor_externo_on">Está usando un reproductor externo para reproducir los canales</string>
 	<string name="reproductor_externo_off">Está usando el reproductor interno para reproducir los canales</string>
 	<string name="add_feed">Añadir</string>
+	<string name="add_feed_empty">Ambos campos son obligatorios</string>
+	<string name="add_feed_success">Fuente añadida correctamente</string>
 	<string name="url_ejemplo">https://www.ejemplo.com/feed</string>
 	<string name="nombre_feed">Nombre de la fuente de noticias</string>
 	<string name="url_feed">URL:</string>
@@ -48,4 +50,14 @@
 	<string name="nombre_canal_lista">Nombre Canal</string>
 	<string name="titulo_lista_noticias">Título</string>
 	<string name="fecha_lista_noticias">Fecha</string>
+	<string name="title_dialog_rss_list">Modificar fuente</string>
+	<string name="dialog_rss_list">¿Qué acción desea realizar con </string>
+	<string name="delete">Eliminar</string>
+	<string name="cancel">Cancelar</string>
+	<string name="delete_feed_success">Fuente eliminada</string>
+	<string name="no_feeds">No se han obtenido artículos</string>
+	<string name="no_connection">La conexión a internet no está disponible</string>
+	<string name="first_start">Añade fuentes desde el menú lateral izquierdo para comenzar</string>
+	<string name="update_feed_success">Artículos actualizados correctamente"</string>
+	<string name="update_feed_failed">Ha ocurrido un error al obtener elementos del Feed. || </string>
 </resources>

@@ -157,7 +157,8 @@ public class MainViewModel extends ViewModel
 
 						// Añadir artículos obtenidos a la lista
 						setArticleList(list);
-						snackbar.postValue("Artículos actualizados correctamente");
+
+						snackbar.postValue(context.getString(R.string.update_feed_success));
 					}
 				}).start();
 			}
@@ -168,7 +169,7 @@ public class MainViewModel extends ViewModel
 			{
 				setArticleList(new ArrayList<Article>());
 				e.printStackTrace();
-				snackbar.postValue("Ha ocurrido un error al obtener elementos del Feed.\n" + e.getMessage());
+				snackbar.postValue(context.getString(R.string.update_feed_success) + e.getMessage());
 			}
 		});
 	}
