@@ -260,10 +260,21 @@ public final class FeedDatabase extends SQLiteOpenHelper
                 // Eliminar entradas existentes de la lista para prevenir su futura inserción
                 entryMap.remove(titulo);
 
+				String link = articulo.getLink();
+
+				if(link.contains("?"))
+				{
+					link = link + "&utm_source=feedtv&utm_medium=feed";
+				}
+				else
+				{
+					link = link + "?utm_source=feedtv&utm_medium=feed";
+				}
+
                 // Comprobar si la entrada necesita ser actualizada
                 if ((articulo.getTitle() != null && !articulo.getTitle().equals(titulo)) ||
                         (articulo.getPubDate() != null && !articulo.getPubDate().equals(fecha)) ||
-                        (articulo.getLink() != null && !articulo.getLink().equals(url)))
+                        (link != null && !link.equals(url)))
                 {
 					try
 					{
@@ -277,7 +288,7 @@ public final class FeedDatabase extends SQLiteOpenHelper
 						long numFecha = Long.parseLong(sdf.format(date));
 
 						// Actualizar artículo
-						actualizarEntrada(id, articulo.getTitle(), articulo.getPubDate(), articulo.getLink(), articulo.getImage(), numFecha);
+						actualizarEntrada(id, articulo.getTitle(), articulo.getPubDate(), link, articulo.getImage(), numFecha);
 					}
 					catch (ParseException e)
 					{
@@ -305,9 +316,20 @@ public final class FeedDatabase extends SQLiteOpenHelper
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm", Locale.getDefault());
 				long numFecha = Long.parseLong(sdf.format(date));
 
-				Log.i(TAG, "Insertado: titulo=" + a.getTitle());
-				// Insertar artículo
-				insertarEntrada(a.getTitle(), a.getPubDate(), a.getLink(), a.getImage(), numFecha);
+				Log.i(TAG, "Insertado: " + a.getTitle());
+				// Insertar artículo con link source feedtv
+				String link = a.getLink();
+
+				if(link.contains("?"))
+				{
+					link = link + "&utm_source=feedtv&utm_medium=feed";
+				}
+				else
+				{
+					link = link + "?utm_source=feedtv&utm_medium=feed";
+				}
+
+				insertarEntrada(a.getTitle(), a.getPubDate(), link, a.getImage(), numFecha);
 			}
 			catch (ParseException e)
 			{

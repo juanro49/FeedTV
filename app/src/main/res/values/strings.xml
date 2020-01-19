@@ -60,4 +60,5 @@
 	<string name="first_start">Añade fuentes desde el menú lateral izquierdo para comenzar</string>
 	<string name="update_feed_success">Artículos actualizados correctamente"</string>
 	<string name="update_feed_failed">Ha ocurrido un error al obtener elementos del Feed. || </string>
+	<string name="url_clipboard">URL copiada al portapapeles</string>
 </resources>

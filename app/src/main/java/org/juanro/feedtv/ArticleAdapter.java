@@ -19,6 +19,8 @@
 
 package org.juanro.feedtv;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.prof.rssparser.Article;
 import com.squareup.picasso.Picasso;
@@ -142,6 +145,23 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
         // Setear categorías
         viewHolder.category.setText(categories.toString());
+
+        // Accion pulsación larga
+        viewHolder.itemView.setOnLongClickListener(new AdapterView.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v)
+            {
+                // Copiar url
+                ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("url", articles.get(viewHolder.getAdapterPosition()).getLink());
+                clipboard.setPrimaryClip(clip);
+
+                Toast.makeText(mContext, mContext.getString(R.string.url_clipboard), Toast.LENGTH_LONG).show();
+
+                return true;
+            }
+        });
 
         // Obtener pulsaciones
         viewHolder.itemView.setOnClickListener(new AdapterView.OnClickListener()
