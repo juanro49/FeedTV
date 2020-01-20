@@ -151,7 +151,7 @@ public class MainViewModel extends ViewModel
 					articulo.setPubDate(c.getString(COLUMN_FEC));
 
 					//Mostrar la imagen del feed si el articulo no tiene imagen
-					if(c.getString(COLUMN_IMG) == null)
+					if(c.getString(COLUMN_IMG) == null && channel.getImage() != null)
 					{
 						articulo.setImage(channel.getImage().getUrl());
 					}
