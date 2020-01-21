@@ -25,4 +25,6 @@
     <string name="reproductor_externo_off">Du bruker den innebygde spilleren til å spille av kanalene</string>
     <string name="titulo_addfeed">Skriv inn navnet og adressen til RSS-strømmen</string>
     <string name="enlaces_disponibles">Tilgjengelige lenker</string>
+    <string name="add_feed">Legg til</string>
+    <string name="nombre_feed">Navn på nyhetskilde</string>
 </resources>
