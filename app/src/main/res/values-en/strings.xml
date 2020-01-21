@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="fecha_lista_noticias">Date</string>
+    <string name="reproductor_externo_on">You are using an external player to play the channels</string>
+    <string name="action_about">About</string>
+    <string name="alert_message">Cannot fetch data.
+\nCheck your connection.</string>
+    <string name="tema_aplicacion">Theme</string>
+    <string name="titulo_addfeed">Type in the name and the address of the RSS-feed</string>
+    <string name="nombre_feed">Name of news-source</string>
+    <string name="alert_positive">Close</string>
+    <string name="alert_title">Warning!</string>
+    <string name="url_detalle">URL</string>
+    <string name="url_ejemplo">https://example.org/feed</string>
+    <string name="about">FeedTV is an app that lets you read news from all medias via RSS, in addition to perusing public TV-channels from anywhere.</string>
+    <string name="enlaces_disponibles">Available links</string>
+    <string name="titulo_lista_noticias">Title</string>
+    <string name="nombre_canal_lista">Channel name</string>
+    <string name="url_feed">URL:</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="nombre_canal_detalle">Channel name</string>
+    <string name="reproductor_externo_off">You are using the internal player to play the channels</string>
+    <string name="video">Video</string>
+    <string name="name_feed">Name:</string>
+    <string name="author">&lt;br /&gt;&lt;br /&gt;Created by Juanro49, licensed Apache 2.0</string>
+    <string name="app_name">FeedTV</string>
+    <string name="add_feed">Add</string>
+</resources>
