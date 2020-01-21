@@ -79,6 +79,6 @@
 		android:layout_below="@+id/etUrl"
 		android:layout_centerHorizontal="true"
 		android:layout_marginTop="50dp"
-		android:onClick="AddFeed"
+		android:onClick="submit"
 		android:text="@string/add_feed" />
 </RelativeLayout>

@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import org.juanro.feedtv.BBDD.RssList;
 public class AddFeed extends AppCompatActivity
 {
 	private EditText nombre, url;
+	private Button submit;
 	private RssList fuentes;
 	private SharedPreferences sharedPref;
 
@@ -48,11 +50,21 @@ public class AddFeed extends AppCompatActivity
 
 		nombre = findViewById(R.id.etNombre);
 		url = findViewById(R.id.etUrl);
+		submit = findViewById(R.id.button);
 
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null)
 		{
 			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+
+		// Modo editar
+		if(getIntent().getExtras() != null)
+		{
+			nombre.setText(getIntent().getExtras().getString("titulo"));
+			nombre.setFocusable(false);
+			url.setText(getIntent().getExtras().getString("url"));
+			submit.setText(this.getString(R.string.edit_feed));
 		}
 	}
 
@@ -67,7 +79,19 @@ public class AddFeed extends AppCompatActivity
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void AddFeed(View view)
+	public void submit(View view)
+	{
+		if(getIntent().getExtras() == null)
+		{
+			addFeed();
+		}
+		else
+		{
+			modFeed();
+		}
+	}
+
+	public void addFeed()
 	{
 		if(nombre.getText().toString().isEmpty() || url.getText().toString().isEmpty())
 		{
@@ -80,6 +104,21 @@ public class AddFeed extends AppCompatActivity
 
 			FeedDatabase.getInstance(getApplicationContext()).crearTabla(nombre.getText().toString() + "_");
 			Toast.makeText(this, this.getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
+		}
+	}
+
+	public void modFeed()
+	{
+		if(nombre.getText().toString().isEmpty() || url.getText().toString().isEmpty())
+		{
+			Toast.makeText(this, this.getString(R.string.add_feed_empty), Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			fuentes = new RssList(this);
+			fuentes.editarEntrada(nombre.getText().toString(), url.getText().toString());
+
+			Toast.makeText(this, this.getString(R.string.mod_feed_success), Toast.LENGTH_LONG).show();
 		}
 	}
 

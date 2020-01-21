@@ -110,6 +110,21 @@ public class RssList extends SQLiteOpenHelper
 	}
 
 	/**
+	 * Edita un registro en la tabla
+	 *
+	 * @param nombre      nombre de la entrada
+	 * @param url         url del feed
+	 */
+	public void editarEntrada(String nombre, String url)
+	{
+		ContentValues values = new ContentValues();
+		values.put(ColumnFeeds.URL, url);
+
+		// Insertando el registro en la base de datos
+		this.getWritableDatabase().update(FEED_TABLE_NAME, values, ColumnFeeds.NOMBRE + "=?", new String[]{String.valueOf(nombre)});
+	}
+
+	/**
 	 * Eliminar entrada
 	 * @param fuente
 	 */
@@ -117,7 +132,7 @@ public class RssList extends SQLiteOpenHelper
 	{
 		getWritableDatabase().delete(
 				FEED_TABLE_NAME,
-				ColumnFeeds.NOMBRE + "=? OR " + ColumnFeeds.NOMBRE + "=? + '_'",
+				ColumnFeeds.NOMBRE + "=?",
 				new String[]{String.valueOf(fuente)});
 	}
 }

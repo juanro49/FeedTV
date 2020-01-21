@@ -177,12 +177,33 @@ public class MainActivity extends AppCompatActivity
 						}
 					});
 
-				builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener()
+				builder.setNegativeButton(getString(R.string.edit), new DialogInterface.OnClickListener()
 					{
 						@Override
 						public void onClick(DialogInterface dialog, int id)
 						{
-							dialog.dismiss();
+							RssList fuente = new RssList(MainActivity.this);
+							Cursor c = fuente.obtenerEntradas();
+							String url = "";
+							boolean encontrado = false;
+
+							c.moveToFirst();
+
+							do
+							{
+								if(c.getString(1).equals(elemento))
+								{
+									url = c.getString(2);
+									encontrado = true;
+								}
+							}while(c.moveToNext() && !encontrado);
+
+							c.close();
+							fuente.close();
+							Intent i = new Intent(getApplicationContext(), AddFeed.class);
+							i.putExtra("titulo", elemento);
+							i.putExtra("url", url);
+							startActivity(i);
 						}
 					});
 
