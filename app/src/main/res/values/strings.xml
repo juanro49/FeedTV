@@ -22,8 +22,7 @@
   ~
   -->
 
-<resources
-	xmlns:tools="http://schemas.android.com/tools">
+<resources>
 	<string name="app_name">FeedTV</string>
 	<string name="action_about">About</string>
 	<string name="alert_title">¡Atención!</string>
@@ -63,4 +62,9 @@
 	<string name="update_feed_success">Artículos actualizados correctamente"</string>
 	<string name="update_feed_failed">Ha ocurrido un error al obtener elementos del Feed. || </string>
 	<string name="url_clipboard">URL copiada al portapapeles</string>
+	<string name="seguir">Seguir</string>
+	<string name="tema_seguir">Tema a seguir</string>
+	<string name="topic">Tema</string>
+	<string name="titulo_seguir">Introduce el tema a seguir y su origen</string>
+	<string name="unlock_gn">Marcar si Google News no está disponible en su país</string>
 </resources>

@@ -23,6 +23,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:scrollbars="vertical"
 	tools:context=".AddFeed">
 
 	<TextView
@@ -30,7 +31,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_centerHorizontal="true"
-		android:layout_marginTop="50dp"
+		android:layout_marginTop="20dp"
 		android:textStyle="bold"
 		android:textSize="17sp"
 		android:text="@string/titulo_addfeed" />
@@ -40,7 +41,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/tvTitulo"
-		android:layout_marginTop="70dp"
+		android:layout_marginTop="30dp"
 		android:layout_alignStart="@+id/tvTitulo"
 		android:text="@string/name_feed" />
 
@@ -48,10 +49,9 @@
 		android:id="@+id/tvUrl"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
 		android:layout_alignEnd="@+id/tvNombre"
 		android:layout_below="@+id/tvNombre"
-		android:layout_marginTop="40dp"
+		android:layout_marginTop="15dp"
 		android:text="@string/url_feed" />
 
 	<EditText
@@ -67,10 +67,11 @@
 		android:id="@+id/etUrl"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:hint="@string/url_ejemplo"
-		android:layout_toRightOf="@+id/tvUrl"
 		android:layout_alignBaseline="@+id/tvUrl"
-		android:layout_marginLeft="20dp" />
+		android:layout_alignEnd="@+id/etNombre"
+		android:layout_marginLeft="20dp"
+		android:layout_toRightOf="@+id/tvUrl"
+		android:hint="@string/url_ejemplo" />
 
 	<Button
 		android:id="@+id/button"
@@ -78,7 +79,78 @@
 		android:layout_height="wrap_content"
 		android:layout_below="@+id/etUrl"
 		android:layout_centerHorizontal="true"
-		android:layout_marginTop="50dp"
+		android:layout_marginTop="20dp"
 		android:onClick="submit"
 		android:text="@string/add_feed" />
+
+	<TextView
+		android:id="@+id/tvTituloTema"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_below="@+id/button"
+		android:layout_marginTop="50dp"
+		android:textStyle="bold"
+		android:textSize="17sp"
+		android:text="@string/titulo_seguir" />
+
+	<RadioGroup
+		android:id="@+id/rbGroup"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/tvTituloTema"
+		android:layout_marginTop="15dp"
+		android:layout_centerHorizontal="true">
+
+		<RadioButton
+			android:id="@+id/rbGoogle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Google News" />
+
+		<RadioButton
+			android:id="@+id/rbBing"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Bing News" />
+	</RadioGroup>
+
+	<TextView
+		android:id="@+id/tvTema"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignEnd="@+id/tvNombre"
+		android:layout_below="@+id/rbGroup"
+		android:layout_marginTop="20dp"
+		android:text="@string/topic" />
+
+	<EditText
+		android:id="@+id/etTema"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBaseline="@+id/tvTema"
+		android:layout_alignEnd="@+id/etNombre"
+		android:layout_marginLeft="20dp"
+		android:layout_toRightOf="@+id/tvTema"
+		android:hint="@string/tema_seguir" />
+
+	<CheckBox
+		android:id="@+id/cbGN"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/unlock_gn"
+		android:layout_below="@+id/tvTema"
+		android:layout_alignStart="@+id/tvTema"
+		android:layout_marginTop="15dp"
+		android:layout_marginEnd="20dp" />
+
+	<Button
+		android:id="@+id/btnSeguir"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/cbGN"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="20dp"
+		android:onClick="submitSeguir"
+		android:text="@string/seguir" />
 </RelativeLayout>

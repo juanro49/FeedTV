@@ -23,7 +23,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -34,8 +36,10 @@ import org.juanro.feedtv.BBDD.RssList;
 
 public class AddFeed extends AppCompatActivity
 {
-	private EditText nombre, url;
+	private EditText nombre, url, tema;
 	private Button submit;
+	private RadioButton google, bing;
+	private CheckBox unlockGN;
 	private RssList fuentes;
 	private SharedPreferences sharedPref;
 
@@ -51,6 +55,10 @@ public class AddFeed extends AppCompatActivity
 		nombre = findViewById(R.id.etNombre);
 		url = findViewById(R.id.etUrl);
 		submit = findViewById(R.id.button);
+		tema = findViewById(R.id.etTema);
+		google = findViewById(R.id.rbGoogle);
+		bing = findViewById(R.id.rbBing);
+		unlockGN = findViewById(R.id.cbGN);
 
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null)
@@ -79,6 +87,7 @@ public class AddFeed extends AppCompatActivity
 		return super.onOptionsItemSelected(item);
 	}
 
+	// Añadir o modificar feed
 	public void submit(View view)
 	{
 		if(getIntent().getExtras() == null)
@@ -91,8 +100,51 @@ public class AddFeed extends AppCompatActivity
 		}
 	}
 
+	// Seguir tema de Google News o Bing News
+	public void submitSeguir(View view)
+	{
+		String topic = tema.getText().toString().replace(" ", "+");
+
+		if(tema.getText().toString().isEmpty() || !google.isChecked() && !bing.isChecked())
+		{
+			Toast.makeText(this, this.getString(R.string.add_feed_empty), Toast.LENGTH_LONG).show();
+		}
+		else
+		{
+			String url = "";
+			fuentes = new RssList(this);
+
+			if(google.isChecked())
+			{
+				if(unlockGN.isChecked())
+				{
+					url = "https://news.google.com/rss/search?q=" + topic + "&hl=es-419&gl=MX&ceid=MX:es-419";
+				}
+				else
+				{
+					url = "https://news.google.com/rss/search?q=" + topic;
+				}
+
+				topic = topic.replaceAll("[+| ]", "") + "GN";
+				fuentes.insertarEntrada(topic, url);
+				FeedDatabase.getInstance(getApplicationContext()).crearTabla(topic + "_");
+			}
+			else if(bing.isChecked())
+			{
+				url = "https://www.bing.com/news/search?q=" + topic + "&format=rss";
+				topic = topic.replaceAll("[+| ]", "") + "BN";
+				fuentes.insertarEntrada(topic, url);
+				FeedDatabase.getInstance(getApplicationContext()).crearTabla(topic + "_");
+			}
+
+			Toast.makeText(this, this.getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
+		}
+	}
+
 	public void addFeed()
 	{
+		String titulo = nombre.getText().toString();
+
 		if(nombre.getText().toString().isEmpty() || url.getText().toString().isEmpty())
 		{
 			Toast.makeText(this, this.getString(R.string.add_feed_empty), Toast.LENGTH_LONG).show();
@@ -100,9 +152,10 @@ public class AddFeed extends AppCompatActivity
 		else
 		{
 			fuentes = new RssList(this);
-			fuentes.insertarEntrada(nombre.getText().toString(), url.getText().toString());
+			titulo = titulo.replaceAll("[+| ]", "");
+			fuentes.insertarEntrada(titulo, url.getText().toString());
 
-			FeedDatabase.getInstance(getApplicationContext()).crearTabla(nombre.getText().toString() + "_");
+			FeedDatabase.getInstance(getApplicationContext()).crearTabla(titulo + "_");
 			Toast.makeText(this, this.getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
 		}
 	}
