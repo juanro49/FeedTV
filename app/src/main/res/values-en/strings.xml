@@ -15,7 +15,6 @@
     <string name="about">FeedTV is an app that lets you read news from all medias via RSS, in addition to perusing public TV-channels from anywhere.</string>
     <string name="enlaces_disponibles">Available links</string>
     <string name="titulo_lista_noticias">Title</string>
-    <string name="nombre_canal_lista">Channel name</string>
     <string name="url_feed">URL:</string>
     <string name="title_activity_settings">Settings</string>
     <string name="nombre_canal_detalle">Channel name</string>

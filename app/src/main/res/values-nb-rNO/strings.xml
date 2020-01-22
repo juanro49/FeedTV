@@ -13,7 +13,6 @@
     <string name="name_feed">Navn:</string>
     <string name="url_detalle">Nettadresse</string>
     <string name="nombre_canal_detalle">Kanalnavn</string>
-    <string name="nombre_canal_lista">Kanalnavn</string>
     <string name="titulo_lista_noticias">Tittel</string>
     <string name="fecha_lista_noticias">Dato</string>
     <string name="alert_title">Advarsel!</string>

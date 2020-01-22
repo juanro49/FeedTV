@@ -48,7 +48,6 @@
 	<string name="enlaces_disponibles">Enlaces disponibles</string>
 	<string name="url_detalle">URL</string>
 	<string name="nombre_canal_detalle">Nombre canal</string>
-	<string name="nombre_canal_lista">Nombre Canal</string>
 	<string name="titulo_lista_noticias">Título</string>
 	<string name="fecha_lista_noticias">Fecha</string>
 	<string name="title_dialog_rss_list">Modificar fuente</string>

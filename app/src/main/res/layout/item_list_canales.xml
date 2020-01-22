@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/channel_icon"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/nombre_canal_lista"
+            android:text="@string/nombre_canal_detalle"
             android:paddingTop="5dp"
             android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@+id/channel_icon"
