@@ -24,4 +24,5 @@
     <string name="enlaces_disponibles">Tilgjengelige lenker</string>
     <string name="add_feed">Legg til</string>
     <string name="nombre_feed">Navn på nyhetskilde</string>
+    <string name="topic">Drakt</string>
 </resources>
