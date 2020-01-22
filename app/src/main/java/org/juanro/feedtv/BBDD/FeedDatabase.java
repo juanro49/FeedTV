@@ -148,6 +148,7 @@ public final class FeedDatabase extends SQLiteOpenHelper
 	public void eliminarTabla(String tabla)
 	{
 		getWritableDatabase().execSQL("DROP TABLE IF EXISTS " + tabla);
+		getWritableDatabase().execSQL("DROP TABLE IF EXISTS " + tabla + "_");
 	}
 
 	/**
@@ -157,7 +158,11 @@ public final class FeedDatabase extends SQLiteOpenHelper
 	 */
 	public void setTabla(String tabla)
 	{
-		nombreTabla = tabla;
+		Cursor c;
+		c = getReadableDatabase().rawQuery("select name from sqlite_master where type = 'table' and name in('" + tabla + "', '" + tabla + "_')", null);
+		c.moveToFirst();
+		nombreTabla = c.getString(0);
+		c.close();
 	}
 
     /**

@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
 								encontrado = true;
 								viewModel.setUrl(url);
 
-								FeedDatabase.getInstance(MainActivity.this).setTabla(fuente + "_");
+								FeedDatabase.getInstance(MainActivity.this).setTabla(fuente);
 
 								// Obtener Feed
 								viewModel.fetchFeed(getApplicationContext());
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity
 
 							// Eliminar fuente de la base de datos y de la lista
 							fuente.eliminarEntradas(elemento);
-							FeedDatabase.getInstance(MainActivity.this).eliminarTabla(elemento + "_");
+							FeedDatabase.getInstance(MainActivity.this).eliminarTabla(elemento);
 							adapter.remove(elemento);
 							fuente.close();
 
