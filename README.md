@@ -11,12 +11,12 @@ FeedTV es una aplicación que te permite leer noticias de cualquier medio median
 Este proyecto es posible gracias a [RSS-Parser](https://github.com/prof18/RSS-Parser), una librería para el parseo de feeds RSS y [TDTChannels](https://github.com/LaQuay/TDTChannels), repo que provee los canales de TV.
 
 # Descarga
-[<img src="https://huaweimobileservices.com/wp-content/uploads/2019/04/appgallery-logo.png" alt="Get it on AppGallery" height="80">](https://appgallery.cloud.huawei.com/marketshare/app/C100875081?locale=es_ES) [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on-es-es.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/org.juanro.feedtv) [<img src="https://user-images.githubusercontent.com/663460/26973090-f8fdc986-4d14-11e7-995a-e7c5e79ed925.png" alt="Download APK from GitHub" height="80">](https://github.com/juanro49/FeedTV/releases/latest) [<img src="https://www.4shared.com/images/logos/logo-web-big.png" alt="Get it on 4shared" height="60">](https://www.4shared.com/mobile/UlAIPNuida/FeedTV.html)
+[<img src="https://huaweimobileservices.com/wp-content/uploads/2019/04/appgallery-logo.png" alt="Get it on AppGallery" height="80">](https://appgallery.cloud.huawei.com/marketshare/app/C100875081?locale=es_ES) [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on-es-es.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/org.juanro.feedtv) [<img src="https://user-images.githubusercontent.com/663460/26973090-f8fdc986-4d14-11e7-995a-e7c5e79ed925.png" alt="Download APK from GitHub" height="80">](https://github.com/juanro49/FeedTV/releases/latest)
 
-Para descargar FeedTV desde F-Droid, necesitas tener añadido el [repo de IzzyOnDroid](https://apt.izzysoft.de/fdroid/repo?fingerprint=3BF0D6ABFEAE2F401707B6D966BE743BF0EEE49C2561B9BA39073711F628937A).
+Para descargar FeedTV desde [F-Droid](https://instatecno.com/f-droid-store-opensource/), necesitas tener añadido el [repo de IzzyOnDroid](https://apt.izzysoft.de/fdroid/repo?fingerprint=3BF0D6ABFEAE2F401707B6D966BE743BF0EEE49C2561B9BA39073711F628937A).
 
 # Contribuir
-Próximamente, cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataforma [Weblate](https://hosted.weblate.org/projects/feedtv/). Mientras, se pueden enviar fallos y propuestas de mejoras desde la pestaña ["Issues"](https://github.com/juanro49/FeedTV/issues) y además puedes colaborar con proyectos de los que depende FeedTV como [RSS-Parser](https://github.com/prof18/RSS-Parser) y [TDTChannels](https://github.com/LaQuay/TDTChannels).
+Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataforma [Weblate](https://hosted.weblate.org/projects/feedtv/). También, se pueden enviar fallos y propuestas de mejoras desde la pestaña ["Issues"](https://github.com/juanro49/FeedTV/issues) y además puedes colaborar con proyectos de los que depende FeedTV como [RSS-Parser](https://github.com/prof18/RSS-Parser) y [TDTChannels](https://github.com/LaQuay/TDTChannels).
 
 ### Donaciones
 | Método | Dirección |
@@ -27,4 +27,3 @@ Próximamente, cualquier persona podrá traducir FeedTV a diferentes idiomas med
 | **Stellar** | GCOHJZYRBOQYIV265UDAB75VU3O2RFQ3TWHFPER32MSOKZCCKRKVBWEH |
 | **Litecoin** | LYsyYEmxnRaCY3ML2tKYZpQA6zhndpuuQ4 |
 | **Dash** | XxhbofmRrJSm5t4Lp9zSjECbe2v9LVdZcK |
-| **Tube** | bxcce6cjtJZ7QPKvTBczG7hWKzL5pjKRxQyJThcakFPafJsFqn8j9hZGRjsMac6ASgHVMrw9552YZgqnuqr8VZgx15ABPh4nY |
