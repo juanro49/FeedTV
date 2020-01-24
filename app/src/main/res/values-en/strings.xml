@@ -24,4 +24,24 @@
     <string name="author">&lt;br /&gt;&lt;br /&gt;Created by Juanro49, licensed Apache 2.0</string>
     <string name="app_name">FeedTV</string>
     <string name="add_feed">Add</string>
+    <string name="edit_feed">Modify</string>
+    <string name="add_feed_empty">Both fields are required</string>
+    <string name="add_feed_success">Feed added successfully</string>
+    <string name="mod_feed_success">Feed modified successfully</string>
+    <string name="title_dialog_rss_list">Modify feed</string>
+    <string name="dialog_rss_list">What action do you want to take with</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="delete_feed_success">Feed deleted</string>
+    <string name="no_feeds">No articles received</string>
+    <string name="no_connection">Internet connection is not available</string>
+    <string name="first_start">Add feeds from the left side menu to get started</string>
+    <string name="update_feed_success">Correctly updated articles</string>
+    <string name="update_feed_failed">An error has occurred when obtaining elements of the Feed. ||</string>
+    <string name="url_clipboard">URL copied to clipboard</string>
+    <string name="seguir">Follow</string>
+    <string name="tema_seguir">Topic to follow</string>
+    <string name="topic">Topic</string>
+    <string name="titulo_seguir">Introduce the topic to follow and its source</string>
+    <string name="unlock_gn">Check if Google News is not available in your country</string>
 </resources>
