@@ -33,6 +33,7 @@
 	<string name="author">&lt;br /&gt;&lt;br /&gt; Creada por Juanro49 bajo licencia Apache 2.0</string>
 	<string name="title_activity_settings">Ajustes</string>
 	<string name="tema_aplicacion">Tema de la aplicación</string>
+    <string name="reproductor">Utilizar reproductor externo</string>
 	<string name="reproductor_externo_on">Está usando un reproductor externo para reproducir los canales</string>
 	<string name="reproductor_externo_off">Está usando el reproductor interno para reproducir los canales</string>
 	<string name="add_feed">Añadir</string>

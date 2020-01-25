@@ -29,5 +29,5 @@
 		app:key="reproductor"
 		app:summaryOff="@string/reproductor_externo_off"
 		app:summaryOn="@string/reproductor_externo_on"
-		app:title="Utilizar reproductor externo" />
+		app:title="@string/reproductor" />
 </androidx.preference.PreferenceScreen>
