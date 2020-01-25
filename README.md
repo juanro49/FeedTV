@@ -18,6 +18,12 @@ Para descargar FeedTV desde [F-Droid](https://instatecno.com/f-droid-store-opens
 # Contribuir
 Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataforma [Weblate](https://hosted.weblate.org/projects/feedtv/). También, se pueden enviar fallos y propuestas de mejoras desde la pestaña ["Issues"](https://github.com/juanro49/FeedTV/issues) y además puedes colaborar con proyectos de los que depende FeedTV como [RSS-Parser](https://github.com/prof18/RSS-Parser) y [TDTChannels](https://github.com/LaQuay/TDTChannels).
 
+### Agradecimientos
+- [@prof18](https://github.com/prof18) --> [RSSParser](https://github.com/prof18/RSS-Parser)
+- [@LaQuay](https://github.com/LaQuay) --> [TDTChannels](https://github.com/LaQuay/TDTChannels)
+- [WebLate](https://hosted.weblate.org/projects/feedtv/) --> Plataforma de traducción
+- [@comradekingu](https://github.com/comradekingu) --> Traducción a noruego e inglés
+
 ### Donaciones
 | Método | Dirección |
 | --- | --- |
