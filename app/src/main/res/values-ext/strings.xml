@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ The MIT License (MIT)
+  ~
+  ~    Copyright (c) 2019 Juanro49
+  ~
+  ~    Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~    of this software and associated documentation files (the "Software"), to deal
+  ~    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~    copies of the Software, and to permit persons to whom the Software is
+  ~    furnished to do so, subject to the following conditions:
+  ~
+  ~    The above copyright notice and this permission notice shall be included in all
+  ~    copies or substantial portions of the Software.
+  ~
+  ~    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+  ~    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~    SOFTWARE.
+  ~
+  ~
+  ~    Traducción al Estremeñu realizada por OscecEstremaura https://twitter.com/OscecEstremaura
+  ~    Sitio web: https://oscecestremaura.wordpress.com/
+  ~
+  -->
+
+<resources>
+    <string name="app_name">FeedTV</string>
+    <string name="action_about">A tentu</string>
+    <string name="alert_title">Cudiau!</string>
+    <string name="alert_message">Empossibli el apapal daus. \nPrevi el su enganchi.</string>
+    <string name="alert_positive">Fechal</string>
+    <string name="video">Vidiu</string>
+    <string name="about">FeedTV es una apricación que te premiti el leyel enteracionis de qualisquiera mediu por mé de RSS amás de poel vel canalis púbricus de TV pandiquiera.</string>
+    <string name="author">&lt;br /&gt;&lt;br /&gt; Entangá de Juanro49 baxu licencia Apache 2.0</string>
+    <string name="title_activity_settings">Ajustamientus</string>
+    <string name="tema_aplicacion">Tema dela apricación</string>
+    <string name="reproductor">Gastal aparatu esternu</string>
+    <string name="reproductor_externo_on">Está gastandu un aparatu esternu pa sonal las canalis</string>
+    <string name="reproductor_externo_off">Está gastandu l’aparatu internu pa sonal las canalis</string>
+    <string name="add_feed">Añidil</string>
+    <string name="edit_feed">Mual</string>
+    <string name="add_feed_empty">Dambus campus sonin obrigaus</string>
+    <string name="add_feed_success">Huenti añidía conformi</string>
+    <string name="mod_feed_success">Huenti muá conformi</string>
+    <string name="url_ejemplo">https://www.exempru.com/feed</string>
+    <string name="nombre_feed">Nombri dela huenti d’enteracionis</string>
+    <string name="url_feed">URL:</string>
+    <string name="name_feed">Nombri:</string>
+    <string name="titulo_addfeed">Entra el nombri i la seña del Feed RSS</string>
+    <string name="enlaces_disponibles">Atillus presenterus</string>
+    <string name="url_detalle">URL</string>
+    <string name="nombre_canal_detalle">Nombri dela canal</string>
+    <string name="titulo_lista_noticias">Títulu</string>
+    <string name="fecha_lista_noticias">Fecha</string>
+    <string name="title_dialog_rss_list">Mual huenti</string>
+    <string name="dialog_rss_list">¿Qué quieri hazel con </string>
+    <string name="delete">Aborral</string>
+    <string name="edit">Mual</string>
+    <string name="delete_feed_success">Huenti aborrá</string>
+    <string name="no_feeds">No s’an apapau endilgus</string>
+    <string name="no_connection">L’enganchi a internet no está presenteru</string>
+    <string name="first_start">Añidi huentis dendi el menú laeru esquierdu pa prencipial</string>
+    <string name="update_feed_success">Endilgus renovaus conformi"</string>
+    <string name="update_feed_failed">Á avíu un marru al apapal componentis del Feed. || </string>
+    <string name="url_clipboard">URL copiá al portapapelis</string>
+    <string name="seguir">Siguil</string>
+    <string name="tema_seguir">Tema a siguil</string>
+    <string name="topic">Tema</string>
+    <string name="titulo_seguir">Entra el tema a siguil i el su origi</string>
+    <string name="unlock_gn">Marcal si Google News no está presenteru en el su país</string>
+</resources>

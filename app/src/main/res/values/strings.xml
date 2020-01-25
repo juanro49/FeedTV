@@ -23,7 +23,7 @@
   -->
 
 <resources>
-	<string name="app_name">FeedTV</string>
+	<string name="app_name" translatable="false">FeedTV</string>
 	<string name="action_about">About</string>
 	<string name="alert_title">¡Atención!</string>
 	<string name="alert_message">Imposible obtener datos. \nCompruebe su conexión.</string>
