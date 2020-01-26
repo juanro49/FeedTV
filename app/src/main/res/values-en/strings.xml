@@ -44,4 +44,5 @@
     <string name="topic">Topic</string>
     <string name="titulo_seguir">Introduce the topic to follow and its source</string>
     <string name="unlock_gn">Check if Google News is not available in your country</string>
+    <string name="reproductor">Use external player</string>
 </resources>
