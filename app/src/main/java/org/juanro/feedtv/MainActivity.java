@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity
 	private String elemento;
 	private SharedPreferences sharedPref;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
 	{
@@ -262,9 +261,9 @@ public class MainActivity extends AppCompatActivity
 								alertDialog.setTitle(R.string.action_about);
 								alertDialog.setIcon(R.mipmap.ic_launcher);
 								alertDialog.setMessage(Html.fromHtml( MainActivity.this.getString(R.string.about) +
-										"<br /><br /> FeedTV es posible gracias a <a href='http://github.com/prof18/RSS-Parser'>RSS Parser</a> " +
-										"y al repositorio de canales de <a href='https://github.com/LaQuay/TDTChannels'>TDTChannels</a>." +
-										MainActivity.this.getString(R.string.author) + "<br /><br /> Versión: " + BuildConfig.VERSION_NAME));
+										MainActivity.this.getString(R.string.agradecimientos) +
+										MainActivity.this.getString(R.string.author) +
+										MainActivity.this.getString(R.string.version) + BuildConfig.VERSION_NAME));
 								alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
 										new DialogInterface.OnClickListener()
 										{
@@ -387,23 +386,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-	/**
-	 * Método que aplica el tema de la aplicación
-	 */
-	private void aplicarTema()
-	{
-		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
-
-		if(sharedPref.getString("tema", "Claro").equals("Claro"))
-		{
-			setTheme(R.style.TemaClaro_NoActionBar);
-		}
-		else
-		{
-			setTheme(R.style.TemaOscuro_NoActionBar);
-		}
-	}
-
 	public void onResume()
 	{
 		super.onResume();
@@ -468,5 +450,22 @@ public class MainActivity extends AppCompatActivity
 		rss.close();
 
 		return fuentes;
+	}
+
+	/**
+	 * Método que aplica el tema de la aplicación
+	 */
+	private void aplicarTema()
+	{
+		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+
+		if(sharedPref.getString("tema", "Claro").equals("Claro"))
+		{
+			setTheme(R.style.TemaClaro_NoActionBar);
+		}
+		else
+		{
+			setTheme(R.style.TemaOscuro_NoActionBar);
+		}
 	}
 }

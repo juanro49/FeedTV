@@ -4,7 +4,7 @@
     <string name="action_about">Om</string>
     <string name="alert_positive">Lukk</string>
     <string name="video">Video</string>
-    <string name="author"><br/> <br/> Laget av Juanro49 under Apache 2.0-lisens</string>
+    <string name="author"><br/> <br/> Laget av Juanro49 under Apache 2.0-lisens &lt;br /&gt;&lt;br /&gt;</string>
     <string name="tema_aplicacion">Programdrakt</string>
     <string name="url_ejemplo">https://www.eksempel.no/informasjonskanal</string>
     <string name="url_feed">Nettadresse:</string>
@@ -22,7 +22,7 @@
     <string name="reproductor_externo_off">Du bruker den innebygde spilleren til å spille av kanalene</string>
     <string name="titulo_addfeed">Skriv inn navnet og adressen til RSS-strømmen</string>
     <string name="enlaces_disponibles">Tilgjengelige lenker</string>
-    <string name="add_feed">Legg til</string>
+    <string name="add">Legg til</string>
     <string name="nombre_feed">Navn på nyhetskilde</string>
     <string name="topic">Drakt</string>
 </resources>

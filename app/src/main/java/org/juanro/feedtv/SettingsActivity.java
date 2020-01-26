@@ -18,13 +18,18 @@
 
 package org.juanro.feedtv;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
+
+import java.util.Locale;
 
 /**
  * Clase que representa la activity de ajustes
@@ -32,6 +37,8 @@ import androidx.preference.PreferenceFragmentCompat;
 public class SettingsActivity extends AppCompatActivity
 {
 	private SharedPreferences sharedPref;
+	private Configuration config = new Configuration();
+	private Locale locale;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -53,6 +60,8 @@ public class SettingsActivity extends AppCompatActivity
 	public void onPause()
 	{
 		super.onPause();
+		aplicarTema();
+		aplicarIdioma();
 	}
 
 	public static class SettingsFragment extends PreferenceFragmentCompat
@@ -91,5 +100,48 @@ public class SettingsActivity extends AppCompatActivity
 		{
 			setTheme(R.style.TemaOscuro);
 		}
+	}
+
+	/**
+	 * Método que carga el idioma de la aplicación
+	 */
+	private void aplicarIdioma()
+	{
+		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+		String lang = sharedPref.getString("lang", "auto");
+
+		switch(lang)
+		{
+			case "auto":
+				config.setToDefaults();
+				Log.i(this.getLocalClassName(), "Idioma establecido: " + lang);
+				break;
+			case "es":
+				locale = new Locale("es");
+				config.locale = locale;
+				Log.i(this.getLocalClassName(), "Idioma establecido: " + config.locale.getLanguage());
+				break;
+			case "ext":
+				locale = new Locale("ext");
+				config.locale = locale;
+				Log.i(this.getLocalClassName(), "Idioma establecido: " + config.locale.getLanguage());
+				break;
+			case "en":
+				locale = new Locale("en");
+				config.locale = locale;
+				Log.i(this.getLocalClassName(), "Idioma establecido: " + config.locale.getLanguage());
+				break;
+			case "nb":
+				locale = new Locale("nb");
+				config.locale = locale;
+				Log.i(this.getLocalClassName(), "Idioma establecido: " + config.locale.getLanguage());
+				break;
+		}
+
+		getResources().updateConfiguration(config, null);
+		Intent refresh = new Intent(getApplicationContext(), MainActivity.class);
+		refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(refresh);
+		finish();
 	}
 }

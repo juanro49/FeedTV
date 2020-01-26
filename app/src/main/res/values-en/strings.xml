@@ -21,9 +21,9 @@
     <string name="reproductor_externo_off">You are using the internal player to play the channels</string>
     <string name="video">Video</string>
     <string name="name_feed">Name:</string>
-    <string name="author">&lt;br /&gt;&lt;br /&gt;Created by Juanro49, licensed Apache 2.0</string>
+    <string name="author">&lt;br /&gt;&lt;br /&gt;Created by Juanro49, licensed Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
     <string name="app_name">FeedTV</string>
-    <string name="add_feed">Add</string>
+    <string name="add">Add</string>
     <string name="edit_feed">Modify</string>
     <string name="add_feed_empty">Both fields are required</string>
     <string name="add_feed_success">Feed added successfully</string>

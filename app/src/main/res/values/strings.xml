@@ -24,19 +24,27 @@
 
 <resources>
 	<string name="app_name" translatable="false">FeedTV</string>
-	<string name="action_about">About</string>
+	<string name="search">Buscar</string>
+	<string name="add_feed">Añadir Feed</string>
+	<string name="watch_tv">Ver TV</string>
+	<string name="settings">Ajustes</string>
+	<string name="action_about">Sobre</string>
+	<string name="television">FeedTV Televisión</string>
+	<string name="channel_detail">Detalles del canal</string>
 	<string name="alert_title">¡Atención!</string>
 	<string name="alert_message">Imposible obtener datos. \nCompruebe su conexión.</string>
 	<string name="alert_positive">Cerrar</string>
 	<string name="video">Video</string>
 	<string name="about">FeedTV es una aplicación que te permite leer noticias de cualquier medio mediante RSS además de poder ver canales públicos de TV en cualquier lugar.</string>
-	<string name="author">&lt;br /&gt;&lt;br /&gt; Creada por Juanro49 bajo licencia Apache 2.0</string>
+	<string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV es posible gracias a &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt; y al repositorio de canales de &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+	<string name="author">&lt;br /&gt;&lt;br /&gt; Creada por Juanro49 bajo licencia Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
+	<string name="version">Versión</string>
 	<string name="title_activity_settings">Ajustes</string>
 	<string name="tema_aplicacion">Tema de la aplicación</string>
     <string name="reproductor">Utilizar reproductor externo</string>
 	<string name="reproductor_externo_on">Está usando un reproductor externo para reproducir los canales</string>
 	<string name="reproductor_externo_off">Está usando el reproductor interno para reproducir los canales</string>
-	<string name="add_feed">Añadir</string>
+	<string name="add">Añadir</string>
     <string name="edit_feed">Modificar</string>
 	<string name="add_feed_empty">Ambos campos son obligatorios</string>
 	<string name="add_feed_success">Fuente añadida correctamente</string>
@@ -67,4 +75,12 @@
 	<string name="topic">Tema</string>
 	<string name="titulo_seguir">Introduce el tema a seguir y su origen</string>
 	<string name="unlock_gn">Marcar si Google News no está disponible en su país</string>
+	<string name="idioma_aplicacion">Idioma aplicación</string>
+	<string name="claro">Claro</string>
+	<string name="oscuro">Oscuro</string>
+	<string name="auto">Automático</string>
+	<string name="str_es">Español</string>
+	<string name="str_ext">Extremeño</string>
+	<string name="str_en">Inglés</string>
+	<string name="str_nb">Noruego</string>
 </resources>

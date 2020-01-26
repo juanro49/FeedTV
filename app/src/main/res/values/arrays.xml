@@ -1,7 +1,25 @@
 <resources>
-	<!-- Reply Preference -->
+	<!-- Tema aplicación -->
 	<string-array name="temas">
-		<item>Claro</item>
-		<item>Oscuro</item>
+		<item>@string/claro</item>
+		<item>@string/oscuro</item>
+	</string-array>
+
+	<!-- Idioma aplicación -->
+	<string-array name="languages" >
+		<item>@string/auto</item>
+		<item>@string/str_es</item>
+		<item>@string/str_ext</item>
+		<item>@string/str_en</item>
+		<item>@string/str_nb</item>
+	</string-array>
+
+	<!-- Valores idioma aplicación -->
+	<string-array name="lang" >
+		<item>auto</item>
+		<item>es</item>
+		<item>ext</item>
+		<item>en</item>
+		<item>nb</item>
 	</string-array>
 </resources>

@@ -35,13 +35,13 @@
     <string name="alert_positive">Fechal</string>
     <string name="video">Vidiu</string>
     <string name="about">FeedTV es una apricación que te premiti el leyel enteracionis de qualisquiera mediu por mé de RSS amás de poel vel canalis púbricus de TV pandiquiera.</string>
-    <string name="author">&lt;br /&gt;&lt;br /&gt; Entangá de Juanro49 baxu licencia Apache 2.0</string>
+    <string name="author">&lt;br /&gt;&lt;br /&gt; Entangá de Juanro49 baxu licencia Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
     <string name="title_activity_settings">Ajustamientus</string>
     <string name="tema_aplicacion">Tema dela apricación</string>
     <string name="reproductor">Gastal aparatu esternu</string>
     <string name="reproductor_externo_on">Está gastandu un aparatu esternu pa sonal las canalis</string>
     <string name="reproductor_externo_off">Está gastandu l’aparatu internu pa sonal las canalis</string>
-    <string name="add_feed">Añidil</string>
+    <string name="add">Añidil</string>
     <string name="edit_feed">Mual</string>
     <string name="add_feed_empty">Dambus campus sonin obrigaus</string>
     <string name="add_feed_success">Huenti añidía conformi</string>

@@ -30,4 +30,12 @@
 		app:summaryOff="@string/reproductor_externo_off"
 		app:summaryOn="@string/reproductor_externo_on"
 		app:title="@string/reproductor" />
+
+	<ListPreference
+		app:defaultValue="@string/auto"
+		app:entries="@array/languages"
+		app:entryValues="@array/lang"
+		app:key="lang"
+		app:title="@string/idioma_aplicacion"
+		app:useSimpleSummaryProvider="true" />
 </androidx.preference.PreferenceScreen>

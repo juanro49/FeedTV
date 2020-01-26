@@ -26,18 +26,18 @@
     <item
         android:id="@+id/addFeed"
         android:orderInCategory="100"
-        android:title="Añadir Feed"
+        android:title="@string/add_feed"
         app:showAsAction="never" />
 
 	<item
 		android:id="@+id/tv"
 		android:orderInCategory="100"
-		android:title="Ver TV"
+		android:title="@string/watch_tv"
 		app:showAsAction="never" />
 	<item
 		android:id="@+id/ajustes"
 		android:orderInCategory="100"
-		android:title="Ajustes"
+		android:title="@string/settings"
 		app:showAsAction="never" />
 
     <item

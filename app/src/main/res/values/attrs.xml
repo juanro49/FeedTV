@@ -4,9 +4,9 @@
          used for button bars depending on the API level.
          ?android:attr/buttonBarStyle is new as of API 11 so this is
          necessary to support previous API levels. -->
-	<declare-styleable name="ButtonBarContainerTheme">
+	<!-- <declare-styleable name="ButtonBarContainerTheme">
 		<attr name="metaButtonBarStyle" formato="reference" />
 		<attr name="metaButtonBarButtonStyle" formato="reference" />
-	</declare-styleable>
+	</declare-styleable> -->
 
 </resources>

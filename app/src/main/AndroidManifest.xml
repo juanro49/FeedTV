@@ -17,7 +17,8 @@
 		android:theme="@style/TemaClaro"
 		android:networkSecurityConfig="@xml/network_security_config"
 		android:usesCleartextTraffic="true"
-		android:appCategory="news">
+		android:appCategory="news"
+		android:fullBackupContent="true">
 
 		<activity
 			android:name=".SettingsActivity"
@@ -25,11 +26,11 @@
 
 		<activity
 			android:name=".AddFeed"
-			android:label="Añadir Feed" />
+			android:label="@string/add_feed" />
 
 		<activity
 			android:name=".MainActivity"
-			android:label="FeedTV"
+			android:label="@string/app_name"
 			android:theme="@style/TemaClaro.NoActionBar">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -39,16 +40,16 @@
 
         <activity
             android:name=".ChannelDetail"
-            android:label="Detalles del canal" />
+            android:label="@string/channel_detail" />
 
 		<activity
             android:name=".TvActivity"
-            android:label="FeedTV Televisión">
+            android:label="@string/television">
 		</activity>
 
 		<activity
 			android:name=".Videoview"
 			android:configChanges="orientation|keyboardHidden|screenSize"
-			android:screenOrientation="landscape" />
+			android:screenOrientation="fullSensor" />
 	</application>
 </manifest>

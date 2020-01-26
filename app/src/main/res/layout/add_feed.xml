@@ -81,7 +81,7 @@
 		android:layout_centerHorizontal="true"
 		android:layout_marginTop="20dp"
 		android:onClick="submit"
-		android:text="@string/add_feed" />
+		android:text="@string/add" />
 
 	<TextView
 		android:id="@+id/tvTituloTema"
