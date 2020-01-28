@@ -25,9 +25,7 @@
   ~    Traducción al Estremeñu realizada por OscecEstremaura https://twitter.com/OscecEstremaura
   ~    Sitio web: https://oscecestremaura.wordpress.com/
   ~
-  -->
-
-<resources>
+  --><resources>
     <string name="app_name">FeedTV</string>
     <string name="action_about">A tentu</string>
     <string name="alert_title">Cudiau!</string>
@@ -72,4 +70,20 @@
     <string name="topic">Tema</string>
     <string name="titulo_seguir">Entra el tema a siguil i el su origi</string>
     <string name="unlock_gn">Marcal si Google News no está presenteru en el su país</string>
+    <string name="add_feed">Añidil Feed</string>
+    <string name="search">Precural</string>
+    <string name="watch_tv">Vel TV</string>
+    <string name="settings">Ajustamientus</string>
+    <string name="television">FeedTV Televisión</string>
+    <string name="channel_detail">Detallis dela canal</string>
+    <string name="agradecimientos"><br/><br/> FeedTV es possibli por mé de <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a> i al reponimientu de canalis de <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a>.</string>
+    <string name="version">Versión</string>
+    <string name="idioma_aplicacion">Idioma apricación</string>
+    <string name="claro">Craru</string>
+    <string name="oscuro">Escuru</string>
+    <string name="auto">Automáticu</string>
+    <string name="str_es">Español</string>
+    <string name="str_ext">Estremeñu</string>
+    <string name="str_en">Inglés</string>
+    <string name="str_nb">Noruegu</string>
 </resources>

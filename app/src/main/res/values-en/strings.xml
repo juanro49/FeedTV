@@ -45,4 +45,19 @@
     <string name="titulo_seguir">Introduce the topic to follow and its source</string>
     <string name="unlock_gn">Check if Google News is not available in your country</string>
     <string name="reproductor">Use external player</string>
+    <string name="add_feed">Add Feed</string>
+    <string name="search">Search</string>
+    <string name="watch_tv">Watch TV</string>
+    <string name="settings">Settings</string>
+    <string name="television">FeedTV TV</string>
+    <string name="channel_detail">Channel detail</string>
+    <string name="version">Version</string>
+    <string name="idioma_aplicacion">App language</string>
+    <string name="claro">Light</string>
+    <string name="oscuro">Dark</string>
+    <string name="auto">Auto</string>
+    <string name="str_es">Spanish</string>
+    <string name="str_ext">Extremadurian</string>
+    <string name="str_en">English</string>
+    <string name="str_nb">Norwegian</string>
 </resources>
