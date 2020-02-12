@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity
 								alertDialog.setMessage(Html.fromHtml( MainActivity.this.getString(R.string.about) +
 										MainActivity.this.getString(R.string.agradecimientos) +
 										MainActivity.this.getString(R.string.author) +
-										MainActivity.this.getString(R.string.version) + BuildConfig.VERSION_NAME));
+										MainActivity.this.getString(R.string.version) + " " + BuildConfig.VERSION_NAME + "<br/><br/>" + MainActivity.this.getString(R.string.github)));
 								alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
 										new DialogInterface.OnClickListener()
 										{
