@@ -60,4 +60,6 @@
     <string name="str_ext">Extremadurian</string>
     <string name="str_en">English</string>
     <string name="str_nb">Norwegian</string>
+    <string name="agradecimientos"><br/><br/> FeedTV is possible thanks to <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a> and the channel repository of <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a>.</string>
+    <string name="github"><a href="https://github.com/juanro49/FeedTV/blob/master/README.md">View on Github</a></string>
 </resources>
