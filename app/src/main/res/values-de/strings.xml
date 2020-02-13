@@ -1,2 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="search">Suche</string>
+    <string name="add_feed">Feed hinzufügen</string>
+    <string name="watch_tv">Fernsehen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="action_about">Info</string>
+    <string name="television">FeedTV-Fernsehen</string>
+    <string name="channel_detail">Kanaldetails</string>
+    <string name="alert_title">Warnung!</string>
+    <string name="alert_message">Daten können nicht abgerufen werden. 
+\nÜberprüfen Sie Ihre Verbindung.</string>
+    <string name="alert_positive">Schließen</string>
+    <string name="video">Video</string>
+    <string name="about">FeedTV ist eine App, mit der Sie Nachrichten aus allen Medien über RSS lesen können und zusätzlich öffentliche Fernsehsender von überall her ansehen können.</string>
+    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV ist nur möglich dank &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt; und &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="author">&lt;br/&gt;&lt;br/&gt;Entwickelt von Juanro49, Lizenz: Apache 2.0 &lt;br/&gt;&lt;br/&gt;</string>
+    <string name="version">Version</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="tema_aplicacion">Theme</string>
+    <string name="reproductor">Externen Player verwenden</string>
+    <string name="reproductor_externo_on">Sie verwenden einen externen Player zur Wiedergabe der Kanäle</string>
+    <string name="reproductor_externo_off">Sie verwenden den internen Player zur Wiedergabe der Kanäle</string>
+    <string name="add">Hinzufügen</string>
+    <string name="edit_feed">Ändern</string>
+    <string name="add_feed_empty">Beide Felder sind erforderlich</string>
+    <string name="add_feed_success">Feed erfolgreich hinzugefügt</string>
+    <string name="mod_feed_success">Feed erfolgreich geändert</string>
+    <string name="url_ejemplo">https://beispiel.de/feed</string>
+    <string name="nombre_feed">Name der Nachrichtenquelle</string>
+    <string name="url_feed">URL:</string>
+    <string name="name_feed">Name:</string>
+    <string name="titulo_addfeed">Geben Sie den Namen und die Adresse des RSS-Feeds ein</string>
+    <string name="enlaces_disponibles">Verfügbare Links</string>
+    <string name="url_detalle">URL</string>
+    <string name="nombre_canal_detalle">Kanalname</string>
+    <string name="titulo_lista_noticias">Titel</string>
+    <string name="fecha_lista_noticias">Datum</string>
+    <string name="title_dialog_rss_list">Feed ändern</string>
+    <string name="dialog_rss_list">Welche Aktion möchten Sie durchführen</string>
+    <string name="delete">Löschen</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="delete_feed_success">Feed gelöscht</string>
+    <string name="no_feeds">Keine Artikel erhalten</string>
+    <string name="no_connection">Internetverbindung nicht verfügbar</string>
+    <string name="first_start">Fügen Sie Feeds aus dem Menü auf der linken Seite hinzu, um zu beginnen</string>
+    <string name="update_feed_success">Korrekt aktualisierte Artikel</string>
+    <string name="update_feed_failed">Beim Abrufen von Elementen des Feeds ist ein Fehler aufgetreten. ||</string>
+    <string name="url_clipboard">URL in die Zwischenablage kopiert</string>
+    <string name="seguir">Folgen</string>
+    <string name="tema_seguir">Themen folgen</string>
+    <string name="topic">Thema</string>
+    <string name="titulo_seguir">Stellen Sie das zu verfolgende Thema und seine Quelle vor</string>
+    <string name="unlock_gn">Prüfen Sie, ob Google News in Ihrem Land verfügbar ist</string>
+    <string name="idioma_aplicacion">App-Sprache</string>
+    <string name="claro">Hell</string>
+    <string name="oscuro">Dunkel</string>
+    <string name="auto">Auto</string>
+    <string name="str_es">Spanisch</string>
+    <string name="str_ext">Extremadurisch</string>
+    <string name="str_en">Englisch</string>
+    <string name="str_nb">Norwegisch</string>
+    <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Auf Github ansehen&lt;/a&gt;</string>
+</resources>
