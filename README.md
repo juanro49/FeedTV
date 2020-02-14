@@ -15,6 +15,8 @@ Este proyecto es posible gracias a [RSS-Parser](https://github.com/prof18/RSS-Pa
 
 Para descargar FeedTV desde [F-Droid](https://instatecno.com/f-droid-store-opensource/), necesitas tener añadido el [repo de IzzyOnDroid](https://apt.izzysoft.de/fdroid/repo?fingerprint=3BF0D6ABFEAE2F401707B6D966BE743BF0EEE49C2561B9BA39073711F628937A).
 
+Manual de uso: https://github.com/juanro49/FeedTV/blob/master/UserManual.pdf
+
 # Contribuir
 Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataforma [Weblate](https://hosted.weblate.org/projects/feedtv/). También, se pueden enviar fallos y propuestas de mejoras desde la pestaña ["Issues"](https://github.com/juanro49/FeedTV/issues) y además puedes colaborar con proyectos de los que depende FeedTV como [RSS-Parser](https://github.com/prof18/RSS-Parser) y [TDTChannels](https://github.com/LaQuay/TDTChannels).
 
