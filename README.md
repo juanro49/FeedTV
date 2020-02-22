@@ -26,7 +26,8 @@ Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataf
   - [WebLate](https://hosted.weblate.org/projects/feedtv/) --> Plataforma de traducción
   - [@comradekingu](https://github.com/comradekingu) --> Traducción a noruego e inglés
   - [OscecEstremaúra](https://oscecestremaura.wordpress.com/) --> Traducción al extremeño/estremeñu
-  - [@iLocIT!](https://github.com/ilocit) --> Traducción a alemán
+  - [@iLocIT!](https://github.com/ilocit) --> Traducción al alemán
+  - [@biesiadamich](https://github.com/biesiadamich) --> Traducción al polaco
 
 ## Donaciones
 | Método | Dirección |
