@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="search">Szukaj</string>
+    <string name="add_feed">Dodaj kanał</string>
+    <string name="watch_tv">Oglądaj TV</string>
+    <string name="channel_detail">Szczegóły kanału</string>
+    <string name="alert_title">Uwaga!</string>
+</resources>
