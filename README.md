@@ -28,6 +28,7 @@ Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataf
   - [OscecEstremaúra](https://oscecestremaura.wordpress.com/) --> Traducción al extremeño/estremeñu
   - [@iLocIT!](https://github.com/ilocit) --> Traducción al alemán
   - [@biesiadamich](https://github.com/biesiadamich) --> Traducción al polaco
+  - [@fitojb](https://github.com/fitojb) --> Traducción al catalán
 
 ## Donaciones
 | Método | Dirección |
