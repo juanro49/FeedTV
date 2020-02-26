@@ -114,27 +114,42 @@ public class SettingsActivity extends AppCompatActivity
 		{
 			case "auto":
 				config.setToDefaults();
-				Log.i(this.getLocalClassName(), "Idioma establecido: " + lang);
+				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + lang);
 				break;
 			case "es":
 				locale = new Locale("es");
 				config.locale = locale;
-				Log.i(this.getLocalClassName(), "Idioma establecido: " + config.locale.getLanguage());
+				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
 				break;
 			case "ext":
 				locale = new Locale("ext");
 				config.locale = locale;
-				Log.i(this.getLocalClassName(), "Idioma establecido: " + config.locale.getLanguage());
+				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
 				break;
 			case "en":
 				locale = new Locale("en");
 				config.locale = locale;
-				Log.i(this.getLocalClassName(), "Idioma establecido: " + config.locale.getLanguage());
+				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
 				break;
 			case "nb":
 				locale = new Locale("nb");
 				config.locale = locale;
-				Log.i(this.getLocalClassName(), "Idioma establecido: " + config.locale.getLanguage());
+				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
+				break;
+			case "de":
+				locale = new Locale("de");
+				config.locale = locale;
+				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
+				break;
+			case "ca":
+				locale = new Locale("ca");
+				config.locale = locale;
+				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
+				break;
+			case "pl":
+				locale = new Locale("pl");
+				config.locale = locale;
+				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
 				break;
 		}
 

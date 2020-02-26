@@ -5,6 +5,12 @@
 		<item>@string/oscuro</item>
 	</string-array>
 
+	<!-- Valoresema aplicación -->
+	<string-array name="tema">
+		<item>Claro</item>
+		<item>Oscuro</item>
+	</string-array>
+
 	<!-- Idioma aplicación -->
 	<string-array name="languages" >
 		<item>@string/auto</item>
@@ -12,6 +18,9 @@
 		<item>@string/str_ext</item>
 		<item>@string/str_en</item>
 		<item>@string/str_nb</item>
+		<item>@string/str_de</item>
+		<item>@string/str_ca</item>
+		<item>@string/str_pl</item>
 	</string-array>
 
 	<!-- Valores idioma aplicación -->
@@ -21,5 +30,8 @@
 		<item>ext</item>
 		<item>en</item>
 		<item>nb</item>
+		<item>de</item>
+		<item>ca</item>
+		<item>pl</item>
 	</string-array>
 </resources>

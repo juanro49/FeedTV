@@ -18,9 +18,9 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<ListPreference
-		app:defaultValue="Claro"
+		app:defaultValue="@string/claro"
 		app:entries="@array/temas"
-		app:entryValues="@array/temas"
+		app:entryValues="@array/tema"
 		app:key="tema"
 		app:title="@string/tema_aplicacion"
 		app:useSimpleSummaryProvider="true" />

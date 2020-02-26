@@ -76,6 +76,7 @@
 	<string name="titulo_seguir">Introduce el tema a seguir y su origen</string>
 	<string name="unlock_gn">Marcar si Google News no está disponible en su país</string>
 	<string name="idioma_aplicacion">Idioma aplicación</string>
+	<string name="idioma_establecido">Idioma establecido: </string>
 	<string name="claro">Claro</string>
 	<string name="oscuro">Oscuro</string>
 	<string name="auto">Automático</string>
@@ -83,5 +84,8 @@
 	<string name="str_ext">Extremeño</string>
 	<string name="str_en">Inglés</string>
 	<string name="str_nb">Noruego</string>
+	<string name="str_de">Alemán</string>
+	<string name="str_ca">Catalán</string>
+	<string name="str_pl">Polaco</string>
 	<string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Ver en Github&lt;/a&gt;</string>
 </resources>
