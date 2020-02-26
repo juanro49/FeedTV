@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Cerca</string>
+    <string name="add_feed">Afegeix un canal</string>
+    <string name="watch_tv">Mira televisió</string>
+    <string name="settings">Configuració</string>
+    <string name="action_about">Quant a</string>
+    <string name="television">FeedTV Televisió</string>
+    <string name="channel_detail">Detalls del canal</string>
+    <string name="alert_title">Atenció!</string>
+    <string name="alert_message">No s’ha pogut obtenir cap dada.
+\nComproveu la vostra connexió.</string>
+    <string name="alert_positive">Tanca</string>
+    <string name="video">Vídeo</string>
+    <string name="about">El FeedTV és una aplicació que us permet llegir notícies des de qualsevol mitjà via RSS i veure canals públics de televisió en qualsevol lloc.</string>
+    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt;El FeedTV és possible gràcies a l’&lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt; y al dipòsit de canals del &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="author">&lt;br /&gt;&lt;br /&gt; Creada pel Juanro49 i disponible en virtut de la llicència Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
+    <string name="version">Versió</string>
+    <string name="title_activity_settings">Configuració</string>
+    <string name="tema_aplicacion">Tema de l’aplicació</string>
+    <string name="reproductor">Utilitza un reproductor extern</string>
+    <string name="reproductor_externo_on">Feu servir un reproductor extern per a reproduir els canals</string>
+    <string name="reproductor_externo_off">Feu servir el reproductor intern per a reproduir els canals</string>
+    <string name="add">Afegeix</string>
+    <string name="edit_feed">Modifica</string>
+    <string name="add_feed_empty">Tots dos camps són obligatoris</string>
+    <string name="add_feed_success">S’ha afegit el flux correctament</string>
+    <string name="mod_feed_success">S’ha modificat el flux correctament</string>
+    <string name="url_ejemplo">https://www.exemple.com/feed</string>
+    <string name="nombre_feed">Nom del flux de notícies</string>
+    <string name="url_feed">URL:</string>
+    <string name="name_feed">Nom:</string>
+    <string name="titulo_addfeed">Introduïu el nom i l’adreça del flux RSS</string>
+    <string name="enlaces_disponibles">Enllaços disponibles</string>
+    <string name="url_detalle">URL</string>
+    <string name="nombre_canal_detalle">Nom del canal</string>
+    <string name="titulo_lista_noticias">Títol</string>
+    <string name="fecha_lista_noticias">Data</string>
+    <string name="title_dialog_rss_list">Modifica el flux</string>
+    <string name="dialog_rss_list">Quina acció voleu efectuar amb:</string>
+    <string name="delete">Suprimeix</string>
+    <string name="edit">Edita</string>
+    <string name="delete_feed_success">S’ha suprimit el flux</string>
+    <string name="no_feeds">No s’ha obtingut cap article</string>
+    <string name="no_connection">La connexió a Internet no està disponible</string>
+    <string name="first_start">Afegiu fluxos des del menú a l’esquerra per a començar</string>
+    <string name="update_feed_success">S’han actualitzat els articles correctament</string>
+    <string name="update_feed_failed">S’ha produït un error en obtenir elements des del flux. ||</string>
+    <string name="url_clipboard">S’ha copiat l’URL al porta-retalls</string>
+    <string name="seguir">Segueix</string>
+    <string name="tema_seguir">Tema a seguir</string>
+    <string name="topic">Tema</string>
+    <string name="titulo_seguir">Introduïu el tema a seguir i el seu origen</string>
+    <string name="unlock_gn">Activeu-lo si el Google News no és disponible al vostre país</string>
+    <string name="idioma_aplicacion">Llengua de l’aplicació</string>
+    <string name="claro">Clar</string>
+    <string name="oscuro">Fosc</string>
+    <string name="auto">Automàtic</string>
+    <string name="str_es">Castellà</string>
+    <string name="str_ext">Extremeny</string>
+    <string name="str_en">Anglès</string>
+    <string name="str_nb">Noruec</string>
+    <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Mostra al GitHub&lt;/a&gt;</string>
+</resources>
