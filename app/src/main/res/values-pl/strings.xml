@@ -5,4 +5,11 @@
     <string name="watch_tv">Oglądaj TV</string>
     <string name="channel_detail">Szczegóły kanału</string>
     <string name="alert_title">Uwaga!</string>
+    <string name="settings">Dostosowanie</string>
+    <string name="action_about">O aplikacji</string>
+    <string name="television">Telewizja FeedTV</string>
+    <string name="alert_message">Nie można uzyskać informacji. 
+\nSprawdź połączenie.</string>
+    <string name="alert_positive">Zamknij</string>
+    <string name="version">Wersja</string>
 </resources>
