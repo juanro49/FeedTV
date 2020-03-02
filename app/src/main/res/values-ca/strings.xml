@@ -61,4 +61,8 @@
     <string name="str_en">Anglès</string>
     <string name="str_nb">Noruec</string>
     <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Mostra al GitHub&lt;/a&gt;</string>
+    <string name="idioma_establecido">Llengua establerta:</string>
+    <string name="str_de">Alemany</string>
+    <string name="str_ca">Català</string>
+    <string name="str_pl">Polonès</string>
 </resources>
