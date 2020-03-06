@@ -28,7 +28,10 @@
 	card_view:cardCornerRadius="20dp"
 	card_view:cardElevation="0dp"
 	card_view:cardUseCompatPadding="true"
-	style="?attr/cardStyle">
+	style="?attr/cardStyle"
+	android:background="?android:attr/selectableItemBackground"
+	android:focusable="true"
+	android:clickable="true">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		xmlns:app="http://schemas.android.com/apk/res-auto"
