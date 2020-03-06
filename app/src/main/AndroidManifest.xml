@@ -27,7 +27,8 @@
 
 		<activity
 			android:name=".AddFeed"
-			android:label="@string/add_feed" />
+			android:label="@string/add_feed"
+			android:windowSoftInputMode="adjustResize"/>
 
 		<activity
 			android:name=".MainActivity"

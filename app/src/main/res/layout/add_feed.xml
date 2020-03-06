@@ -17,140 +17,147 @@
 ~
 ~
 -->
-
-<RelativeLayout
+<androidx.core.widget.NestedScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:fitsSystemWindows="true"
 	android:scrollbars="vertical"
+	android:isScrollContainer="true"
 	tools:context=".AddFeed">
 
-	<TextView
-		android:id="@+id/tvTitulo"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerHorizontal="true"
-		android:layout_marginTop="20dp"
-		android:textStyle="bold"
-		android:textSize="17sp"
-		android:text="@string/titulo_addfeed" />
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 
-	<TextView
-		android:id="@+id/tvNombre"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_below="@+id/tvTitulo"
-		android:layout_marginTop="30dp"
-		android:layout_alignStart="@+id/tvTitulo"
-		android:text="@string/name_feed" />
-
-	<TextView
-		android:id="@+id/tvUrl"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignEnd="@+id/tvNombre"
-		android:layout_below="@+id/tvNombre"
-		android:layout_marginTop="15dp"
-		android:text="@string/url_feed" />
-
-	<EditText
-		android:id="@+id/etNombre"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:hint="@string/nombre_feed"
-		android:layout_toRightOf="@+id/tvNombre"
-		android:layout_alignBaseline="@+id/tvNombre"
-		android:layout_marginLeft="20dp"/>
-
-	<EditText
-		android:id="@+id/etUrl"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignBaseline="@+id/tvUrl"
-		android:layout_alignEnd="@+id/etNombre"
-		android:layout_marginLeft="20dp"
-		android:layout_toRightOf="@+id/tvUrl"
-		android:hint="@string/url_ejemplo" />
-
-	<Button
-		android:id="@+id/button"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_below="@+id/etUrl"
-		android:layout_centerHorizontal="true"
-		android:layout_marginTop="20dp"
-		android:onClick="submit"
-		android:text="@string/add" />
-
-	<TextView
-		android:id="@+id/tvTituloTema"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_centerHorizontal="true"
-		android:layout_below="@+id/button"
-		android:layout_marginTop="50dp"
-		android:textStyle="bold"
-		android:textSize="17sp"
-		android:text="@string/titulo_seguir" />
-
-	<RadioGroup
-		android:id="@+id/rbGroup"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_below="@+id/tvTituloTema"
-		android:layout_marginTop="15dp"
-		android:layout_centerHorizontal="true">
-
-		<RadioButton
-			android:id="@+id/rbGoogle"
+		<TextView
+			android:id="@+id/tvTitulo"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="Google News" />
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="20dp"
+			android:textStyle="bold"
+			android:textSize="17sp"
+			android:text="@string/titulo_addfeed" />
 
-		<RadioButton
-			android:id="@+id/rbBing"
+		<TextView
+			android:id="@+id/tvNombre"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="Bing News" />
-	</RadioGroup>
+			android:layout_below="@+id/tvTitulo"
+			android:layout_marginTop="30dp"
+			android:layout_alignStart="@+id/tvTitulo"
+			android:text="@string/name_feed" />
 
-	<TextView
-		android:id="@+id/tvTema"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignEnd="@+id/tvNombre"
-		android:layout_below="@+id/rbGroup"
-		android:layout_marginTop="20dp"
-		android:text="@string/topic" />
+		<TextView
+			android:id="@+id/tvUrl"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignEnd="@+id/tvNombre"
+			android:layout_below="@+id/tvNombre"
+			android:layout_marginTop="15dp"
+			android:text="@string/url_feed" />
 
-	<EditText
-		android:id="@+id/etTema"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignBaseline="@+id/tvTema"
-		android:layout_alignEnd="@+id/etNombre"
-		android:layout_marginLeft="20dp"
-		android:layout_toRightOf="@+id/tvTema"
-		android:hint="@string/tema_seguir" />
+		<EditText
+			android:id="@+id/etNombre"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:hint="@string/nombre_feed"
+			android:layout_toEndOf="@+id/tvNombre"
+			android:layout_alignBaseline="@+id/tvNombre"
+			android:layout_marginStart="20dp"/>
 
-	<CheckBox
-		android:id="@+id/cbGN"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/unlock_gn"
-		android:layout_below="@+id/tvTema"
-		android:layout_alignStart="@+id/tvTema"
-		android:layout_marginTop="15dp"
-		android:layout_marginEnd="20dp" />
+		<EditText
+			android:id="@+id/etUrl"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBaseline="@+id/tvUrl"
+			android:layout_alignEnd="@+id/etNombre"
+			android:layout_marginStart="20dp"
+			android:layout_toEndOf="@+id/tvUrl"
+			android:hint="@string/url_ejemplo"
+			android:inputType="textUri" />
 
-	<Button
-		android:id="@+id/btnSeguir"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_below="@+id/cbGN"
-		android:layout_centerHorizontal="true"
-		android:layout_marginTop="20dp"
-		android:onClick="submitSeguir"
-		android:text="@string/seguir" />
-</RelativeLayout>
+		<Button
+			android:id="@+id/button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/etUrl"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="20dp"
+			android:onClick="submit"
+			android:text="@string/add" />
+
+		<TextView
+			android:id="@+id/tvTituloTema"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@+id/button"
+			android:layout_marginTop="50dp"
+			android:textStyle="bold"
+			android:textSize="17sp"
+			android:text="@string/titulo_seguir" />
+
+		<RadioGroup
+			android:id="@+id/rbGroup"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/tvTituloTema"
+			android:layout_marginTop="15dp"
+			android:layout_centerHorizontal="true">
+
+			<RadioButton
+				android:id="@+id/rbGoogle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Google News" />
+
+			<RadioButton
+				android:id="@+id/rbBing"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Bing News" />
+		</RadioGroup>
+
+		<TextView
+			android:id="@+id/tvTema"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignEnd="@+id/tvNombre"
+			android:layout_below="@+id/rbGroup"
+			android:layout_marginTop="20dp"
+			android:text="@string/topic" />
+
+		<EditText
+			android:id="@+id/etTema"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignBaseline="@+id/tvTema"
+			android:layout_alignEnd="@+id/etNombre"
+			android:layout_marginStart="20dp"
+			android:layout_toEndOf="@+id/tvTema"
+			android:hint="@string/tema_seguir" />
+
+		<CheckBox
+			android:id="@+id/cbGN"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/unlock_gn"
+			android:layout_below="@+id/tvTema"
+			android:layout_alignStart="@+id/tvTema"
+			android:layout_marginTop="15dp"
+			android:layout_marginEnd="20dp" />
+
+		<Button
+			android:id="@+id/btnSeguir"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/cbGN"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="20dp"
+			android:onClick="submitSeguir"
+			android:text="@string/seguir" />
+	</RelativeLayout>
+</androidx.core.widget.NestedScrollView>
