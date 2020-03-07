@@ -10,6 +10,8 @@ FeedTV es una aplicación que te permite leer noticias de cualquier medio median
 
 Este proyecto es posible gracias a [RSS-Parser](https://github.com/prof18/RSS-Parser), una librería para el parseo de feeds RSS y [TDTChannels](https://github.com/LaQuay/TDTChannels), repo que provee los canales de TV.
 
+<p align="center"><img src="https://github.com/juanro49/FeedTV/blob/master/fastlane/metadata/android/es-ES/images/phoneScreenshots/FeedTV_01.png" height="400"> <img src="https://github.com/juanro49/FeedTV/blob/master/fastlane/metadata/android/es-ES/images/phoneScreenshots/FeedTV_03.png" height="400"> <img src="https://github.com/juanro49/FeedTV/blob/master/fastlane/metadata/android/es-ES/images/phoneScreenshots/FeedTV_04.png" height="400"></p>
+
 # Descarga
 [<img src="https://huaweimobileservices.com/wp-content/uploads/2019/12/AppGallery_DownlaodBadge_ENG.png" alt="Get it on AppGallery" height="80">](https://appstore.huawei.com/app/C100875081?locale=es_ES) [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on-es-es.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/app/org.juanro.feedtv) [<img src="https://user-images.githubusercontent.com/663460/26973090-f8fdc986-4d14-11e7-995a-e7c5e79ed925.png" alt="Download APK from GitHub" height="80">](https://github.com/juanro49/FeedTV/releases/latest)
 
