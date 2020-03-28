@@ -1,2 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Bekijken op GitHub&lt;/a&gt;</string>
+    <string name="str_pl">Pools</string>
+    <string name="str_ca">Catalaans</string>
+    <string name="str_de">Duits</string>
+    <string name="str_nb">Noors</string>
+    <string name="str_en">Engels</string>
+    <string name="str_ext">Extremeens</string>
+    <string name="str_es">Spaans</string>
+    <string name="auto">Automatisch</string>
+    <string name="oscuro">Donker</string>
+    <string name="claro">Licht</string>
+    <string name="idioma_establecido">Taal instellen:</string>
+    <string name="idioma_aplicacion">App-taal</string>
+    <string name="unlock_gn">Controleer of Google Nieuws beschikbaar is in jouw land</string>
+    <string name="titulo_seguir">Voer de naam en bron in van het te volgen onderwerp</string>
+    <string name="topic">Onderwerp</string>
+    <string name="tema_seguir">Te volgen onderwerp</string>
+    <string name="seguir">Volgen</string>
+    <string name="url_clipboard">De url is gekopieerd naar het klembord</string>
+    <string name="update_feed_failed">Er is een fout opgetreden tijdens het ophalen van de artikelen. ||</string>
+    <string name="update_feed_success">De artikelen zijn bijgewerkt</string>
+    <string name="first_start">Open het linkernavigatiepaneel om feeds toe te voegen</string>
+    <string name="no_feeds">Er zijn geen artikelen opgehaald</string>
+    <string name="no_connection">Geen internetverbinding</string>
+    <string name="delete_feed_success">De feed is verwijderd</string>
+    <string name="edit">Bewerken</string>
+    <string name="delete">Verwijderen</string>
+    <string name="dialog_rss_list">Welke actie wil je uitvoeren op</string>
+    <string name="title_dialog_rss_list">Feed bewerken</string>
+    <string name="fecha_lista_noticias">Datum</string>
+    <string name="titulo_lista_noticias">Titel</string>
+    <string name="nombre_canal_detalle">Naam van kanaal</string>
+    <string name="url_detalle">URL</string>
+    <string name="enlaces_disponibles">Beschikbare links</string>
+    <string name="titulo_addfeed">Voer de naam en het adres in van de RSS-feed</string>
+    <string name="name_feed">Naam:</string>
+    <string name="url_feed">URL:</string>
+    <string name="nombre_feed">Naam van de nieuwsbron</string>
+    <string name="url_ejemplo">https://www.voorbeeld.nl/feed</string>
+    <string name="mod_feed_success">De feed is aangepast</string>
+    <string name="add_feed_success">De feed is toegevoegd</string>
+    <string name="add_feed_empty">Beide velden zijn vereist</string>
+    <string name="edit_feed">Aanpassen</string>
+    <string name="add">Toevoegen</string>
+    <string name="reproductor_externo_off">Je gebruikt de meegeleverde speler om kanalen te bekijken</string>
+    <string name="reproductor_externo_on">Je gebruikt een externe speler om kanalen te bekijken</string>
+    <string name="reproductor">Externe speler gebruiken</string>
+    <string name="tema_aplicacion">App-thema</string>
+    <string name="title_activity_settings">Instellingen</string>
+    <string name="version">Versie</string>
+    <string name="author">&lt;br /&gt;&lt;br /&gt; Gemaakt door Juanro49, uitgebracht onder de Apache 2.0-licentie &lt;br /&gt;&lt;br /&gt;</string>
+    <string name="about">FeedTV is een app waarmee je het laatste nieuws van elke bron kunt lezen via RSS. Ook kun je publieke tv-kanalen bekijken.</string>
+    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV wordt mogelijk gemaakt door &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt; en de kanaalverzameling van &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="video">Video</string>
+    <string name="alert_positive">Sluiten</string>
+    <string name="alert_message">Kan gegevens niet ophalen.
+\nControleer je internetverbinding.</string>
+    <string name="alert_title">Waarschuwing!</string>
+    <string name="channel_detail">Kanaalinformatie</string>
+    <string name="television">FeedTV TV</string>
+    <string name="action_about">Over</string>
+    <string name="settings">Instellingen</string>
+    <string name="watch_tv">TV kijken</string>
+    <string name="add_feed">Feed toevoegen</string>
+    <string name="search">Zoeken</string>
+</resources>
