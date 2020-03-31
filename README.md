@@ -23,14 +23,15 @@ Manual de uso: https://github.com/juanro49/FeedTV/blob/master/UserManual.pdf
 Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataforma [Weblate](https://hosted.weblate.org/projects/feedtv/). También, se pueden enviar fallos y propuestas de mejoras desde la pestaña ["Issues"](https://github.com/juanro49/FeedTV/issues) y además puedes colaborar con proyectos de los que depende FeedTV como [RSS-Parser](https://github.com/prof18/RSS-Parser) y [TDTChannels](https://github.com/LaQuay/TDTChannels).
 
 ## Agradecimientos
-  - [@prof18](https://github.com/prof18) --> [RSSParser](https://github.com/prof18/RSS-Parser)
-  - [@LaQuay](https://github.com/LaQuay) --> [TDTChannels](https://github.com/LaQuay/TDTChannels)
-  - [WebLate](https://hosted.weblate.org/projects/feedtv/) --> Plataforma de traducción
-  - [@comradekingu](https://github.com/comradekingu) --> Traducción a noruego e inglés
-  - [OscecEstremaúra](https://oscecestremaura.wordpress.com/) --> Traducción al extremeño/estremeñu
-  - [@iLocIT!](https://github.com/ilocit) --> Traducción al alemán
-  - [@biesiadamich](https://github.com/biesiadamich) --> Traducción al polaco
-  - [@fitojb](https://github.com/fitojb) --> Traducción al catalán
+- [@prof18](https://github.com/prof18) --> [RSSParser](https://github.com/prof18/RSS-Parser)
+- [@LaQuay](https://github.com/LaQuay) --> [TDTChannels](https://github.com/LaQuay/TDTChannels)
+- [WebLate](https://hosted.weblate.org/projects/feedtv/) --> Plataforma de traducción
+- [@comradekingu](https://github.com/comradekingu) --> Traducción a noruego e inglés
+- [OscecEstremaúra](https://oscecestremaura.wordpress.com/) --> Traducción al extremeño/estremeñu
+- [@iLocIT!](https://github.com/ilocit) --> Traducción al alemán
+- [@biesiadamich](https://github.com/biesiadamich) --> Traducción al polaco
+- [@fitojb](https://github.com/fitojb) --> Traducción al catalán
+- [@Vistaus](https://github.com/Vistaus) --> Traducción a holandés
 
 ## Donaciones
 | Método | Dirección |
