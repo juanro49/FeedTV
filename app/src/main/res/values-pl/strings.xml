@@ -12,4 +12,30 @@
 \nSprawdź połączenie.</string>
     <string name="alert_positive">Zamknij</string>
     <string name="version">Wersja</string>
+    <string name="github"><a href="https://github.com/juanro49/FeedTV/blob/master/README.md">Wyświetl w Github</a></string>
+    <string name="str_pl">Polski</string>
+    <string name="str_ca">Kataloński</string>
+    <string name="str_de">Niemiecki</string>
+    <string name="str_nb">Norweski</string>
+    <string name="str_en">Angielski</string>
+    <string name="str_es">Hiszpański</string>
+    <string name="idioma_aplicacion">Język aplikacji</string>
+    <string name="url_clipboard">Adres URL skopiowany do schowka</string>
+    <string name="no_connection">Połączenie internetowe nie jest dostępne</string>
+    <string name="edit">Edytuj</string>
+    <string name="delete">Usuń</string>
+    <string name="title_dialog_rss_list">Zmień czcionkę</string>
+    <string name="fecha_lista_noticias">Data</string>
+    <string name="titulo_lista_noticias">Tytuł</string>
+    <string name="nombre_canal_detalle">Nazwa kanału</string>
+    <string name="url_detalle">URL</string>
+    <string name="titulo_addfeed">Wprowadź nazwę i adres kanału RSS</string>
+    <string name="name_feed">Imię:</string>
+    <string name="url_feed">URL:</string>
+    <string name="url_ejemplo">https://www.ejemplo.com/feed</string>
+    <string name="add_feed_empty">Oba pola są obowiązkowe</string>
+    <string name="edit_feed">Zmodyfikuj</string>
+    <string name="add">Dodaj</string>
+    <string name="author"><br/><br/> Utworzone przez Juanro49 na licencji Apache 2.0 <br/><br/></string>
+    <string name="video">Wideo</string>
 </resources>
