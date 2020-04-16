@@ -45,12 +45,14 @@ import com.prof.rssparser.Article;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -100,117 +102,13 @@ public class MainActivity extends AppCompatActivity
 		listaFeeds.setAdapter(adapter);
 
 		// Obtener pulsación lista fuentes
-		listaFeeds.setOnItemClickListener(new AdapterView.OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int pos, long id)
-			{
-				mSwipeRefreshLayout.setRefreshing(true);
-
-				new Thread(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						String fuente = parent.getItemAtPosition(pos).toString();
-						String url;
-						boolean encontrado = false;
-
-						RssList listaRss = new RssList(getApplicationContext());
-						Cursor c = listaRss.obtenerEntradas();
-
-						c.moveToFirst();
-
-						do
-						{
-							if(c.getString(1).equals(fuente))
-							{
-								url = c.getString(2);
-								encontrado = true;
-								viewModel.setUrl(url);
-
-								FeedDatabase.getInstance(MainActivity.this).setTabla(fuente);
-
-								// Obtener Feed
-								viewModel.fetchFeed(getApplicationContext());
-							}
-						}while(c.moveToNext() && !encontrado);
-
-						c.close();
-						listaRss.close();
-					}
-				}).start();
-
-				drawerLayout.closeDrawers();
-			}
-		});
+		listaFeeds.setOnItemClickListener((parent, view, pos, id) -> onFeedsItemClick(parent, pos));
 
 		// Acciones pulsación larga lista de fuentes
-		listaFeeds.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+		listaFeeds.setOnItemLongClickListener((parent, view, pos, id) ->
 		{
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int pos, long id)
-			{
-				elemento = parent.getItemAtPosition(pos).toString();
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-				builder.setMessage(getString(R.string.dialog_rss_list) + " " + elemento + "?");
-				builder.setTitle(getString(R.string.title_dialog_rss_list));
-				builder.setCancelable(true);
-				builder.setIcon(android.R.drawable.ic_dialog_alert);
-				builder.setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener()
-					{
-						@Override
-						public void onClick(DialogInterface dialog, int id)
-						{
-							RssList fuente = new RssList(MainActivity.this);
-
-							// Eliminar fuente de la base de datos y de la lista
-							fuente.eliminarEntradas(elemento);
-							FeedDatabase.getInstance(MainActivity.this).eliminarTabla(elemento);
-							adapter.remove(elemento);
-							fuente.close();
-
-							adapter.notifyDataSetChanged();
-							Toast.makeText(MainActivity.this, getString(R.string.delete_feed_success), Toast.LENGTH_LONG).show();
-						}
-					});
-
-				builder.setNegativeButton(getString(R.string.edit), new DialogInterface.OnClickListener()
-					{
-						@Override
-						public void onClick(DialogInterface dialog, int id)
-						{
-							RssList fuente = new RssList(MainActivity.this);
-							Cursor c = fuente.obtenerEntradas();
-							String url = "";
-							boolean encontrado = false;
-
-							c.moveToFirst();
-
-							do
-							{
-								if(c.getString(1).equals(elemento))
-								{
-									url = c.getString(2);
-									encontrado = true;
-								}
-							}while(c.moveToNext() && !encontrado);
-
-							c.close();
-							fuente.close();
-							Intent i = new Intent(getApplicationContext(), AddFeed.class);
-							i.putExtra("titulo", elemento);
-							i.putExtra("url", url);
-							startActivity(i);
-						}
-					});
-
-				AlertDialog alert = builder.create();
-				alert.show();
-
-				return true;
-			}
+			onFeedsItemLongClick(parent, pos);
+			return true;
 		});
 
 		// Obtener objeto que contiene el Feed
@@ -225,87 +123,28 @@ public class MainActivity extends AppCompatActivity
         frameLayout = findViewById(R.id.root_layout);
 
         // Obtener pulsación barra lateral
-		navView.setNavigationItemSelectedListener(
-				new NavigationView.OnNavigationItemSelectedListener()
-				{
-					@Override
-					public boolean onNavigationItemSelected(MenuItem menuItem)
-					{
-						switch (menuItem.getItemId())
-						{
-							case R.id.addFeed:
-							{
-								Intent i = new Intent(getApplicationContext(), AddFeed.class);
-								startActivity(i);
-								break;
-							}
-
-							case R.id.tv:
-							{
-								Intent i = new Intent(getApplicationContext(), TvActivity.class);
-								startActivity(i);
-								break;
-							}
-
-							case R.id.ajustes:
-							{
-								Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
-								startActivity(i);
-								break;
-							}
-
-							case R.id.about:
-							{
-
-								AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-								alertDialog.setTitle(R.string.action_about);
-								alertDialog.setIcon(R.mipmap.ic_launcher);
-								alertDialog.setMessage(Html.fromHtml( MainActivity.this.getString(R.string.about) +
-										MainActivity.this.getString(R.string.agradecimientos) +
-										MainActivity.this.getString(R.string.author) +
-										MainActivity.this.getString(R.string.version) + " " + BuildConfig.VERSION_NAME + "<br/><br/>" + MainActivity.this.getString(R.string.github)));
-								alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-										new DialogInterface.OnClickListener()
-										{
-											public void onClick(DialogInterface dialog, int which)
-											{
-												dialog.dismiss();
-											}
-										});
-								alertDialog.show();
-
-								((TextView) alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
-
-								break;
-							}
-						}
-
-						drawerLayout.closeDrawers();
-
-						return true;
-					}
-				});
+		navView.setNavigationItemSelectedListener(menuItem ->
+		{
+			onItemSelected(menuItem.getItemId());
+			return true;
+		});
 
 		// Obtener artículos y mostrarlos
-		viewModel.getArticleList().observe(this, new Observer<List<Article>>()
+		viewModel.getArticleList().observe(this, articles ->
 		{
-			@Override
-			public void onChanged(List<Article> articles)
+			if (articles != null)
 			{
-				if (articles != null)
-				{
-					// Asociar adapter con RecyclerView
-					mAdapter = new ArticleAdapter(articles, MainActivity.this);
-					mRecyclerView.setAdapter(mAdapter);
-					mAdapter.notifyDataSetChanged();
-					mSwipeRefreshLayout.setRefreshing(false);
-				}
-				else
-				{
-					Toast.makeText(getApplicationContext(), getString(R.string.no_feeds), Toast.LENGTH_LONG).show();
-					mSwipeRefreshLayout.setRefreshing(false);
-				}
+				// Asociar adapter con RecyclerView
+				mAdapter = new ArticleAdapter(articles, MainActivity.this);
+				mRecyclerView.setAdapter(mAdapter);
+				mAdapter.notifyDataSetChanged();
 			}
+			else
+			{
+				Toast.makeText(getApplicationContext(), getString(R.string.no_feeds), Toast.LENGTH_LONG).show();
+			}
+
+			mSwipeRefreshLayout.setRefreshing(false);
 		});
 
 		// Obtener mensajes de la snackbar
@@ -392,6 +231,171 @@ public class MainActivity extends AppCompatActivity
 
 		adapter = new ArrayAdapter<String>(this, R.layout.simple_list_item_white, cargarFuentes());
 		listaFeeds.setAdapter(adapter);
+	}
+
+	/**
+	 * Selecciona el feed correspondiente pulsado en la lista de feeds de la barra lateral
+	 *
+	 * @param parent
+	 * @param pos
+	 */
+	private void onFeedsItemClick(AdapterView<?> parent, int pos)
+	{
+		mSwipeRefreshLayout.setRefreshing(true);
+
+		new Thread(() ->
+		{
+			String fuente = parent.getItemAtPosition(pos).toString();
+			String url;
+			boolean encontrado = false;
+
+			RssList listaRss = new RssList(getApplicationContext());
+			Cursor c = listaRss.obtenerEntradas();
+
+			c.moveToFirst();
+
+			do
+			{
+				if(c.getString(1).equals(fuente))
+				{
+					url = c.getString(2);
+					encontrado = true;
+					viewModel.setUrl(url);
+
+					FeedDatabase.getInstance(MainActivity.this).setTabla(fuente);
+
+					// Obtener Feed
+					viewModel.fetchFeed(getApplicationContext());
+				}
+			}while(c.moveToNext() && !encontrado);
+
+			c.close();
+			listaRss.close();
+		}).start();
+
+		drawerLayout.closeDrawers();
+	}
+
+	/**
+	 * Acciones al pulsar de forma prolongada un feed en la lista de feeds de la barra lateral
+	 *
+	 * @param parent
+	 * @param pos
+	 * @return
+	 */
+	public void onFeedsItemLongClick(AdapterView<?> parent, int pos)
+	{
+		elemento = parent.getItemAtPosition(pos).toString();
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		builder.setMessage(getString(R.string.dialog_rss_list) + " " + elemento + "?");
+		builder.setTitle(getString(R.string.title_dialog_rss_list));
+		builder.setCancelable(true);
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+		// Eliminar
+		builder.setPositiveButton(getString(R.string.delete), (dialog, id) ->
+		{
+			RssList fuente = new RssList(MainActivity.this);
+
+			// Eliminar fuente de la base de datos y de la lista
+			fuente.eliminarEntradas(elemento);
+			FeedDatabase.getInstance(MainActivity.this).eliminarTabla(elemento);
+			adapter.remove(elemento);
+			fuente.close();
+
+			adapter.notifyDataSetChanged();
+			Toast.makeText(MainActivity.this, getString(R.string.delete_feed_success), Toast.LENGTH_LONG).show();
+		});
+
+		// Editar
+		builder.setNegativeButton(getString(R.string.edit), (dialog, id) ->
+		{
+			RssList fuente = new RssList(MainActivity.this);
+			Cursor c = fuente.obtenerEntradas();
+			String url = "";
+			boolean encontrado = false;
+
+			c.moveToFirst();
+
+			do
+			{
+				if(c.getString(1).equals(elemento))
+				{
+					url = c.getString(2);
+					encontrado = true;
+				}
+			}while(c.moveToNext() && !encontrado);
+
+			c.close();
+			fuente.close();
+			Intent i = new Intent(getApplicationContext(), AddFeed.class);
+			i.putExtra("titulo", elemento);
+			i.putExtra("url", url);
+			startActivity(i);
+		});
+
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+
+	/**
+	 * Inicia el menú correspondiente pulsado en la barra lateral
+	 *
+	 * @param item
+	 */
+	private void onItemSelected(int item)
+	{
+		switch (item)
+		{
+			case R.id.addFeed:
+			{
+				Intent i = new Intent(getApplicationContext(), AddFeed.class);
+				startActivity(i);
+				break;
+			}
+
+			case R.id.tv:
+			{
+				Intent i = new Intent(getApplicationContext(), TvActivity.class);
+				startActivity(i);
+				break;
+			}
+
+			case R.id.ajustes:
+			{
+				Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+				startActivity(i);
+				break;
+			}
+
+			case R.id.about:
+			{
+
+				AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+				alertDialog.setTitle(R.string.action_about);
+				alertDialog.setIcon(R.mipmap.ic_launcher);
+				alertDialog.setMessage(Html.fromHtml( MainActivity.this.getString(R.string.about) +
+						MainActivity.this.getString(R.string.agradecimientos) +
+						MainActivity.this.getString(R.string.author) +
+						MainActivity.this.getString(R.string.version) + " " + BuildConfig.VERSION_NAME + "<br/><br/>" + MainActivity.this.getString(R.string.github)));
+				alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+						new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int which)
+							{
+								dialog.dismiss();
+							}
+						});
+				alertDialog.show();
+
+				((TextView) alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+
+				break;
+			}
+		}
+
+		drawerLayout.closeDrawers();
 	}
 
 	/**
