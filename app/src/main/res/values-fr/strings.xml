@@ -1,2 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="tema_seguir">Thème à suivre</string>
+    <string name="str_ext">estrémègne</string>
+    <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Voir sur Github&lt;/a&gt;</string>
+    <string name="str_pl">polonais</string>
+    <string name="str_ca">catalan</string>
+    <string name="str_de">allemand</string>
+    <string name="str_nb">norvégien</string>
+    <string name="str_en">anglais</string>
+    <string name="str_es">espagnol</string>
+    <string name="auto">Automatique</string>
+    <string name="oscuro">Sombre</string>
+    <string name="claro">Clair</string>
+    <string name="idioma_establecido">Langue sélectionnée :</string>
+    <string name="idioma_aplicacion">Langue de l’appli</string>
+    <string name="unlock_gn">Vérifiez si Google News n’est pas disponible dans votre pays</string>
+    <string name="titulo_seguir">Entrez le thème à suivre et sa source</string>
+    <string name="topic">Thème</string>
+    <string name="seguir">Suivre</string>
+    <string name="url_clipboard">URL copiée dans le presse-papier</string>
+    <string name="update_feed_failed">Une erreur est survenue pendant l’obtention des éléments du flux. ||</string>
+    <string name="update_feed_success">Articles mis à jour avec succès</string>
+    <string name="first_start">Ajoutez des sources depuis le menu latéral gauche pour commencer</string>
+    <string name="no_connection">La connexion Internet est indisponible</string>
+    <string name="no_feeds">Aucun article obtenu</string>
+    <string name="delete_feed_success">Source supprimée</string>
+    <string name="edit">Modifier</string>
+    <string name="delete">Supprimer</string>
+    <string name="dialog_rss_list">Quelle action voulez-vous entreprendre avec</string>
+    <string name="title_dialog_rss_list">Modifier la source</string>
+    <string name="fecha_lista_noticias">Date</string>
+    <string name="titulo_lista_noticias">Titre</string>
+    <string name="nombre_canal_detalle">Nom de la chaîne</string>
+    <string name="url_detalle">URL</string>
+    <string name="enlaces_disponibles">Liens disponibles</string>
+    <string name="titulo_addfeed">Entrez le nom et l’adresse du flux RSS</string>
+    <string name="name_feed">Nom :</string>
+    <string name="url_feed">URL :</string>
+    <string name="nombre_feed">Nom de la source de nouvelles</string>
+    <string name="url_ejemplo">https://www.exemple.com/feed</string>
+    <string name="mod_feed_success">Source modifiée avec succès</string>
+    <string name="add_feed_success">Source ajoutée avec succès</string>
+    <string name="add_feed_empty">Les deux champs sont obligatoires</string>
+    <string name="edit_feed">Modifier</string>
+    <string name="add">Ajouter</string>
+    <string name="reproductor_externo_off">Vous utilisez le lecteur interne pour visionner les chaînes</string>
+    <string name="reproductor_externo_on">Vous utilisez un lecteur externe pour visionner les chaînes</string>
+    <string name="reproductor">Utiliser un lecteur externe</string>
+    <string name="tema_aplicacion">Thème de l’appli</string>
+    <string name="title_activity_settings">Paramètres</string>
+    <string name="version">Version</string>
+    <string name="author">&lt;br /&gt;&lt;br /&gt; Crée par Juanro49 sous licence Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
+    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV est possible grâce à &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt; et au dépôt de chaînes de &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="about">FeedTV est une application qui vous permet de lire les nouvelles de n’importe quel support par RSS ainsi que de pouvoir regarder les chaînes de télévision publique n’importe où.</string>
+    <string name="video">Vidéo</string>
+    <string name="alert_positive">Fermer</string>
+    <string name="alert_message">Impossible d’obtenir les donnée.
+\nVérifiez votre connexion.</string>
+    <string name="alert_title">Attention !</string>
+    <string name="channel_detail">Détails de la chaîne</string>
+    <string name="television">Télévision FeedTV</string>
+    <string name="action_about">À propos</string>
+    <string name="settings">Paramètres</string>
+    <string name="watch_tv">Regarder la TV</string>
+    <string name="add_feed">Ajouter un flux</string>
+    <string name="search">Chercher</string>
+</resources>
