@@ -61,4 +61,8 @@
     <string name="str_en">Englisch</string>
     <string name="str_nb">Norwegisch</string>
     <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Auf Github ansehen&lt;/a&gt;</string>
+    <string name="str_pl">Polnisch</string>
+    <string name="str_ca">Katalanisch</string>
+    <string name="str_de">Deutsch</string>
+    <string name="idioma_establecido">Festgelegte Sprache:</string>
 </resources>
