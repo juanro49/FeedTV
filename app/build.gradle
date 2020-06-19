@@ -10,8 +10,8 @@ android
 		applicationId "org.juanro.feedtv"
 		minSdkVersion 19
 		targetSdkVersion 30
-		versionCode 20200307
-		versionName "1.7"
+		versionCode 20200619
+		versionName "1.8"
 		useLibrary 'org.apache.http.legacy'
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 	}
