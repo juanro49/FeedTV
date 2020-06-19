@@ -76,7 +76,7 @@
     <string name="settings">Ajustamientus</string>
     <string name="television">FeedTV Televisión</string>
     <string name="channel_detail">Detallis dela canal</string>
-    <string name="agradecimientos"><br/><br/> FeedTV es possibli por mé de <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a> i al reponimientu de canalis de <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a>.</string>
+    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV es possibli por mé de &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt; i al reponimientu de canalis de &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
     <string name="version">Versión</string>
     <string name="idioma_aplicacion">Idioma apricación</string>
     <string name="claro">Craru</string>

@@ -21,6 +21,9 @@
 		<item>@string/str_de</item>
 		<item>@string/str_ca</item>
 		<item>@string/str_pl</item>
+		<item>@string/str_fr</item>
+		<item>@string/str_it</item>
+		<item>@string/str_nl</item>
 	</string-array>
 
 	<!-- Valores idioma aplicación -->
@@ -33,5 +36,8 @@
 		<item>de</item>
 		<item>ca</item>
 		<item>pl</item>
+		<item>fr</item>
+		<item>it</item>
+		<item>nl</item>
 	</string-array>
 </resources>

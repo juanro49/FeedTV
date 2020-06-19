@@ -28,7 +28,7 @@
 	<string name="add_feed">Añadir Feed</string>
 	<string name="watch_tv">Ver TV</string>
 	<string name="settings">Ajustes</string>
-	<string name="action_about">Sobre</string>
+	<string name="action_about">Acerca de</string>
 	<string name="television">FeedTV Televisión</string>
 	<string name="channel_detail">Detalles del canal</string>
 	<string name="alert_title">¡Atención!</string>
@@ -87,5 +87,8 @@
 	<string name="str_de">Alemán</string>
 	<string name="str_ca">Catalán</string>
 	<string name="str_pl">Polaco</string>
+	<string name="str_fr">Francés</string>
+	<string name="str_it">Italiano</string>
+	<string name="str_nl">Neerlandés</string>
 	<string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Ver en Github&lt;/a&gt;</string>
 </resources>

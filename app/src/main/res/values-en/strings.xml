@@ -60,8 +60,8 @@
     <string name="str_ext">Extremaduran</string>
     <string name="str_en">English</string>
     <string name="str_nb">Norwegian</string>
-    <string name="agradecimientos"><br/><br/> FeedTV is possible thanks to <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a> and the channel repository of <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a>.</string>
-    <string name="github"><a href="https://github.com/juanro49/FeedTV/blob/master/README.md">View on Github</a></string>
+    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV is possible thanks to &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt; and the channel repository of &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;View on Github&lt;/a&gt;</string>
     <string name="idioma_establecido">Language set:</string>
     <string name="str_de">German</string>
     <string name="str_ca">Catalan</string>

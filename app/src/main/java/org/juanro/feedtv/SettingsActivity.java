@@ -151,6 +151,21 @@ public class SettingsActivity extends AppCompatActivity
 				config.locale = locale;
 				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
 				break;
+			case "fr":
+				locale = new Locale("fr");
+				config.locale = locale;
+				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
+				break;
+			case "it":
+				locale = new Locale("it");
+				config.locale = locale;
+				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
+				break;
+			case "nl":
+				locale = new Locale("nl");
+				config.locale = locale;
+				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
+				break;
 		}
 
 		getResources().updateConfiguration(config, null);

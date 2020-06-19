@@ -12,7 +12,7 @@
 \nSprawdź połączenie.</string>
     <string name="alert_positive">Zamknij</string>
     <string name="version">Wersja</string>
-    <string name="github"><a href="https://github.com/juanro49/FeedTV/blob/master/README.md">Wyświetl w Github</a></string>
+    <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Wyświetl w Github&lt;/a&gt;</string>
     <string name="str_pl">Polski</string>
     <string name="str_ca">Kataloński</string>
     <string name="str_de">Niemiecki</string>
@@ -36,6 +36,6 @@
     <string name="add_feed_empty">Oba pola są obowiązkowe</string>
     <string name="edit_feed">Zmodyfikuj</string>
     <string name="add">Dodaj</string>
-    <string name="author"><br/><br/> Utworzone przez Juanro49 na licencji Apache 2.0 <br/><br/></string>
+    <string name="author">&lt;br/&gt;&lt;br/&gt; Utworzone przez Juanro49 na licencji Apache 2.0 &lt;br/&gt;&lt;br/&gt;</string>
     <string name="video">Wideo</string>
 </resources>
