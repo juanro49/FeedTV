@@ -65,4 +65,7 @@
     <string name="watch_tv">TV kijken</string>
     <string name="add_feed">Feed toevoegen</string>
     <string name="search">Zoeken</string>
+    <string name="str_nl">Nederlands</string>
+    <string name="str_it">Italiaans</string>
+    <string name="str_fr">Frans</string>
 </resources>
