@@ -66,4 +66,7 @@
     <string name="str_de">German</string>
     <string name="str_ca">Catalan</string>
     <string name="str_pl">Polish</string>
+    <string name="str_nl">Dutch</string>
+    <string name="str_it">Italian</string>
+    <string name="str_fr">French</string>
 </resources>
