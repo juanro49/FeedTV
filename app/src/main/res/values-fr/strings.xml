@@ -12,7 +12,7 @@
     <string name="auto">Automatique</string>
     <string name="oscuro">Sombre</string>
     <string name="claro">Clair</string>
-    <string name="idioma_establecido">Langue sélectionnée :</string>
+    <string name="idioma_establecido">Langue sélectionnée :</string>
     <string name="idioma_aplicacion">Langue de l’appli</string>
     <string name="unlock_gn">Vérifiez si Google News n’est pas disponible dans votre pays</string>
     <string name="titulo_seguir">Entrez le thème à suivre et sa source</string>
@@ -65,4 +65,7 @@
     <string name="watch_tv">Regarder la TV</string>
     <string name="add_feed">Ajouter un flux</string>
     <string name="search">Chercher</string>
+    <string name="str_nl">néerlandais</string>
+    <string name="str_it">italien</string>
+    <string name="str_fr">français</string>
 </resources>
