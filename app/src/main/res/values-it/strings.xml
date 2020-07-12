@@ -65,4 +65,7 @@
     <string name="watch_tv">Guarda la TV</string>
     <string name="add_feed">Aggiungi un flusso</string>
     <string name="search">Cerca</string>
+    <string name="str_nl">olandese</string>
+    <string name="str_it">italiano</string>
+    <string name="str_fr">francese</string>
 </resources>
