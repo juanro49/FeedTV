@@ -65,4 +65,7 @@
     <string name="str_de">Alemany</string>
     <string name="str_ca">Català</string>
     <string name="str_pl">Polonès</string>
+    <string name="str_nl">Neerlandès</string>
+    <string name="str_it">Italià</string>
+    <string name="str_fr">Francès</string>
 </resources>

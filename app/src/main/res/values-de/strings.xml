@@ -44,11 +44,11 @@
     <string name="no_feeds">Keine Artikel erhalten</string>
     <string name="no_connection">Internetverbindung nicht verfügbar</string>
     <string name="first_start">Fügen Sie Feeds aus dem Menü auf der linken Seite hinzu, um zu beginnen</string>
-    <string name="update_feed_success">Korrekt aktualisierte Artikel</string>
+    <string name="update_feed_success">Artikel erfolgreich aktualisiert</string>
     <string name="update_feed_failed">Beim Abrufen von Elementen des Feeds ist ein Fehler aufgetreten. ||</string>
     <string name="url_clipboard">URL in die Zwischenablage kopiert</string>
     <string name="seguir">Folgen</string>
-    <string name="tema_seguir">Themen folgen</string>
+    <string name="tema_seguir">Themen zu folgen</string>
     <string name="topic">Thema</string>
     <string name="titulo_seguir">Stellen Sie das zu verfolgende Thema und seine Quelle vor</string>
     <string name="unlock_gn">Prüfen Sie, ob Google News in Ihrem Land verfügbar ist</string>
@@ -64,5 +64,8 @@
     <string name="str_pl">Polnisch</string>
     <string name="str_ca">Katalanisch</string>
     <string name="str_de">Deutsch</string>
-    <string name="idioma_establecido">Festgelegte Sprache:</string>
+    <string name="idioma_establecido">Ausgewählte Sprache:</string>
+    <string name="str_nl">Niederländisch</string>
+    <string name="str_it">Italienisch</string>
+    <string name="str_fr">Französisch</string>
 </resources>
