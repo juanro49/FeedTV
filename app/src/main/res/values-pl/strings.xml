@@ -61,4 +61,11 @@
     <string name="claro">Jasny</string>
     <string name="unlock_gn">Zaznacz, jeśli Google News nie jest dostępna w twoim kraju</string>
     <string name="titulo_seguir">Wpisz temat do śledzenia i jego pochodzenie</string>
+    <string name="no_feeds">Brak przedmiotów</string>
+    <string name="auto">Automatyczne</string>
+    <string name="topic">Temat</string>
+    <string name="seguir">Kontynuuj</string>
+    <string name="update_feed_failed">Wystąpił błąd podczas pobierania elementów kanału. ||</string>
+    <string name="update_feed_success">Artykuły zaktualizowane poprawnie</string>
+    <string name="first_start">Dodaj czcionki z menu po lewej stronie, aby rozpocząć</string>
 </resources>
