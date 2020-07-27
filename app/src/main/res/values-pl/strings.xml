@@ -38,4 +38,12 @@
     <string name="add">Dodaj</string>
     <string name="author">&lt;br/&gt;&lt;br/&gt; Utworzone przez Juanro49 na licencji Apache 2.0 &lt;br/&gt;&lt;br/&gt;</string>
     <string name="video">Wideo</string>
+    <string name="delete_feed_success">Źródło zostało usunięte</string>
+    <string name="dialog_rss_list">Jakie działania chcesz podjąć\?</string>
+    <string name="enlaces_disponibles">Dostępne linki</string>
+    <string name="nombre_feed">Nazwa źródła wiadomości</string>
+    <string name="mod_feed_success">Prawidłowo zmodyfikowana czcionka</string>
+    <string name="add_feed_success">Czcionka dodana poprawnie</string>
+    <string name="reproductor">Użyj zewnętrznego odtwarzacza</string>
+    <string name="tema_aplicacion">Motyw aplikacji</string>
 </resources>
