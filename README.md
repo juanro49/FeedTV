@@ -37,6 +37,8 @@ Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataf
 - [@Vistaus](https://github.com/Vistaus) --> Traducción a holandés
 - Jeannette L --> Traducción a francés, italiano y alemán
 - [@WaldiSt](https://github.com/WaldiSt) --> Traducción al polaco
+- [@milotype](https://github.com/milotype) --> Traducción al alemán
+- J. Lavoie --> Traducción a varios idiomas
 
 ## Donaciones
 | Método | Dirección |
