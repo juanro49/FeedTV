@@ -30,7 +30,7 @@
     <string name="nombre_canal_detalle">Nazwa kanału</string>
     <string name="url_detalle">URL</string>
     <string name="titulo_addfeed">Wprowadź nazwę i adres kanału RSS</string>
-    <string name="name_feed">Imię:</string>
+    <string name="name_feed">Nazwa:</string>
     <string name="url_feed">URL:</string>
     <string name="url_ejemplo">https://www.ejemplo.com/feed</string>
     <string name="add_feed_empty">Oba pola są obowiązkowe</string>
@@ -38,4 +38,34 @@
     <string name="add">Dodaj</string>
     <string name="author">&lt;br/&gt;&lt;br/&gt; Utworzone przez Juanro49 na licencji Apache 2.0 &lt;br/&gt;&lt;br/&gt;</string>
     <string name="video">Wideo</string>
+    <string name="delete_feed_success">Źródło zostało usunięte</string>
+    <string name="dialog_rss_list">Jakie czynności należy wykonać</string>
+    <string name="enlaces_disponibles">Dostępne linki</string>
+    <string name="nombre_feed">Nazwa źródła wiadomości</string>
+    <string name="mod_feed_success">Prawidłowo zmodyfikowana czcionka</string>
+    <string name="add_feed_success">Czcionka dodana poprawnie</string>
+    <string name="reproductor">Użyj zewnętrznego odtwarzacza</string>
+    <string name="tema_aplicacion">Motyw aplikacji</string>
+    <string name="reproductor_externo_off">Używasz wewnętrznego odtwarzacza do odtwarzania kanałów</string>
+    <string name="reproductor_externo_on">Używasz zewnętrznego odtwarzacza do odtwarzania kanałów</string>
+    <string name="title_activity_settings">Ustawienia</string>
+    <string name="agradecimientos"><br/> <br/> FeedTV jest możliwe dzięki <a href="http://github.com/prof18/RSS-Parser"> RSS Parser </a> i repozytorium kanałów <a href="https://github.com/LaQuay/TDTChannels"> TDTChannels </a>.</string>
+    <string name="about">FeedTV-jest to aplikacja, która pozwala czytać Wiadomości z dowolnego nośnika za pomocą RSS, można również przeglądać otwarte kanały TV w dowolnym miejscu.</string>
+    <string name="idioma_establecido">Ustawiony język:</string>
+    <string name="str_ext">Estremadura</string>
+    <string name="tema_seguir">Kontynuuj temat</string>
+    <string name="str_nl">Holenderski</string>
+    <string name="str_it">Włoski</string>
+    <string name="str_fr">Francuski</string>
+    <string name="oscuro">Ciemny</string>
+    <string name="claro">Jasny</string>
+    <string name="unlock_gn">Zaznacz, jeśli Google News nie jest dostępna w twoim kraju</string>
+    <string name="titulo_seguir">Wpisz temat do śledzenia i jego pochodzenie</string>
+    <string name="no_feeds">Brak przedmiotów</string>
+    <string name="auto">Automatyczne</string>
+    <string name="topic">Temat</string>
+    <string name="seguir">Kontynuuj</string>
+    <string name="update_feed_failed">Wystąpił błąd podczas pobierania elementów kanału. ||</string>
+    <string name="update_feed_success">Artykuły zaktualizowane poprawnie</string>
+    <string name="first_start">Dodaj czcionki z menu po lewej stronie, aby rozpocząć</string>
 </resources>
