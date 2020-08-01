@@ -43,7 +43,7 @@ public class JSONParser
 	public static final String TAG = JSONParser.class.getSimpleName();
 	private static JSONParser instance;
 	private ArrayList<Canal> canalesTV;
-	private String url = "http://www.tdtchannels.com/lists/channels.json";
+	private String url = "http://www.tdtchannels.com/lists/tv.json";
 
 
 	/**
