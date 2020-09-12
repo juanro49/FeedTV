@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str_nl">Nizozemski</string>
+    <string name="str_it">Talijanski</string>
+    <string name="str_fr">Francuski</string>
+    <string name="str_pl">Poljski</string>
+    <string name="str_ca">Katalonski</string>
+    <string name="str_de">Njemački</string>
+    <string name="str_nb">Norveški</string>
+    <string name="str_en">Engleski</string>
+    <string name="str_ext">Estremadurski</string>
+    <string name="str_es">Španjolski</string>
+    <string name="auto">Automatski</string>
+    <string name="oscuro">Tamna</string>
+    <string name="claro">Svijetla</string>
+    <string name="idioma_establecido">Odabrani jezik:</string>
+    <string name="idioma_aplicacion">Jezik programa</string>
+    <string name="unlock_gn">Provjeri, jesu li Google Vijesti dostupne u tvojoj zemlji</string>
+    <string name="titulo_seguir">Upiši temu koju želiš pratiti i njen izvor</string>
+    <string name="topic">Tema</string>
+    <string name="tema_seguir">Praćena tema</string>
+    <string name="seguir">Prati</string>
+    <string name="url_clipboard">URL adresa kopirana u međuspremnik</string>
+    <string name="no_connection">Internetska veza nije dostupna</string>
+    <string name="edit">Uredi</string>
+    <string name="delete">Izbriši</string>
+    <string name="dialog_rss_list">Što želiš uraditi s</string>
+    <string name="fecha_lista_noticias">Datum</string>
+    <string name="titulo_lista_noticias">Naslov</string>
+    <string name="nombre_canal_detalle">Ime kanala</string>
+    <string name="url_detalle">URL</string>
+    <string name="enlaces_disponibles">Dostupne poveznice</string>
+    <string name="add">Dodaj</string>
+    <string name="reproductor_externo_off">Za reprodukciju kanala koristiš unutarnji player</string>
+    <string name="reproductor_externo_on">Za reprodukciju kanala koristiš vanjski player</string>
+    <string name="reproductor">Koristi vanjski player</string>
+    <string name="tema_aplicacion">Modus</string>
+    <string name="title_activity_settings">Postavke</string>
+    <string name="version">Verzija</string>
+    <string name="author">&lt;br /&gt;&lt;br /&gt;Autor: Juanro49. Licenca Apache 2.0&lt;br /&gt;&lt;br /&gt;</string>
+    <string name="video">Video</string>
+    <string name="alert_positive">Zatvori</string>
+    <string name="alert_message">Nije moguće dobiti podatke.
+\nProvjeri vezu.</string>
+    <string name="alert_title">Oprez!</string>
+    <string name="channel_detail">Podaci kanala</string>
+    <string name="action_about">Informacije</string>
+    <string name="settings">Postavke</string>
+    <string name="watch_tv">Gledaj televiziju</string>
+    <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Pogledaj na Githubu&lt;/a&gt;</string>
+    <string name="update_feed_failed">Greška pri dohvaćanju vijesti. ||</string>
+    <string name="update_feed_success">Članci uspješno aktualizirani</string>
+    <string name="no_feeds">Nema članaka</string>
+    <string name="titulo_addfeed">Upiši ime i adresu RSS vijesti</string>
+    <string name="name_feed">Ime:</string>
+    <string name="url_feed">URL:</string>
+    <string name="add_feed">Dodaj vijest</string>
+    <string name="first_start">Započni, dodavanjem vijest iz lijevog bočnog izbornika</string>
+    <string name="mod_feed_success">Vijest je uspješno promijenjena</string>
+    <string name="add_feed_success">Vijest je uspješno dodana</string>
+    <string name="delete_feed_success">Vijest izbrisana</string>
+    <string name="title_dialog_rss_list">Uredi vijest</string>
+    <string name="nombre_feed">Ime izvora vijesti</string>
+    <string name="url_ejemplo">https://www.ejemplo.com/feed</string>
+    <string name="add_feed_empty">Oba polja su obavezna</string>
+    <string name="edit_feed">Promijeni</string>
+    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV omogućuju &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt; i &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="about">FeedTV je program koji omogućuje čitanje vijesti s bilo kojeg medija putem RSS-a, kao i mogućnost gledanja javnih TV kanala bilo gdje.</string>
+    <string name="television">FeedTV televizija</string>
+    <string name="search">Traži</string>
+</resources>
