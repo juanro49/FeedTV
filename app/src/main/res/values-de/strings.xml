@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="search">Suche</string>
+    <string name="search">Suchen</string>
     <string name="add_feed">Feed hinzufügen</string>
     <string name="watch_tv">Fernsehen</string>
     <string name="settings">Einstellungen</string>
-    <string name="action_about">Info</string>
+    <string name="action_about">Über</string>
     <string name="television">FeedTV-Fernsehen</string>
     <string name="channel_detail">Kanaldetails</string>
     <string name="alert_title">Warnung!</string>
@@ -22,7 +22,7 @@
     <string name="reproductor_externo_on">Sie verwenden einen externen Player zur Wiedergabe der Kanäle</string>
     <string name="reproductor_externo_off">Sie verwenden den internen Player zur Wiedergabe der Kanäle</string>
     <string name="add">Hinzufügen</string>
-    <string name="edit_feed">Ändern</string>
+    <string name="edit_feed">Bearbeiten</string>
     <string name="add_feed_empty">Beide Felder sind erforderlich</string>
     <string name="add_feed_success">Feed erfolgreich hinzugefügt</string>
     <string name="mod_feed_success">Feed erfolgreich geändert</string>
