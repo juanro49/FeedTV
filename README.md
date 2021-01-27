@@ -41,12 +41,9 @@ Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataf
 - J. Lavoie --> Traducción a varios idiomas
 
 ## Donaciones
+[<img src="https://coindrop.to/embed-button.png" style="border-radius: 10px; height: 57px !important;width: 229px !important;" alt="Coindrop.to me">](https://coindrop.to/juanro49)
+
 | Método | Dirección |
 | --- | --- |
-| **Paypal** | https://www.paypal.me/juanro49 |
-| **Bitcoin** | 1QJfiEAxa1A4TbEgtbVMHPXPWXJXxEpUvi |
-| **Ethereum y tokens** | 0xb9d9958e73b44325082a2870830dca0d881490d2 |
 | **Stellar** | GCOHJZYRBOQYIV265UDAB75VU3O2RFQ3TWHFPER32MSOKZCCKRKVBWEH |
 | **GridCoin** | S6DXDzwMyu8bkgdExaFEFeV91DMBJyy1QB |
-| **Litecoin** | LYsyYEmxnRaCY3ML2tKYZpQA6zhndpuuQ4 |
-| **Dash** | XxhbofmRrJSm5t4Lp9zSjECbe2v9LVdZcK |
