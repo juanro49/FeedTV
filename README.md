@@ -42,8 +42,3 @@ Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataf
 
 ## Donaciones
 [<img src="https://coindrop.to/embed-button.png" style="border-radius: 10px; height: 57px !important;width: 229px !important;" alt="Coindrop.to me">](https://coindrop.to/juanro49)
-
-| Método | Dirección |
-| --- | --- |
-| **Stellar** | GCOHJZYRBOQYIV265UDAB75VU3O2RFQ3TWHFPER32MSOKZCCKRKVBWEH |
-| **GridCoin** | S6DXDzwMyu8bkgdExaFEFeV91DMBJyy1QB |
