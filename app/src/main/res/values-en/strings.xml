@@ -7,7 +7,7 @@
 \nCheck your connection.</string>
     <string name="tema_aplicacion">App theme</string>
     <string name="titulo_addfeed">Type in the name and the address of the RSS-feed</string>
-    <string name="nombre_feed">Name of news-source</string>
+    <string name="nombre_feed">Name of news source</string>
     <string name="alert_positive">Close</string>
     <string name="alert_title">Warning!</string>
     <string name="url_detalle">URL</string>
