@@ -1,2 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="github"><a href="https://github.com/juanro49/FeedTV/blob/master/README.md">Посетить Github</a></string>
+    <string name="str_nl">Нидерландский</string>
+    <string name="str_it">Итальянский</string>
+    <string name="str_fr">Французский</string>
+    <string name="str_pl">Польский</string>
+    <string name="str_ca">Каталонский</string>
+    <string name="str_de">Немецкий</string>
+    <string name="str_nb">Норвежский</string>
+    <string name="str_en">Английский</string>
+    <string name="str_ext">Эстремадурский</string>
+    <string name="str_es">Испанский</string>
+    <string name="auto">Авто</string>
+    <string name="oscuro">Тёмная</string>
+    <string name="claro">Светлая</string>
+    <string name="idioma_establecido">Установка языка:</string>
+    <string name="idioma_aplicacion">Язык приложения</string>
+    <string name="unlock_gn">Проверьте, что Новости Google недоступны в вашей стране</string>
+    <string name="titulo_seguir">Введите тему, на которую нужно подписаться, и ее источник</string>
+    <string name="topic">Тема</string>
+    <string name="tema_seguir">Тема для подписки</string>
+    <string name="seguir">Подписаться</string>
+    <string name="url_clipboard">Ссылка скопирована в буфер обмена</string>
+    <string name="update_feed_failed">Произошла ошибка при получении элементов из канала. ||</string>
+    <string name="update_feed_success">Статьи успешно обновлены</string>
+    <string name="first_start">Чтобы начать, добавьте каналы из меню слева</string>
+    <string name="no_connection">Интернет-соединение недоступно</string>
+    <string name="no_feeds">Статьи не получены</string>
+    <string name="delete_feed_success">Канал удалён</string>
+    <string name="edit">Изменить</string>
+    <string name="delete">Удалить</string>
+    <string name="dialog_rss_list">Какое действие вы хотите предпринять</string>
+    <string name="title_dialog_rss_list">Изменить канал</string>
+    <string name="fecha_lista_noticias">Дата</string>
+    <string name="titulo_lista_noticias">Заголовок</string>
+    <string name="nombre_canal_detalle">Имя канала</string>
+    <string name="url_detalle">Ссылка</string>
+    <string name="enlaces_disponibles">Доступные ссылки</string>
+    <string name="titulo_addfeed">Введите название и адрес RSS-канала</string>
+    <string name="name_feed">Имя:</string>
+    <string name="url_feed">Ссылка:</string>
+    <string name="nombre_feed">Название источника новостей</string>
+    <string name="mod_feed_success">Канал успешно изменён</string>
+    <string name="add_feed_success">Канал успешно добавлен</string>
+    <string name="add_feed_empty">Оба поля обязательны</string>
+    <string name="edit_feed">Изменить</string>
+    <string name="add">Добавить</string>
+    <string name="reproductor_externo_off">Для воспроизведения каналов, используется собственный проигрыватель</string>
+    <string name="reproductor_externo_on">Для воспроизведения каналов, Вы используете внешний проигрыватель</string>
+    <string name="reproductor">Использовать внешний плеер</string>
+    <string name="tema_aplicacion">Тема приложения</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="version">Версия</string>
+    <string name="author"><br/><br/>Создано Juanro49, под лицензией Apache 2.0 <br/><br/></string>
+    <string name="about">FeedTV - это приложение, которое позволяет вам любым способом читать новости через RSS, а также просматривать общедоступные телеканалы из любого места.</string>
+    <string name="video">Видео</string>
+    <string name="alert_positive">Закрыть</string>
+    <string name="alert_message">Не удалось получить данные.
+\nПроверьте ваше соединение.</string>
+    <string name="alert_title">Предупреждение!</string>
+    <string name="channel_detail">Свойства канала</string>
+    <string name="television">FeedTV Телевидение</string>
+    <string name="action_about">О программе</string>
+    <string name="settings">Настройки</string>
+    <string name="watch_tv">Просмотр TV</string>
+    <string name="add_feed">Добавить канал</string>
+    <string name="search">Поиск</string>
+</resources>
