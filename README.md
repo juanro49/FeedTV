@@ -40,6 +40,7 @@ Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataf
 - [@milotype](https://github.com/milotype) --> Traducción al alemán y croata
 - J. Lavoie --> Traducción a varios idiomas
 - [@Axus-Wizix](https://github.com/Axus-Wizix) --> Traducción al ruso
+- [@milotype](https://github.com/milotype) --> Traducción al croata
 
 ## Donaciones
 [<img src="https://coindrop.to/embed-button.png" border-radius="10px" height="57" width="200px" alt="Coindrop.to me">](https://coindrop.to/juanro49) [<img alt="Donate using Liberapay" border-radius="10px" height="57" width="200px" src="https://liberapay.com/assets/widgets/donate.svg">](https://liberapay.com/juanro49/donate)
