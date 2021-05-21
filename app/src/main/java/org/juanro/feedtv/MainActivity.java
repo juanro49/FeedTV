@@ -193,8 +193,40 @@ public class MainActivity extends AppCompatActivity
         	// Cargar artículos al inicio
 			if(listaFeeds.getAdapter().isEmpty())
 			{
-				Toast.makeText(this, getString(R.string.first_start), Toast.LENGTH_LONG).show();
-				drawerLayout.openDrawer(Gravity.LEFT);
+				// Si no el listado de RSS está vacio, se consulta si se quiere añadir el rss de noticias recientes
+				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				builder.setMessage(getString(R.string.recentNews));
+				builder.setTitle(getString(R.string.title_recentNews));
+				builder.setCancelable(true);
+				builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+				// Añadir
+				builder.setPositiveButton(getString(R.string.add), (dialog, id) ->
+				{
+					RssList fuentes = new RssList(MainActivity.this);
+					String url = "https://www.bing.com/news/search?qft=sortbydate%3d\"1\"&format=rss";
+					fuentes.insertarEntrada("News", url);
+					FeedDatabase.getInstance(getApplicationContext()).crearTabla("News_");
+
+					// Recargamos las fuentes
+					adapter.add("News");
+					fuentes.close();
+
+					adapter.notifyDataSetChanged();
+					listaFeeds.performItemClick(listaFeeds.getSelectedView(),0, 0);
+
+					Toast.makeText(this, this.getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
+				});
+
+				// No añadir
+				builder.setNegativeButton(getString(R.string.notAdd), (dialog, id) ->
+				{
+					Toast.makeText(this, getString(R.string.first_start), Toast.LENGTH_LONG).show();
+					drawerLayout.openDrawer(Gravity.LEFT);
+				});
+
+				AlertDialog alert = builder.create();
+				alert.show();
 			}
 			else
 			{

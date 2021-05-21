@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="github"><a href="https://github.com/juanro49/FeedTV/blob/master/README.md">Посетить Github</a></string>
+    <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Посетить Github&lt;/a&gt;</string>
     <string name="str_nl">Нидерландский</string>
     <string name="str_it">Итальянский</string>
     <string name="str_fr">Французский</string>
@@ -52,7 +52,7 @@
     <string name="tema_aplicacion">Тема приложения</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="version">Версия</string>
-    <string name="author"><br/><br/>Создано Juanro49, под лицензией Apache 2.0 <br/><br/></string>
+    <string name="author">&lt;br/&gt;&lt;br/&gt;Создано Juanro49, под лицензией Apache 2.0 &lt;br/&gt;&lt;br/&gt;</string>
     <string name="about">FeedTV - это приложение, которое позволяет вам любым способом читать новости через RSS, а также просматривать общедоступные телеканалы из любого места.</string>
     <string name="video">Видео</string>
     <string name="alert_positive">Закрыть</string>

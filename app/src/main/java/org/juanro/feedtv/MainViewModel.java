@@ -27,6 +27,7 @@ import com.prof.rssparser.Channel;
 import com.prof.rssparser.OnTaskCompleted;
 import com.prof.rssparser.Parser;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,7 +114,10 @@ public class MainViewModel extends ViewModel
 	public void fetchFeed(final Context context)
 	{
 		// Crear el parseador del RSS
-		Parser parser = new Parser();
+		Parser parser = new Parser.Builder()
+				.charset(Charset.defaultCharset())
+				//.cacheExpirationMillis() and .context() not called because on Java side, caching is NOT supported
+				.build();
 
 		// Mapeado rápido de indices
 		final int COLUMN_TITULO = 1;

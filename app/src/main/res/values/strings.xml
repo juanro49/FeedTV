@@ -45,6 +45,9 @@
 	<string name="reproductor_externo_on">Está usando un reproductor externo para reproducir los canales</string>
 	<string name="reproductor_externo_off">Está usando el reproductor interno para reproducir los canales</string>
 	<string name="add">Añadir</string>
+	<string name="notAdd">No añadir</string>
+	<string name="title_recentNews">Añadir noticias recientes</string>
+	<string name="recentNews">No tiene feeds añadidos, ¿Desea añadir el feed de noticias recientes?</string>
     <string name="edit_feed">Modificar</string>
 	<string name="add_feed_empty">Ambos campos son obligatorios</string>
 	<string name="add_feed_success">Fuente añadida correctamente</string>
@@ -67,7 +70,7 @@
 	<string name="no_feeds">No se han obtenido artículos</string>
 	<string name="no_connection">La conexión a internet no está disponible</string>
 	<string name="first_start">Añade fuentes desde el menú lateral izquierdo para comenzar</string>
-	<string name="update_feed_success">Artículos actualizados correctamente"</string>
+	<string name="update_feed_success">Artículos actualizados correctamente</string>
 	<string name="update_feed_failed">Ha ocurrido un error al obtener elementos del Feed. || </string>
 	<string name="url_clipboard">URL copiada al portapapeles</string>
 	<string name="seguir">Seguir</string>
@@ -90,5 +93,7 @@
 	<string name="str_fr">Francés</string>
 	<string name="str_it">Italiano</string>
 	<string name="str_nl">Neerlandés</string>
+	<string name="str_hr">Croata</string>
+	<string name="str_ru">Ruso</string>
 	<string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Ver en Github&lt;/a&gt;</string>
 </resources>

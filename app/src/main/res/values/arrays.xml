@@ -5,7 +5,7 @@
 		<item>@string/oscuro</item>
 	</string-array>
 
-	<!-- Valoresema aplicación -->
+	<!-- Valores tema aplicación -->
 	<string-array name="tema">
 		<item>Claro</item>
 		<item>Oscuro</item>
@@ -24,6 +24,8 @@
 		<item>@string/str_fr</item>
 		<item>@string/str_it</item>
 		<item>@string/str_nl</item>
+		<item>@string/str_hr</item>
+		<item>@string/str_ru</item>
 	</string-array>
 
 	<!-- Valores idioma aplicación -->
@@ -39,5 +41,7 @@
 		<item>fr</item>
 		<item>it</item>
 		<item>nl</item>
+		<item>hr</item>
+		<item>ru</item>
 	</string-array>
 </resources>
