@@ -57,7 +57,7 @@
     <string name="alert_positive">Fermer</string>
     <string name="alert_message">Impossible d’obtenir les donnée.
 \nVérifiez votre connexion.</string>
-    <string name="alert_title">Attention !</string>
+    <string name="alert_title">Attention !</string>
     <string name="channel_detail">Détails de la chaîne</string>
     <string name="television">Télévision FeedTV</string>
     <string name="action_about">À propos</string>
@@ -68,4 +68,9 @@
     <string name="str_nl">néerlandais</string>
     <string name="str_it">italien</string>
     <string name="str_fr">français</string>
+    <string name="str_ru">russe</string>
+    <string name="str_hr">croate</string>
+    <string name="recentNews">Vous n’avez pas ajouté de flux, voulez-vous ajouter le flux des nouvelles récentes \?</string>
+    <string name="title_recentNews">Ajouter des nouvelles récentes</string>
+    <string name="notAdd">Ne pas ajouter</string>
 </resources>
