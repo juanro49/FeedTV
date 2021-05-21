@@ -69,4 +69,9 @@
     <string name="str_nl">Dutch</string>
     <string name="str_it">Italian</string>
     <string name="str_fr">French</string>
+    <string name="str_ru">Russian</string>
+    <string name="str_hr">Croatian</string>
+    <string name="recentNews">You have no feeds added, do you want to add the recent news feed\?</string>
+    <string name="title_recentNews">Add recent news</string>
+    <string name="notAdd">Do not add</string>
 </resources>
