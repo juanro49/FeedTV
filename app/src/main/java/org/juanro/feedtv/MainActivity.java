@@ -31,7 +31,6 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -41,19 +40,14 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.prof.rssparser.Article;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -67,18 +61,16 @@ import org.juanro.feedtv.BBDD.RssList;
 public class MainActivity extends AppCompatActivity
 {
     private RecyclerView mRecyclerView;
-    private static ListView listaFeeds;
-    private static ArticleAdapter mAdapter;
+    private ListView listaFeeds;
+    private ArticleAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private MainViewModel viewModel;
     private FrameLayout frameLayout;
     private DrawerLayout drawerLayout;
-    private NavigationView navView;
 	private ArrayAdapter<String> adapter;
 	private String elemento;
-	private SharedPreferences sharedPref;
 
-    @Override
+	@Override
     protected void onCreate(Bundle savedInstanceState)
 	{
 		// Establecer tema de la aplicación
@@ -91,7 +83,7 @@ public class MainActivity extends AppCompatActivity
 
         // Setear barra lateral
         drawerLayout = findViewById(R.id.drawerlayout);
-        navView = findViewById(R.id.navview);
+		NavigationView navView = findViewById(R.id.navview);
         listaFeeds = findViewById(R.id.listaFeeds);
 		// Boton para abrir barra lateral
 		getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_menu);
@@ -148,17 +140,13 @@ public class MainActivity extends AppCompatActivity
 		});
 
 		// Obtener mensajes de la snackbar
-		viewModel.getSnackbar().observe(this, new Observer<String>()
+		viewModel.getSnackbar().observe(this, s ->
 		{
-			@Override
-			public void onChanged(String s)
+			if (s != null)
 			{
-				if (s != null)
-				{
-					Snackbar.make(frameLayout, s, Snackbar.LENGTH_LONG).show();
-					viewModel.onSnackbarShowed();
-					mSwipeRefreshLayout.setRefreshing(false);
-				}
+				Snackbar.make(frameLayout, s, Snackbar.LENGTH_LONG).show();
+				viewModel.onSnackbarShowed();
+				mSwipeRefreshLayout.setRefreshing(false);
 			}
 		});
 
@@ -166,27 +154,23 @@ public class MainActivity extends AppCompatActivity
         mSwipeRefreshLayout = findViewById(R.id.swipe_layout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorHeader, R.color.colorAccent);
         mSwipeRefreshLayout.canChildScrollUp();
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
-        {
-            @Override
-            public void onRefresh()
-            {
-                if(isNetworkAvailable())
-                {
-                    // Limpiar lista de artículos
-                    mAdapter.notifyDataSetChanged();
-                    mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setOnRefreshListener(() ->
+		{
+			if(isNetworkAvailable())
+			{
+				// Limpiar lista de artículos
+				mAdapter.notifyDataSetChanged();
+				mSwipeRefreshLayout.setRefreshing(true);
 
-                    // Obtener Feed
-                    viewModel.fetchFeed(getApplicationContext());
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(), getString(R.string.no_connection), Toast.LENGTH_LONG).show();
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }
-            }
-        });
+				// Obtener Feed
+				viewModel.fetchFeed(getApplicationContext());
+			}
+			else
+			{
+				Toast.makeText(getApplicationContext(), getString(R.string.no_connection), Toast.LENGTH_LONG).show();
+				mSwipeRefreshLayout.setRefreshing(false);
+			}
+		});
 
         if (isNetworkAvailable())
         {
@@ -222,7 +206,7 @@ public class MainActivity extends AppCompatActivity
 				builder.setNegativeButton(getString(R.string.notAdd), (dialog, id) ->
 				{
 					Toast.makeText(this, getString(R.string.first_start), Toast.LENGTH_LONG).show();
-					drawerLayout.openDrawer(Gravity.LEFT);
+					drawerLayout.openDrawer(GravityCompat.START);
 				});
 
 				AlertDialog alert = builder.create();
@@ -242,15 +226,7 @@ public class MainActivity extends AppCompatActivity
                     .setTitle(R.string.alert_title)
                     .setCancelable(false)
                     .setPositiveButton(R.string.alert_positive,
-                            new DialogInterface.OnClickListener()
-                            {
-                                @Override
-                                public void onClick(DialogInterface dialog,
-                                                    int id)
-                                {
-                                    finish();
-                                }
-                            });
+							(dialog, id) -> finish());
 
             AlertDialog alert = builder.create();
             alert.show();
@@ -313,7 +289,6 @@ public class MainActivity extends AppCompatActivity
 	 *
 	 * @param parent
 	 * @param pos
-	 * @return
 	 */
 	public void onFeedsItemLongClick(AdapterView<?> parent, int pos)
 	{
@@ -412,13 +387,7 @@ public class MainActivity extends AppCompatActivity
 						MainActivity.this.getString(R.string.author) +
 						MainActivity.this.getString(R.string.version) + " " + BuildConfig.VERSION_NAME + "<br/><br/>" + MainActivity.this.getString(R.string.github)));
 				alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-						new DialogInterface.OnClickListener()
-						{
-							public void onClick(DialogInterface dialog, int which)
-							{
-								dialog.dismiss();
-							}
-						});
+						(dialog, which) -> dialog.dismiss());
 				alertDialog.show();
 
 				((TextView) alertDialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
@@ -493,7 +462,7 @@ public class MainActivity extends AppCompatActivity
 	 */
 	private void aplicarTema()
 	{
-		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
 		if(sharedPref.getString("tema", "Claro").equals("Claro"))
 		{
