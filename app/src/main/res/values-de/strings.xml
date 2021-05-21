@@ -17,15 +17,15 @@
     <string name="author">&lt;br/&gt;&lt;br/&gt;Entwickelt von Juanro49, Lizenz: Apache 2.0 &lt;br/&gt;&lt;br/&gt;</string>
     <string name="version">Version</string>
     <string name="title_activity_settings">Einstellungen</string>
-    <string name="tema_aplicacion">Theme</string>
+    <string name="tema_aplicacion">Anwendungsdesign</string>
     <string name="reproductor">Externen Player verwenden</string>
     <string name="reproductor_externo_on">Sie verwenden einen externen Player zur Wiedergabe der Kanäle</string>
     <string name="reproductor_externo_off">Sie verwenden den internen Player zur Wiedergabe der Kanäle</string>
     <string name="add">Hinzufügen</string>
     <string name="edit_feed">Bearbeiten</string>
     <string name="add_feed_empty">Beide Felder sind erforderlich</string>
-    <string name="add_feed_success">Feed erfolgreich hinzugefügt</string>
-    <string name="mod_feed_success">Feed erfolgreich geändert</string>
+    <string name="add_feed_success">Quelle erfolgreich hinzugefügt</string>
+    <string name="mod_feed_success">Quelle erfolgreich geändert</string>
     <string name="url_ejemplo">https://beispiel.de/feed</string>
     <string name="nombre_feed">Name der Nachrichtenquelle</string>
     <string name="url_feed">URL:</string>
@@ -52,7 +52,7 @@
     <string name="topic">Thema</string>
     <string name="titulo_seguir">Stellen Sie das zu verfolgende Thema und seine Quelle vor</string>
     <string name="unlock_gn">Prüfen Sie, ob Google News in Ihrem Land verfügbar ist</string>
-    <string name="idioma_aplicacion">App-Sprache</string>
+    <string name="idioma_aplicacion">Anwendungssprache</string>
     <string name="claro">Hell</string>
     <string name="oscuro">Dunkel</string>
     <string name="auto">Auto</string>
@@ -68,4 +68,9 @@
     <string name="str_nl">Niederländisch</string>
     <string name="str_it">Italienisch</string>
     <string name="str_fr">Französisch</string>
+    <string name="str_ru">Russisch</string>
+    <string name="str_hr">Kroatisch</string>
+    <string name="recentNews">Sie haben keine Feeds hinzugefügt. Möchten Sie den neuesten Nachrichten-Feed hinzufügen\?</string>
+    <string name="title_recentNews">Neuere Nachrichten hinzufügen</string>
+    <string name="notAdd">Nicht hinzufügen</string>
 </resources>
