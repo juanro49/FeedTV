@@ -68,4 +68,9 @@
     <string name="str_nl">olandese</string>
     <string name="str_it">italiano</string>
     <string name="str_fr">francese</string>
+    <string name="str_ru">russo</string>
+    <string name="str_hr">croato</string>
+    <string name="recentNews">Non hai nessun flusso aggiunto, vuoi aggiungere il flusso delle notizie recenti\?</string>
+    <string name="title_recentNews">Aggiungi notizie recenti</string>
+    <string name="notAdd">Non aggiungere</string>
 </resources>
