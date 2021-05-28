@@ -68,4 +68,9 @@
     <string name="about">FeedTV je program koji omogućuje čitanje vijesti s bilo kojeg medija putem RSS-a, kao i mogućnost gledanja javnih TV kanala bilo gdje.</string>
     <string name="television">FeedTV televizija</string>
     <string name="search">Traži</string>
+    <string name="str_ru">Ruski</string>
+    <string name="str_hr">Hrvatski</string>
+    <string name="recentNews">Nema dodanih vijesti. Želiš li dodati nedavne vijesti\?</string>
+    <string name="title_recentNews">Dodaj nedavne vijesti</string>
+    <string name="notAdd">Nemoj dodati</string>
 </resources>
