@@ -68,4 +68,9 @@
     <string name="str_nl">Neerlandès</string>
     <string name="str_it">Italià</string>
     <string name="str_fr">Francès</string>
+    <string name="str_hr">Croat</string>
+    <string name="str_ru">Rus</string>
+    <string name="notAdd">No l’afegeixis</string>
+    <string name="recentNews">No teniu cap canal afegit. Voleu afegir el canal de notícies recents\?</string>
+    <string name="title_recentNews">Addició de les notícies recents</string>
 </resources>
