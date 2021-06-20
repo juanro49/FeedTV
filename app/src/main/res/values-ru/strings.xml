@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Посетить Github&lt;/a&gt;</string>
+    <string name="github"><a href="https://github.com/juanro49/FeedTV/blob/master/README.md">Просмотр на Github</a></string>
     <string name="str_nl">Нидерландский</string>
     <string name="str_it">Итальянский</string>
     <string name="str_fr">Французский</string>
@@ -16,17 +16,17 @@
     <string name="claro">Светлая</string>
     <string name="idioma_establecido">Установка языка:</string>
     <string name="idioma_aplicacion">Язык приложения</string>
-    <string name="unlock_gn">Проверьте, что Новости Google недоступны в вашей стране</string>
+    <string name="unlock_gn">Проверьте, не доступны ли Google News в вашей стране</string>
     <string name="titulo_seguir">Введите тему, на которую нужно подписаться, и ее источник</string>
     <string name="topic">Тема</string>
     <string name="tema_seguir">Тема для подписки</string>
     <string name="seguir">Подписаться</string>
     <string name="url_clipboard">Ссылка скопирована в буфер обмена</string>
     <string name="update_feed_failed">Произошла ошибка при получении элементов из канала. ||</string>
-    <string name="update_feed_success">Статьи успешно обновлены</string>
+    <string name="update_feed_success">Правильно обновленные статьи</string>
     <string name="first_start">Чтобы начать, добавьте каналы из меню слева</string>
     <string name="no_connection">Интернет-соединение недоступно</string>
-    <string name="no_feeds">Статьи не получены</string>
+    <string name="no_feeds">Статьи не были получены</string>
     <string name="delete_feed_success">Канал удалён</string>
     <string name="edit">Изменить</string>
     <string name="delete">Удалить</string>
@@ -52,7 +52,7 @@
     <string name="tema_aplicacion">Тема приложения</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="version">Версия</string>
-    <string name="author">&lt;br/&gt;&lt;br/&gt;Создано Juanro49, под лицензией Apache 2.0 &lt;br/&gt;&lt;br/&gt;</string>
+    <string name="author"><br/><br/> Создано Juanro49 под лицензией Apache 2.0 <br/><br/></string>
     <string name="about">FeedTV - это приложение, которое позволяет вам любым способом читать новости через RSS, а также просматривать общедоступные телеканалы из любого места.</string>
     <string name="video">Видео</string>
     <string name="alert_positive">Закрыть</string>
@@ -66,4 +66,10 @@
     <string name="watch_tv">Просмотр TV</string>
     <string name="add_feed">Добавить канал</string>
     <string name="search">Поиск</string>
+    <string name="str_ru">Русский</string>
+    <string name="str_hr">Хорватский</string>
+    <string name="recentNews">У вас нет добавленных лент, хотите ли вы добавить ленту последних новостей\?</string>
+    <string name="title_recentNews">Добавить последние новости</string>
+    <string name="notAdd">Не добавляйте</string>
+    <string name="agradecimientos"><br/><br/> FeedTV стал возможен благодаря <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a> и хранилищу каналов <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a>.</string>
 </resources>
