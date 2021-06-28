@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="github"><a href="https://github.com/juanro49/FeedTV/blob/master/README.md">Просмотр на Github</a></string>
+    <string name="github">&lt;a href=\\\'https://github.com/juanro49/FeedTV/blob/master/README.md\\\'&gt;Просмотр на Github&lt;/a&gt;</string>
     <string name="str_nl">Нидерландский</string>
     <string name="str_it">Итальянский</string>
     <string name="str_fr">Французский</string>
