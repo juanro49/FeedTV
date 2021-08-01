@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="github">&lt;a href=\\\'https://github.com/juanro49/FeedTV/blob/master/README.md\\\'&gt;Просмотр на Github&lt;/a&gt;</string>
+    <string name="github"><a href="https://github.com/juanro49/FeedTV/blob/master/README.md">Просмотр на Github</a></string>
     <string name="str_nl">Нидерландский</string>
     <string name="str_it">Итальянский</string>
     <string name="str_fr">Французский</string>
@@ -72,4 +72,5 @@
     <string name="title_recentNews">Добавить последние новости</string>
     <string name="notAdd">Не добавляйте</string>
     <string name="agradecimientos"><br/><br/> FeedTV стал возможен благодаря <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a> и хранилищу каналов <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a>.</string>
+    <string name="url_ejemplo">https://www.ejemplo.com/feed</string>
 </resources>
