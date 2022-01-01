@@ -269,11 +269,11 @@ public final class FeedDatabase extends SQLiteOpenHelper
 
 				if(link.contains("?"))
 				{
-					link = link + "&utm_source=feedtv&utm_medium=feed";
+					link = link + "&utm_source=FeedTV&utm_medium=RSS";
 				}
 				else
 				{
-					link = link + "?utm_source=feedtv&utm_medium=feed";
+					link = link + "?utm_source=FeedTV&utm_medium=RSS";
 				}
 
                 // Comprobar si la entrada necesita ser actualizada

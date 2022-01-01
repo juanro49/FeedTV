@@ -20,7 +20,6 @@
 package org.juanro.feedtv;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -29,7 +28,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -188,7 +186,7 @@ public class MainActivity extends AppCompatActivity
 				builder.setPositiveButton(getString(R.string.add), (dialog, id) ->
 				{
 					RssList fuentes = new RssList(MainActivity.this);
-					String url = "https://www.bing.com/news/search?qft=sortbydate%3d\"1\"&format=rss";
+					String url = "https://www.meneame.net/rss?status=all";
 					fuentes.insertarEntrada("News", url);
 					FeedDatabase.getInstance(getApplicationContext()).crearTabla("News_");
 

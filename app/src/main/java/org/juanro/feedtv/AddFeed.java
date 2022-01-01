@@ -118,7 +118,7 @@ public class AddFeed extends AppCompatActivity
 			{
 				if(unlockGN.isChecked())
 				{
-					url = "https://news.google.com/rss/search?q=" + topic + "&hl=es-419&gl=MX&ceid=MX:es-419";
+					url = "https://news.google.com/rss/search?q=" + topic + "&hl=es-419&gl=CU&ceid=CU:es-419";
 				}
 				else
 				{

@@ -104,32 +104,28 @@ public class ChannelDetail extends AppCompatActivity
 			fuentes.setAdapter(adapter);
 
 			// Obtener pulsaciones sobre la lista
-			fuentes.setOnItemClickListener(new AdapterView.OnItemClickListener()
+			fuentes.setOnItemClickListener((parent, view, position, id) ->
 			{
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-				{
-					String source = fuentes.getItemAtPosition(position).toString();
+				String source = fuentes.getItemAtPosition(position).toString();
 
-					// Iniciar reproductor
-					if(sharedPref.getBoolean("reproductor", false))
-					{
-						// Reproductor externo
-						Uri uri = Uri.parse(source);
-						Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-						//intent.setDataAndType(uri, "video/*");
-						startActivity(intent);
-					}
-					else
-					{
-						// Reproductor interno
-						Intent i = new Intent(getApplicationContext(), Videoview.class);
-						Bundle extras = new Bundle();
-						extras.putString("url", source);
-						i.putExtras(extras);
-						i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						getApplicationContext().startActivity(i);
-					}
+				// Iniciar reproductor
+				if(sharedPref.getBoolean("reproductor", false))
+				{
+					// Reproductor externo
+					Uri uri = Uri.parse(source);
+					Intent intent1 = new Intent(Intent.ACTION_VIEW, uri);
+					//intent.setDataAndType(uri, "video/*");
+					startActivity(intent1);
+				}
+				else
+				{
+					// Reproductor interno
+					Intent i = new Intent(getApplicationContext(), Videoview.class);
+					Bundle extras = new Bundle();
+					extras.putString("url", source);
+					i.putExtras(extras);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					getApplicationContext().startActivity(i);
 				}
 			});
 		}

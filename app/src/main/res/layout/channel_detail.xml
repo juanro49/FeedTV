@@ -41,7 +41,7 @@
 		android:layout_height="wrap_content"
 		android:fontFamily="sans-serif-medium"
 		android:text="@string/nombre_canal_detalle"
-		android:layout_toRightOf="@+id/channelImage"
+		android:layout_toEndOf="@+id/channelImage"
 		android:paddingStart="20dp"
 		android:textSize="20sp" />
 
@@ -54,7 +54,7 @@
 		android:paddingTop="10dp"
 		android:text="@string/url_detalle"
 		android:layout_below="@+id/channelName"
-		android:layout_toRightOf="@+id/channelImage"
+		android:layout_toEndOf="@+id/channelImage"
 		android:paddingStart="20dp"
 		android:textSize="16sp" />
 

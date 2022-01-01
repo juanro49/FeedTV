@@ -147,40 +147,32 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         viewHolder.category.setText(categories.toString());
 
         // Accion pulsación larga
-        viewHolder.itemView.setOnLongClickListener(new AdapterView.OnLongClickListener()
+        viewHolder.itemView.setOnLongClickListener(v ->
         {
-            @Override
-            public boolean onLongClick(View v)
-            {
-                // Copiar url
-                ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("url", articles.get(viewHolder.getAdapterPosition()).getLink());
-                clipboard.setPrimaryClip(clip);
+            // Copiar url
+            ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("url", articles.get(viewHolder.getAbsoluteAdapterPosition()).getLink());
+            clipboard.setPrimaryClip(clip);
 
-                Toast.makeText(mContext, mContext.getString(R.string.url_clipboard), Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, mContext.getString(R.string.url_clipboard), Toast.LENGTH_LONG).show();
 
-                return true;
-            }
+            return true;
         });
 
         // Obtener pulsaciones
-        viewHolder.itemView.setOnClickListener(new AdapterView.OnClickListener()
+        viewHolder.itemView.setOnClickListener(view ->
         {
-            @Override
-            public void onClick(View view)
-            {
-                // Obtener url del artículo
-                String url = articles.get(viewHolder.getAdapterPosition()).getLink();
+            // Obtener url del artículo
+            String url = articles.get(viewHolder.getAbsoluteAdapterPosition()).getLink();
 
-                // Abrir url en formato Custom Tab
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                builder.addDefaultShareMenuItem();
-                CustomTabsIntent cti = builder.build();
-                cti.intent.putExtra(Intent.EXTRA_REFERRER, Uri.parse(Intent.URI_ANDROID_APP_SCHEME + "//" + mContext.getPackageName()));
-                // Hacer compatible con versiones anteriores a Android 6
-                cti.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                cti.launchUrl(mContext, Uri.parse(url));
-            }
+            // Abrir url en formato Custom Tab
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            builder.setShareState(CustomTabsIntent.SHARE_STATE_DEFAULT);
+            CustomTabsIntent cti = builder.build();
+            cti.intent.putExtra(Intent.EXTRA_REFERRER, Uri.parse(Intent.URI_ANDROID_APP_SCHEME + "//" + mContext.getPackageName()));
+            // Hacer compatible con versiones anteriores a Android 6
+            cti.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            cti.launchUrl(mContext, Uri.parse(url));
         });
     }
 

@@ -42,7 +42,7 @@ public class JSONParser
 {
 	public static final String TAG = JSONParser.class.getSimpleName();
 	private static JSONParser instance;
-	private ArrayList<Canal> canalesTV;
+	private ArrayList<Ambito> ambitos;
 	private String url = "http://www.tdtchannels.com/lists/tv.json";
 
 
@@ -55,16 +55,16 @@ public class JSONParser
 	 */
 	public void loadChannels(boolean forceUpdate, final Context context, final ResponseServerCallback responseServerCallback)
 	{
-		if (!forceUpdate && canalesTV != null && !canalesTV.isEmpty())
+		if (!forceUpdate && ambitos != null && !ambitos.isEmpty())
 		{
 			Log.i(TAG, "Cargar canales desde la cache");
-			responseServerCallback.onChannelsLoadServer(canalesTV);
+			responseServerCallback.onChannelsLoadServer(ambitos);
 		}
 		else
 		{
 			Log.i(TAG, "Cargar canales desde el servidor: " + url);
-			canalesTV = new ArrayList<>();
-			downloadChannels(url, canalesTV, context, responseServerCallback);
+			ambitos = new ArrayList<>();
+			downloadChannels(url, ambitos, context, responseServerCallback);
 		}
 	}
 
@@ -91,11 +91,11 @@ public class JSONParser
 	 * Método que se encarga de parsear el JSON
 	 *
 	 * @param URL
-	 * @param canales
+	 * @param ambitos
 	 * @param context
 	 * @param responseServerCallback
 	 */
-	private void downloadChannels(final String URL, final ArrayList<Canal> canales, final Context context, final ResponseServerCallback responseServerCallback)
+	private void downloadChannels(final String URL, final ArrayList<Ambito> ambitos, final Context context, final ResponseServerCallback responseServerCallback)
 	{
 		// Petición del JSON
 		JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(
@@ -128,6 +128,8 @@ public class JSONParser
 								{
 									JSONObject ambitJson = ambitsArray.getJSONObject(j);
 									JSONArray channelsArray = ambitJson.getJSONArray("channels");
+									ArrayList<Canal> canales = new ArrayList<>();
+									String ambitName = ambitJson.getString("name");
 
 									for (int k = 0; k < channelsArray.length(); k++)
 									{
@@ -150,14 +152,17 @@ public class JSONParser
 											channelOptions.add(new Opciones(optionFormat, optionURL));
 										}
 
-										// Añadir canal obtenido a la lista
+										// Añadir canal obtenido a la lista de ese ámbito
 										canales.add(new Canal(channelName, channelWeb, channelLogo, channelOptions));
 									}
+
+									// Añadir ámbito obtenido a la lista
+									ambitos.add(new Ambito(ambitName, canales));
 								}
 							}
 
 							// Enviar lista de canales al método de carga en la actividad principal
-							responseServerCallback.onChannelsLoadServer(canales);
+							responseServerCallback.onChannelsLoadServer(ambitos);
 						}
 						catch (JSONException e)
 						{
@@ -190,6 +195,6 @@ public class JSONParser
 	 */
 	public interface ResponseServerCallback
 	{
-		void onChannelsLoadServer(ArrayList<Canal> canales);
+		void onChannelsLoadServer(ArrayList<Ambito> ambitos);
 	}
 }

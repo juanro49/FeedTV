@@ -66,7 +66,8 @@
 			android:hint="@string/nombre_feed"
 			android:layout_toEndOf="@+id/tvNombre"
 			android:layout_alignBaseline="@+id/tvNombre"
-			android:layout_marginStart="20dp"/>
+			android:layout_marginStart="20dp"
+			android:inputType="text" />
 
 		<EditText
 			android:id="@+id/etUrl"
@@ -138,7 +139,8 @@
 			android:layout_alignEnd="@+id/etNombre"
 			android:layout_marginStart="20dp"
 			android:layout_toEndOf="@+id/tvTema"
-			android:hint="@string/tema_seguir" />
+			android:hint="@string/tema_seguir"
+			android:inputType="text" />
 
 		<CheckBox
 			android:id="@+id/cbGN"

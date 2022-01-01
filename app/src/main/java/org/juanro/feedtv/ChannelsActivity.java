@@ -1,5 +1,5 @@
 /*
- *   Copyright 2019 Juanro49
+ *   Copyright 2021 Juanro49
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -19,6 +19,13 @@
 
 package org.juanro.feedtv;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -27,28 +34,18 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import org.juanro.feedtv.JSONParser.Ambito;
-import org.juanro.feedtv.JSONParser.JSONParser;
-
-import java.util.ArrayList;
 
 /**
  * Clase que muestra la lista de canales
  */
-public class TvActivity extends AppCompatActivity implements JSONParser.ResponseServerCallback
+public class ChannelsActivity extends AppCompatActivity
 {
-	private AmbitsAdapter mAdapter;
+	private ChannelsAdapter mAdapter;
 	private RecyclerView lista;
-	private SwipeRefreshLayout swipe;
 	private SharedPreferences sharedPref;
+	private Ambito ambito;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -58,9 +55,6 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tv);
-
-
-		swipe = findViewById(R.id.swiperefresh);
 
 		lista = findViewById(R.id.lista);
 		lista.setLayoutManager(new GridLayoutManager(this, 2));
@@ -74,37 +68,17 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 
-		// Cargar los canales del JSON remoto en un nuevo hilo
-		Thread cargar = new Thread(cargarDatos);
-		cargar.start();
+		// Cargamos el archivo de preferencias
+		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
-		// Recargar elementos con swipe
-		swipe.setOnRefreshListener(() ->
-		{
-			Thread cargar1 = new Thread(cargarDatos);
-			cargar1.start();
-		});
-	}
+		// Obtener el ambito de la anterior activity que contiene sus canales
+		Intent intent = getIntent();
+		ambito = (Ambito) intent.getSerializableExtra("Ambito");
 
-	/**
-	 * Runnable para crear el hilo de la carga de datos
-	 */
-	private final Runnable cargarDatos = () -> JSONParser.getInstance().loadChannels(true, TvActivity.this, TvActivity.this);
-
-	/**
-	 * Crear la lista con los ambitos obtenidos
-	 *
-	 * @param ambitos
-	 */
-	@Override
-	public void onChannelsLoadServer(ArrayList<Ambito> ambitos)
-	{
-		mAdapter = new AmbitsAdapter(getApplicationContext(), ambitos);
+		// Crear el adapter de los canales de ese ambito y listarlo
+		mAdapter = new ChannelsAdapter(getApplicationContext(), ambito.getCanales());
 		lista.setAdapter(mAdapter);
 		mAdapter.notifyDataSetChanged();
-
-		//Detener animación de carga
-		swipe.setRefreshing(false);
 	}
 
 	/**

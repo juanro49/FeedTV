@@ -149,21 +149,23 @@ public class MainViewModel extends ViewModel
 
 				do
 				{
-					Article articulo = new Article();
-					articulo.setTitle(c.getString(COLUMN_TITULO));
-					articulo.setLink(c.getString(COLUMN_URL));
-					articulo.setPubDate(c.getString(COLUMN_FEC));
-
+					String title = c.getString(COLUMN_TITULO);
+					String link = c.getString(COLUMN_URL);
+					String pubDate = c.getString(COLUMN_FEC);
+					String image = "";
+					List<String> categories = new ArrayList<String>();
+					
 					//Mostrar la imagen del feed si el articulo no tiene imagen
 					if(c.getString(COLUMN_IMG) == null && channel.getImage() != null)
 					{
-						articulo.setImage(channel.getImage().getUrl());
+						image = channel.getImage().getUrl();
 					}
 					else
 					{
-						articulo.setImage(c.getString(COLUMN_IMG));
+						image = c.getString(COLUMN_IMG);
 					}
 
+					Article articulo = new Article("", title, "", link, pubDate, "", "", image, "", "", "", "", categories, null);
 
 					list.add(articulo);
 				} while(c.moveToNext());

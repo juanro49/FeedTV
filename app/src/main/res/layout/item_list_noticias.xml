@@ -65,7 +65,7 @@
 			app:layout_constraintTop_toTopOf="@+id/imagen"
 			app:layout_constraintEnd_toEndOf="parent"
 			android:layout_marginStart="16dp"
-			android:layout_toRightOf="@+id/imagen" />
+			android:layout_toEndOf="@+id/imagen" />
 
 		<!-- FECHA -->
 		<TextView

@@ -75,24 +75,13 @@ public class Videoview extends AppCompatActivity
 		videoView.requestFocus();
 
 		// Obtener error al reproducir
-        videoView.setOnErrorListener(new MediaPlayer.OnErrorListener()
-		{
-            @Override
-            public boolean onError(MediaPlayer mediaPlayer, int what, int extra)
-			{
-                Toast.makeText(Videoview.this, "Error: " + what + " - extra: " + extra, Toast.LENGTH_SHORT).show();
-                return false;
-            }
+        videoView.setOnErrorListener((mediaPlayer, what, extra) ->
+        {
+            Toast.makeText(Videoview.this, "Error: " + what + " - extra: " + extra, Toast.LENGTH_SHORT).show();
+            return false;
         });
 
         // Ejecutar cuando el reproductor esté listo
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
-		{
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer)
-            {
-                mediaPlayer.start();
-            }
-        });
+        videoView.setOnPreparedListener(MediaPlayer::start);
     }
 }
