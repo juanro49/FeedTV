@@ -34,6 +34,13 @@
 		android:orderInCategory="100"
 		android:title="@string/watch_tv"
 		app:showAsAction="never" />
+
+	<item
+		android:id="@+id/radio"
+		android:orderInCategory="100"
+		android:title="@string/listen_radio"
+		app:showAsAction="never" />
+
 	<item
 		android:id="@+id/ajustes"
 		android:orderInCategory="100"

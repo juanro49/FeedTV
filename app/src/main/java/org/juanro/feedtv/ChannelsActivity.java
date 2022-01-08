@@ -35,7 +35,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.juanro.feedtv.JSONParser.Ambito;
+import org.juanro.feedtv.Adapters.ChannelsAdapter;
+import org.juanro.feedtv.TV.Ambito;
 
 /**
  * Clase que muestra la lista de canales

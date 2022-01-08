@@ -13,7 +13,7 @@
     <string name="alert_positive">Schließen</string>
     <string name="video">Video</string>
     <string name="about">FeedTV ist eine App, mit der Sie Nachrichten aus allen Medien über RSS lesen können und zusätzlich öffentliche Fernsehsender von überall her ansehen können.</string>
-    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV ist nur möglich dank &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt; und &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV ist nur möglich dank &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, , &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, und &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
     <string name="author">&lt;br/&gt;&lt;br/&gt;Entwickelt von Juanro49, Lizenz: Apache 2.0 &lt;br/&gt;&lt;br/&gt;</string>
     <string name="version">Version</string>
     <string name="title_activity_settings">Einstellungen</string>

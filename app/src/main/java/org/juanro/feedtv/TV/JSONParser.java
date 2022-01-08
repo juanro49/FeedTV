@@ -17,7 +17,7 @@
  *
  */
 
-package org.juanro.feedtv.JSONParser;
+package org.juanro.feedtv.TV;
 
 import android.content.Context;
 import android.util.Log;

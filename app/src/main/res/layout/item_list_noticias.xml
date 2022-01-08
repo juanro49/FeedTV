@@ -42,8 +42,8 @@
 		<!-- MINIATURA -->
 		<ImageView
 			android:id="@+id/imagen"
-			android:layout_width="140dp"
-			android:layout_height="140dp"
+			android:layout_width="120dp"
+			android:layout_height="120dp"
 			android:layout_marginTop="15dp"
 			android:layout_marginBottom="15dp"
 			android:scaleType="centerCrop"

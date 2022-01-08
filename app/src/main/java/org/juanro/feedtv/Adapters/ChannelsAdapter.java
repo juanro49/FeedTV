@@ -16,7 +16,7 @@
  *
  */
 
-package org.juanro.feedtv;
+package org.juanro.feedtv.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +33,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import org.juanro.feedtv.JSONParser.Canal;
+import org.juanro.feedtv.ChannelDetail;
+import org.juanro.feedtv.R;
+import org.juanro.feedtv.TV.Canal;
 
 import java.util.ArrayList;
 

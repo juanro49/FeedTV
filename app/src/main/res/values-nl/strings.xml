@@ -52,7 +52,7 @@
     <string name="version">Versie</string>
     <string name="author">&lt;br /&gt;&lt;br /&gt; Gemaakt door Juanro49, uitgebracht onder de Apache 2.0-licentie &lt;br /&gt;&lt;br /&gt;</string>
     <string name="about">FeedTV is een app waarmee je het laatste nieuws van elke bron kunt lezen via RSS. Ook kun je publieke tv-kanalen bekijken.</string>
-    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV wordt mogelijk gemaakt door &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt; en de kanaalverzameling van &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV wordt mogelijk gemaakt door &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, en de kanaalverzameling van &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
     <string name="video">Video</string>
     <string name="alert_positive">Sluiten</string>
     <string name="alert_message">Kan gegevens niet ophalen.

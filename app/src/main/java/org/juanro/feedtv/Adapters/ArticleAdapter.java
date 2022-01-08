@@ -17,7 +17,7 @@
  *
  */
 
-package org.juanro.feedtv;
+package org.juanro.feedtv.Adapters;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -27,7 +27,6 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +43,8 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.juanro.feedtv.R;
 
 /**
  * Clase que representa el adapter de la lista de artículos

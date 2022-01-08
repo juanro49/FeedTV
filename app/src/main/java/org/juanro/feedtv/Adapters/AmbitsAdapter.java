@@ -16,7 +16,7 @@
  *
  */
 
-package org.juanro.feedtv;
+package org.juanro.feedtv.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,7 +31,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.juanro.feedtv.JSONParser.Ambito;
+import org.juanro.feedtv.ChannelsActivity;
+import org.juanro.feedtv.R;
+import org.juanro.feedtv.TV.Ambito;
 
 import java.util.ArrayList;
 

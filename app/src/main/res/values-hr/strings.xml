@@ -64,7 +64,7 @@
     <string name="url_ejemplo">https://www.ejemplo.com/feed</string>
     <string name="add_feed_empty">Oba polja su obavezna</string>
     <string name="edit_feed">Promijeni</string>
-    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV omogućuju &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt; i &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV omogućuju &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, i &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
     <string name="about">FeedTV je program koji omogućuje čitanje vijesti s bilo kojeg medija putem RSS-a, kao i mogućnost gledanja javnih TV kanala bilo gdje.</string>
     <string name="television">FeedTV televizija</string>
     <string name="search">Traži</string>

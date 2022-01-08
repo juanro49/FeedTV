@@ -16,7 +16,7 @@
  *
  */
 
-package org.juanro.feedtv.JSONParser;
+package org.juanro.feedtv.TV;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -71,6 +71,6 @@
     <string name="recentNews">У вас нет добавленных лент, хотите ли вы добавить ленту последних новостей\?</string>
     <string name="title_recentNews">Добавить последние новости</string>
     <string name="notAdd">Не добавляйте</string>
-    <string name="agradecimientos"><br/><br/> FeedTV стал возможен благодаря <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a> и хранилищу каналов <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a>.</string>
+    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV стал возможен благодаря &lt;a href=\"http://github.com/prof18/RSS-Parser\"&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, и хранилищу каналов &lt;a href=\"https://github.com/LaQuay/TDTChannels\"&gt;TDTChannels&lt;/a&gt;.</string>
     <string name="url_ejemplo">https://www.ejemplo.com/feed</string>
 </resources>

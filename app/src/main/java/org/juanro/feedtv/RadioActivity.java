@@ -1,5 +1,5 @@
 /*
- *   Copyright 2019 Juanro49
+ *   Copyright 2021 Juanro49
  *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
@@ -19,6 +19,12 @@
 
 package org.juanro.feedtv;
 
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -26,27 +32,23 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import net.bjoernpetersen.m3u.model.M3uEntry;
 
-import org.juanro.feedtv.Adapters.AmbitsAdapter;
-import org.juanro.feedtv.TV.Ambito;
-import org.juanro.feedtv.TV.JSONParser;
+import org.juanro.feedtv.Adapters.RadiosAdapter;
+import org.juanro.feedtv.Radio.M3UParser;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que muestra la lista de canales
  */
-public class TvActivity extends AppCompatActivity implements JSONParser.ResponseServerCallback
+public class RadioActivity extends AppCompatActivity implements M3UParser.ResponseServerCallback
 {
-	private AmbitsAdapter mAdapter;
+	private RadiosAdapter mAdapter;
 	private RecyclerView lista;
 	private SwipeRefreshLayout swipe;
 	private SharedPreferences sharedPref;
@@ -58,13 +60,13 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 		aplicarTema();
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_tv);
+		setContentView(R.layout.activity_radio);
 
 
 		swipe = findViewById(R.id.swiperefresh);
 
 		lista = findViewById(R.id.lista);
-		lista.setLayoutManager(new GridLayoutManager(this, 2));
+		lista.setLayoutManager(new LinearLayoutManager(this));
 		lista.setItemAnimator(new DefaultItemAnimator());
 		lista.setHasFixedSize(true);
 
@@ -75,7 +77,7 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 
-		// Cargar los canales del JSON remoto en un nuevo hilo
+		// Cargar los canales del M3U remoto en un nuevo hilo
 		Thread cargar = new Thread(cargarDatos);
 		cargar.start();
 
@@ -90,17 +92,17 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 	/**
 	 * Runnable para crear el hilo de la carga de datos
 	 */
-	private final Runnable cargarDatos = () -> JSONParser.getInstance().loadChannels(true, TvActivity.this, TvActivity.this);
+	private final Runnable cargarDatos = () -> M3UParser.getInstance().loadRadios(true, RadioActivity.this, RadioActivity.this);
 
 	/**
 	 * Crear la lista con los ambitos obtenidos
 	 *
-	 * @param ambitos
+	 * @param entradasM3u
 	 */
 	@Override
-	public void onChannelsLoadServer(ArrayList<Ambito> ambitos)
+	public void onChannelsLoadServer(List<M3uEntry> entradasM3u)
 	{
-		mAdapter = new AmbitsAdapter(getApplicationContext(), ambitos);
+		mAdapter = new RadiosAdapter(getApplicationContext(), entradasM3u);
 		lista.setAdapter(mAdapter);
 		mAdapter.notifyDataSetChanged();
 

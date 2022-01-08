@@ -52,6 +52,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import org.juanro.feedtv.Adapters.ArticleAdapter;
 import org.juanro.feedtv.BBDD.FeedDatabase;
 import org.juanro.feedtv.BBDD.RssList;
 
@@ -363,6 +364,13 @@ public class MainActivity extends AppCompatActivity
 			case R.id.tv:
 			{
 				Intent i = new Intent(getApplicationContext(), TvActivity.class);
+				startActivity(i);
+				break;
+			}
+
+			case R.id.radio:
+			{
+				Intent i = new Intent(getApplicationContext(), RadioActivity.class);
 				startActivity(i);
 				break;
 			}

@@ -27,8 +27,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -36,8 +34,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.juanro.feedtv.JSONParser.Canal;
-import org.juanro.feedtv.JSONParser.Opciones;
+import org.juanro.feedtv.TV.Canal;
+import org.juanro.feedtv.TV.Opciones;
 
 import java.util.ArrayList;
 

@@ -49,7 +49,7 @@
     <string name="reproductor_externo_off">Używasz wewnętrznego odtwarzacza do odtwarzania kanałów</string>
     <string name="reproductor_externo_on">Używasz zewnętrznego odtwarzacza do odtwarzania kanałów</string>
     <string name="title_activity_settings">Ustawienia</string>
-    <string name="agradecimientos"><br/> <br/> FeedTV jest możliwe dzięki <a href="http://github.com/prof18/RSS-Parser"> RSS Parser </a> i repozytorium kanałów <a href="https://github.com/LaQuay/TDTChannels"> TDTChannels </a>.</string>
+    <string name="agradecimientos">&lt;br/&gt; &lt;br/&gt; FeedTV jest możliwe dzięki &lt;a href=\"http://github.com/prof18/RSS-Parser\"&gt; RSS Parser &lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, i repozytorium kanałów &lt;a href=\"https://github.com/LaQuay/TDTChannels\"&gt; TDTChannels &lt;/a&gt;.</string>
     <string name="about">FeedTV-jest to aplikacja, która pozwala czytać Wiadomości z dowolnego nośnika za pomocą RSS, można również przeglądać otwarte kanały TV w dowolnym miejscu.</string>
     <string name="idioma_establecido">Ustawiony język:</string>
     <string name="str_ext">Estremadura</string>
