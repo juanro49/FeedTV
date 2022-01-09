@@ -19,6 +19,7 @@ allprojects {
 		maven { url 'https://oss.sonatype.org/content/repositories/staging'}
 		maven { url 'https://maven.mozilla.org/maven2'}
 		maven { url "https://jitpack.io" }
+		maven { url 'https://developer.huawei.com/repo/'}
 	}
 }
 
