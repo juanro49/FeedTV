@@ -11,7 +11,7 @@
 
 FeedTV es una aplicación que te permite leer noticias de cualquier medio mediante RSS además de poder ver canales públicos de TV en cualquier lugar.
 
-Este proyecto es posible gracias a [RSS-Parser](https://github.com/prof18/RSS-Parser), una librería para el parseo de feeds RSS y [TDTChannels](https://github.com/LaQuay/TDTChannels), repo que provee los canales de TV.
+Este proyecto es posible gracias a [RSS-Parser](https://github.com/prof18/RSS-Parser), una librería para el parseo de feeds RSS, [M3UParser](https://github.com/BjoernPetersen/m3u-parser), una librería para el parseo de listas m3u, [TDTChannels](https://github.com/LaQuay/TDTChannels), repo que provee los canales de TV y [enjey](https://libertalia.world/@enjey) por proveer la lista de radios y TVs comunitarias.
 
 <p align="center"><img src="https://github.com/juanro49/FeedTV/blob/master/fastlane/metadata/android/es-ES/images/phoneScreenshots/FeedTV_01.png" height="400"> <img src="https://github.com/juanro49/FeedTV/blob/master/fastlane/metadata/android/es-ES/images/phoneScreenshots/FeedTV_03.png" height="400"> <img src="https://github.com/juanro49/FeedTV/blob/master/fastlane/metadata/android/es-ES/images/phoneScreenshots/FeedTV_04.png" height="400"></p>
 
@@ -23,11 +23,13 @@ Para descargar FeedTV desde [F-Droid](https://instatecno.com/f-droid-store-opens
 Manual de uso: https://github.com/juanro49/FeedTV/blob/master/UserManual.pdf
 
 # Contribuir
-Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataforma [Weblate](https://hosted.weblate.org/projects/feedtv/). También, se pueden enviar fallos y propuestas de mejoras desde la pestaña ["Issues"](https://github.com/juanro49/FeedTV/issues) y además puedes colaborar con proyectos de los que depende FeedTV como [RSS-Parser](https://github.com/prof18/RSS-Parser) y [TDTChannels](https://github.com/LaQuay/TDTChannels).
+Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataforma [Weblate](https://hosted.weblate.org/projects/feedtv/). También, se pueden enviar fallos y propuestas de mejoras desde la pestaña ["Issues"](https://github.com/juanro49/FeedTV/issues) y además puedes colaborar con proyectos de los que depende FeedTV como [RSS-Parser](https://github.com/prof18/RSS-Parser), [M3UParser](https://github.com/BjoernPetersen/m3u-parser), [TDTChannels](https://github.com/LaQuay/TDTChannels) y haciendo aportaciones a la [lista radios y TV libres y comunitarias](https://libertalia.world/@enjey/106982718007217691).
 
 ## Agradecimientos
 - [@prof18](https://github.com/prof18) --> [RSSParser](https://github.com/prof18/RSS-Parser)
+- [@BjoernPetersen](https://github.com/BjoernPetersen) --> [M3UParser](https://github.com/BjoernPetersen/m3u-parser)
 - [@LaQuay](https://github.com/LaQuay) --> [TDTChannels](https://github.com/LaQuay/TDTChannels)
+- [@enjey](https://libertalia.world/@enjey) --> [Lista radios y TV libres y comunitarias](https://libertalia.world/@enjey/106982718007217691)
 - [WebLate](https://hosted.weblate.org/projects/feedtv/) --> Plataforma de traducción
 - [@comradekingu](https://github.com/comradekingu) --> Traducción a noruego e inglés
 - [OscecEstremaúra](https://oscecestremaura.wordpress.com/) y Jose A. Martínez --> Traducción al extremeño/estremeñu
