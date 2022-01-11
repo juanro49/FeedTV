@@ -51,7 +51,7 @@
     <string name="title_activity_settings">Impostazioni</string>
     <string name="version">Versione</string>
     <string name="author">&lt;br /&gt;&lt;br /&gt; Creato da Juanro49 con licenza Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
-    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV è reso possibile grazie a &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, e al repository di canali di &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="agradecimientos">&lt;br /&gt;&lt;x&gt;&lt;br /&gt; FeedTV è reso possibile da &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt; a &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt; repository di canali e &lt;a href=\'https://libertalia.world/@enjey/106982718007217691\'&gt;enjey&lt;/a&gt; compilation di radio libere.</string>
     <string name="about">FeedTV è un’applicazione che ti permette di leggere notizie da qualsiasi mezzo da RSS, oltre ad essere in grado di guardare i canali televisivi pubblici ovunque.</string>
     <string name="video">Video</string>
     <string name="alert_positive">Chiudi</string>
@@ -73,4 +73,6 @@
     <string name="recentNews">Non hai nessun flusso aggiunto, vuoi aggiungere il flusso delle notizie recenti\?</string>
     <string name="title_recentNews">Aggiungi notizie recenti</string>
     <string name="notAdd">Non aggiungere</string>
+    <string name="radio">Radio e TV comunitarie</string>
+    <string name="listen_radio">Vedi radio/TV libere</string>
 </resources>
