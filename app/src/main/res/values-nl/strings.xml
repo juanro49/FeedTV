@@ -73,4 +73,6 @@
     <string name="recentNews">Je hebt nog geen feeds toegevoegd. Wil je het laatste nieuws toevoegen\?</string>
     <string name="title_recentNews">Laatste nieuws toevoegen</string>
     <string name="notAdd">Niet toevoegen</string>
+    <string name="radio">Radio- en tv-communicatie</string>
+    <string name="listen_radio">Radio luisteren/Vrije tv kijken</string>
 </resources>

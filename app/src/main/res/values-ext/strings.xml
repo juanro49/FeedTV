@@ -87,4 +87,18 @@
     <string name="str_en">Inglés</string>
     <string name="str_nb">Noruegu</string>
     <string name="idioma_establecido">luenga edtablecido:</string>
+    <string name="str_nl">Nerlandés</string>
+    <string name="github"><a href="https://github.com/juanro49/FeedTV/blob/master/README.md">Vel en Github</a></string>
+    <string name="title_recentNews">Añidir informacionis rezientis</string>
+    <string name="recentNews">No tien feeds añidíus. Quiel añidil el feed d\'informacionis rezientis\?</string>
+    <string name="str_de">Alemán</string>
+    <string name="str_ca">Catalán</string>
+    <string name="str_pl">Polacu</string>
+    <string name="str_fr">Francés</string>
+    <string name="str_it">Italianu</string>
+    <string name="str_hr">Croata</string>
+    <string name="str_ru">Russu</string>
+    <string name="radio">Arradius y TVs comunitarias</string>
+    <string name="listen_radio">Vel arradiu/TV libris</string>
+    <string name="notAdd">No añidir</string>
 </resources>
