@@ -73,4 +73,6 @@
     <string name="recentNews">Sie haben keine Feeds hinzugefügt. Möchten Sie den neuesten Nachrichten-Feed hinzufügen\?</string>
     <string name="title_recentNews">Neuere Nachrichten hinzufügen</string>
     <string name="notAdd">Nicht hinzufügen</string>
+    <string name="radio">Gemeinschaftsradio und -fernsehen</string>
+    <string name="listen_radio">Frei empfangbares Radio/TV sehen</string>
 </resources>

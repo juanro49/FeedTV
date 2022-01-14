@@ -73,4 +73,6 @@
     <string name="recentNews">Nema dodanih vijesti. Želiš li dodati nedavne vijesti\?</string>
     <string name="title_recentNews">Dodaj nedavne vijesti</string>
     <string name="notAdd">Nemoj dodati</string>
+    <string name="radio">Javni radio i televizija</string>
+    <string name="listen_radio">Gledaj televiziju/Besplatna televizija</string>
 </resources>
