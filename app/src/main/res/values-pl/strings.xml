@@ -68,4 +68,11 @@
     <string name="update_feed_failed">Wystąpił błąd podczas pobierania elementów kanału. ||</string>
     <string name="update_feed_success">Artykuły zaktualizowane poprawnie</string>
     <string name="first_start">Dodaj czcionki z menu po lewej stronie, aby rozpocząć</string>
+    <string name="listen_radio">Oglądaj darmowe radio/tv</string>
+    <string name="title_recentNews">Dodaj najnowsze wiadomości</string>
+    <string name="recentNews">Nie masz dodanych żadnych kanałów, czy chcesz dodać kanał z najnowszymi wiadomościami\?</string>
+    <string name="notAdd">Nie dodawaj</string>
+    <string name="str_ru">Rosyjski</string>
+    <string name="str_hr">Chorwacki</string>
+    <string name="radio">Społecznościowe radia i telewizory</string>
 </resources>
