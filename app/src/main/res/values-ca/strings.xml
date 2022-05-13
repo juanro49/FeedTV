@@ -13,7 +13,7 @@
     <string name="alert_positive">Tanca</string>
     <string name="video">Vídeo</string>
     <string name="about">El FeedTV és una aplicació que us permet llegir notícies des de qualsevol mitjà via RSS i veure canals públics de televisió en qualsevol lloc.</string>
-    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt;El FeedTV és possible gràcies a l’&lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, , &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, al dipòsit de canals del &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="agradecimientos"><br/> <br/> FeedTV és possible gràcies a <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a>, <a href="https://github.com/BjoernPetersen/m3u-parser">M3U Parser</a> al repositori de canals de <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a> i recull de ràdios lliures de <a href="https://libertalia.world/@enjey/106982718007217691">enjey</a>.</string>
     <string name="author">&lt;br /&gt;&lt;br /&gt; Creada pel Juanro49 i disponible en virtut de la llicència Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
     <string name="version">Versió</string>
     <string name="title_activity_settings">Configuració</string>
@@ -73,4 +73,5 @@
     <string name="notAdd">No l’afegeixis</string>
     <string name="recentNews">No teniu cap canal afegit. Voleu afegir el canal de notícies recents\?</string>
     <string name="title_recentNews">Addició de les notícies recents</string>
+    <string name="listen_radio">Veure ràdio/TV lliures</string>
 </resources>
