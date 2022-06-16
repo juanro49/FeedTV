@@ -37,7 +37,7 @@
     <string name="titulo_lista_noticias">Títol</string>
     <string name="fecha_lista_noticias">Data</string>
     <string name="title_dialog_rss_list">Modifica el flux</string>
-    <string name="dialog_rss_list">Quina acció voleu efectuar amb:</string>
+    <string name="dialog_rss_list">¿Quina acció voleu efectuar amb</string>
     <string name="delete">Suprimeix</string>
     <string name="edit">Edita</string>
     <string name="delete_feed_success">S’ha suprimit el flux</string>
@@ -74,4 +74,5 @@
     <string name="recentNews">No teniu cap canal afegit. Voleu afegir el canal de notícies recents\?</string>
     <string name="title_recentNews">Addició de les notícies recents</string>
     <string name="listen_radio">Veure ràdio/TV lliures</string>
+    <string name="radio">Ràdios i TVs comunitàries</string>
 </resources>
