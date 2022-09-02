@@ -20,6 +20,8 @@ package org.juanro.feedtv.Adapters;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +34,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -138,6 +141,19 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				mContext.getApplicationContext().startActivity(i);
 			}
+		});
+
+		// Accion pulsación larga
+		vh.itemView.setOnLongClickListener(v ->
+		{
+			// Copiar url
+			ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+			ClipData clip = ClipData.newPlainText("url", radiosFiltradas.get(vh.getAbsoluteAdapterPosition()).getLocation().getUrl().toString());
+			clipboard.setPrimaryClip(clip);
+
+			Toast.makeText(mContext, mContext.getString(R.string.url_clipboard), Toast.LENGTH_LONG).show();
+
+			return true;
 		});
 	}
 
