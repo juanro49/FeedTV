@@ -77,16 +77,17 @@ public class RadioActivity extends AppCompatActivity implements M3UParser.Respon
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 
-		// Cargar los canales del M3U remoto en un nuevo hilo
-		Thread cargar = new Thread(cargarDatos);
-		cargar.start();
-
 		// Recargar elementos con swipe
 		swipe.setOnRefreshListener(() ->
 		{
 			Thread cargar1 = new Thread(cargarDatos);
 			cargar1.start();
 		});
+
+		// Cargar los canales del M3U remoto en un nuevo hilo
+		swipe.setRefreshing(true);
+		Thread cargar = new Thread(cargarDatos);
+		cargar.start();
 	}
 
 	/**

@@ -21,6 +21,7 @@ package org.juanro.feedtv.TV;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -43,7 +44,7 @@ public class JSONParser
 	public static final String TAG = JSONParser.class.getSimpleName();
 	private static JSONParser instance;
 	private ArrayList<Ambito> ambitos;
-	private String url = "http://www.tdtchannels.com/lists/tv.json";
+	private String url = "https://www.tdtchannels.com/lists/tv.json";
 
 
 	/**
@@ -160,15 +161,15 @@ public class JSONParser
 									ambitos.add(new Ambito(ambitName, canales));
 								}
 							}
-
-							// Enviar lista de canales al método de carga en la actividad principal
-							responseServerCallback.onChannelsLoadServer(ambitos);
 						}
 						catch (JSONException e)
 						{
+							Toast.makeText(context.getApplicationContext(), "ERROR:" + e.getMessage(), Toast.LENGTH_LONG).show();
 							Log.e(TAG, "ERROR al parsear el JSON");
-							e.printStackTrace();
 						}
+
+						// Enviar lista de canales al método de carga en la actividad principal
+						responseServerCallback.onChannelsLoadServer(ambitos);
 					}
 				},
 				new Response.ErrorListener()
@@ -181,7 +182,11 @@ public class JSONParser
 					@Override
 					public void onErrorResponse(VolleyError error)
 					{
+						String errorMessage = new String(error.networkResponse.data);
 						Log.e(TAG, "Error al acceder a la URL " + URL);
+						Toast.makeText(context.getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+						// Enviar lista de canales vacío al método de carga en la actividad principal
+						responseServerCallback.onChannelsLoadServer(ambitos);
 					}
 				}
 		);

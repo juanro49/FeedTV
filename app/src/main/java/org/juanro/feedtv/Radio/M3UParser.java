@@ -21,6 +21,7 @@ package org.juanro.feedtv.Radio;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -34,12 +35,10 @@ import net.bjoernpetersen.m3u.model.M3uEntry;
 import org.juanro.feedtv.Http.InputStreamVolleyRequest;
 import org.juanro.feedtv.Http.VolleyController;
 
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -137,10 +136,9 @@ public class M3UParser
 							}
 						} catch (IOException e)
 						{
-							Log.e(TAG, "Error: " + e.getMessage());
+							Toast.makeText(context.getApplicationContext(), "ERROR:" + e.getMessage(), Toast.LENGTH_LONG).show();
+							Log.e(TAG, "Error al parsear la lista M3U: " + e.getMessage());
 						}
-
-
 
 						// Enviar lista de canales al método de carga en la actividad principal
 						responseServerCallback.onChannelsLoadServer(entradasM3u);
@@ -156,7 +154,11 @@ public class M3UParser
 					@Override
 					public void onErrorResponse(VolleyError error)
 					{
+						String errorMessage = new String(error.networkResponse.data);
 						Log.e(TAG, "Error al acceder a la URL " + URL);
+						Toast.makeText(context.getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+						// Enviar lista de canales al método de carga en la actividad principal
+						responseServerCallback.onChannelsLoadServer(entradasM3u);
 					}
 				}, null);
 
