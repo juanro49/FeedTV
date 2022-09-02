@@ -19,6 +19,7 @@
 package org.juanro.feedtv;
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -111,6 +112,7 @@ public class AddFeed extends AppCompatActivity
 		}
 		else
 		{
+			Configuration config = getResources().getConfiguration();
 			String url = "";
 			fuentes = new RssList(this);
 
@@ -122,7 +124,7 @@ public class AddFeed extends AppCompatActivity
 				}
 				else
 				{
-					url = "https://news.google.com/rss/search?q=" + topic;
+					url = "https://news.google.com/rss/search?q=" + topic + "&hl=" + config.locale.getLanguage();
 				}
 
 				topic = topic.replaceAll("[+| ]", "") + "GN";
