@@ -19,9 +19,9 @@
 
 package org.juanro.feedtv;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -31,6 +31,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
@@ -125,6 +129,19 @@ public class ChannelDetail extends AppCompatActivity
 					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					getApplicationContext().startActivity(i);
 				}
+			});
+
+			// Accion pulsación larga
+			fuentes.setOnItemLongClickListener((parent, view, position, id) ->
+			{
+				// Copiar url
+				ClipboardManager clipboard = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
+				ClipData clip = ClipData.newPlainText("url", fuentes.getItemAtPosition(position).toString());
+				clipboard.setPrimaryClip(clip);
+
+				Toast.makeText(this, this.getString(R.string.url_clipboard), Toast.LENGTH_LONG).show();
+
+				return true;
 			});
 		}
 	}

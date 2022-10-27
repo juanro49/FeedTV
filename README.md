@@ -35,7 +35,7 @@ Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataf
 - [OscecEstremaúra](https://oscecestremaura.wordpress.com/) y Jose A. Martínez --> Traducción al extremeño/estremeñu
 - [@iLocIT!](https://github.com/ilocit) --> Traducción al alemán
 - [@biesiadamich](https://github.com/biesiadamich) --> Traducción al polaco
-- [@fitojb](https://github.com/fitojb) --> Traducción al catalán
+- [@fitojb](https://github.com/fitojb) y Maite Guix --> Traducción al catalán
 - [@Vistaus](https://github.com/Vistaus) --> Traducción a holandés
 - Jeannette L --> Traducción a francés, italiano y alemán
 - [@WaldiSt](https://github.com/WaldiSt) --> Traducción al polaco
@@ -45,4 +45,4 @@ Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataf
 - [@milotype](https://github.com/milotype) --> Traducción al croata
 
 ## Donaciones
-[<img src="https://coindrop.to/embed-button.png" border-radius="10px" height="57" width="200px" alt="Coindrop.to me">](https://coindrop.to/juanro49) [<img alt="Donate using Liberapay" border-radius="10px" height="57" width="200px" src="https://liberapay.com/assets/widgets/donate.svg">](https://liberapay.com/juanro49/donate) [<img src="https://cesium.duniter.io/img/duniter_button.svg" border-radius="10px" height="57" width="200px" alt="moneda libre G1">](https://cesium.duniter.io/api/#/v1/payment/5eETo8btrVGYTTyC5nAvqCPmLBok4aRLhxiGP7dy3Wqw?comment=Donaci%C3%B3n%20github)
+[<img src="https://coindrop.to/embed-button.png" border-radius="10px" height="57" width="200px" alt="Coindrop.to me">](https://coindrop.to/juanro49) [<img alt="Donate using Liberapay" border-radius="10px" height="57" width="200px" src="https://liberapay.com/assets/widgets/donate.svg">](https://liberapay.com/juanro49/donate) [<img src="https://cdn.lemediaen442.fr/wp-content/uploads/2021/09/11110246/La-June.jpg" border-radius="10px" height="57" width="200px" alt="moneda libre G1">](https://demo.cesium.app/api/#/v1/payment/5eETo8btrVGYTTyC5nAvqCPmLBok4aRLhxiGP7dy3Wqw?comment=Donaci%C3%B3n%20github)

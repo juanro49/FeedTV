@@ -75,16 +75,17 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 
-		// Cargar los canales del JSON remoto en un nuevo hilo
-		Thread cargar = new Thread(cargarDatos);
-		cargar.start();
-
 		// Recargar elementos con swipe
 		swipe.setOnRefreshListener(() ->
 		{
 			Thread cargar1 = new Thread(cargarDatos);
 			cargar1.start();
 		});
+
+		// Cargar los canales del JSON remoto en un nuevo hilo
+		swipe.setRefreshing(true);
+		Thread cargar = new Thread(cargarDatos);
+		cargar.start();
 	}
 
 	/**
