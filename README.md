@@ -44,5 +44,7 @@ Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataf
 - [@Axus-Wizix](https://github.com/Axus-Wizix) --> Traducción al ruso
 - [@milotype](https://github.com/milotype) --> Traducción al croata
 
+[<img src="https://contrib.rocks/image?repo=juanro49/FeedTV" />](https://github.com/juanro49/FeedTV/graphs/contributors)
+
 ## Donaciones
 [<img src="https://coindrop.to/embed-button.png" border-radius="10px" height="57" width="200px" alt="Coindrop.to me">](https://coindrop.to/juanro49) [<img alt="Donate using Liberapay" border-radius="10px" height="57" width="200px" src="https://liberapay.com/assets/widgets/donate.svg">](https://liberapay.com/juanro49/donate) [<img src="https://cdn.lemediaen442.fr/wp-content/uploads/2021/09/11110246/La-June.jpg" border-radius="10px" height="57" width="200px" alt="moneda libre G1">](https://demo.cesium.app/api/#/v1/payment/5eETo8btrVGYTTyC5nAvqCPmLBok4aRLhxiGP7dy3Wqw?comment=Donaci%C3%B3n%20github)
