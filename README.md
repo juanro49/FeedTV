@@ -4,9 +4,9 @@
 
 | [**GNU/Linux Vagos**](https://gnulinuxvagos.es/topic/10896-appopen-source-feedtv-noticias-y-tv-desde-cualquier-lugar/) | [**HTCmania**](https://www.htcmania.com/showthread.php?t=1545924) | [**ForoCoches**](https://www.forocoches.com/foro/showthread.php?t=7867328) | [**XDAdevelopers**](https://forum.xda-developers.com/android/apps-games/app-feedtv-news-tv-t4082141) |
 
-| License | Translations | Code Quality | Downloads | Vulnerabilities | Dependences | Bugs |
-|---|---|---|---|---|---|---|
-| [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) | [![Estado de la traducción](https://hosted.weblate.org/widgets/feedtv/-/svg-badge.svg)](https://hosted.weblate.org/engage/feedtv/?utm_source=widget) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/37fe446752b94703a745172c36a049bc)](https://www.codacy.com/app/juanro49/FeedTV?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=juanro49/FeedTV&amp;utm_campaign=Badge_Grade) | [![GitHub All Releases](https://img.shields.io/github/downloads/juanro49/feedtv/total.svg)](https://github.com/juanro49/FeedTV/blob/master/README.md#descarga) | [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=juanro49_FeedTV&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=juanro49_FeedTV) | [![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/juanro49/feedtv.svg)](https://libraries.io/github/juanro49/FeedTV) | [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=juanro49_FeedTV&metric=bugs)](https://sonarcloud.io/dashboard?id=juanro49_FeedTV) |
+| License | Translations | Downloads | Vulnerabilities | Dependences | Bugs |
+|---|---|---|---|---|---|
+| [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) | [![Estado de la traducción](https://hosted.weblate.org/widgets/feedtv/-/svg-badge.svg)](https://hosted.weblate.org/engage/feedtv/?utm_source=widget) | [![GitHub All Releases](https://img.shields.io/github/downloads/juanro49/feedtv/total.svg)](https://github.com/juanro49/FeedTV/blob/master/README.md#descarga) | [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=juanro49_FeedTV&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=juanro49_FeedTV) | [![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/juanro49/feedtv.svg)](https://libraries.io/github/juanro49/FeedTV) | [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=juanro49_FeedTV&metric=bugs)](https://sonarcloud.io/dashboard?id=juanro49_FeedTV) |
 
 
 FeedTV es una aplicación que te permite leer noticias de cualquier medio mediante RSS además de poder ver canales públicos de TV en cualquier lugar.
@@ -43,6 +43,8 @@ Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataf
 - J. Lavoie --> Traducción a varios idiomas
 - [@Axus-Wizix](https://github.com/Axus-Wizix) --> Traducción al ruso
 - [@milotype](https://github.com/milotype) --> Traducción al croata
+
+[<img src="https://contrib.rocks/image?repo=juanro49/FeedTV" />](https://github.com/juanro49/FeedTV/graphs/contributors)
 
 ## Donaciones
 [<img src="https://coindrop.to/embed-button.png" border-radius="10px" height="57" width="200px" alt="Coindrop.to me">](https://coindrop.to/juanro49) [<img alt="Donate using Liberapay" border-radius="10px" height="57" width="200px" src="https://liberapay.com/assets/widgets/donate.svg">](https://liberapay.com/juanro49/donate) [<img src="https://cdn.lemediaen442.fr/wp-content/uploads/2021/09/11110246/La-June.jpg" border-radius="10px" height="57" width="200px" alt="moneda libre G1">](https://demo.cesium.app/api/#/v1/payment/5eETo8btrVGYTTyC5nAvqCPmLBok4aRLhxiGP7dy3Wqw?comment=Donaci%C3%B3n%20github)
