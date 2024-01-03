@@ -97,16 +97,29 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int position)
     {
         // Obtener artículo de la posición actual
-        Article currentArticle = articles.get(position);
+        RssItem currentArticle = articles.get(position);
 
         String pubDateString;
+        String title;
 
         try
         {
             String sourceDateString = String.valueOf(currentArticle.getPubDate());
 
-            SimpleDateFormat sourceSdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-            Date date = sourceSdf.parse(sourceDateString);
+            SimpleDateFormat sourceRSS = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+            SimpleDateFormat sourceAtom = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
+            Date date = new Date();
+
+            // La fecha viene en diferentes formatos para feeds de Atom y RSS
+            if(sourceDateString.startsWith("2"))
+            {
+                sourceDateString = sourceDateString.substring(0, 19);
+                date = sourceAtom.parse(sourceDateString);
+            }
+            else
+            {
+                date = sourceRSS.parse(sourceDateString);
+            }
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm", Locale.getDefault());
             pubDateString = sdf.format(date);
@@ -118,7 +131,15 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         }
 
         // Setear el título
-        viewHolder.title.setText(currentArticle.getTitle());
+        //Comprobamos si el titulo tiene CDATA para eliminarlo
+        title = currentArticle.getTitle();
+
+        if(title.contains("<![CDATA["))
+        {
+            title = title.replace("<![CDATA[", "").replace("]]>", "");
+        }
+
+        viewHolder.title.setText(title);
 
         // Setear imagen
         Picasso.get()

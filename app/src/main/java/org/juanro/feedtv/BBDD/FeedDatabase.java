@@ -286,8 +286,20 @@ public final class FeedDatabase extends SQLiteOpenHelper
 						// Crear el campo numFecha para ordenar a partir de la fecha de publicación
 						String pubDate = articulo.getPubDate();
 
-						SimpleDateFormat sourceSdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-						Date date = sourceSdf.parse(pubDate);
+						SimpleDateFormat sourceRSS = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+						SimpleDateFormat sourceAtom = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
+						Date date = new Date();
+
+						// La fecha viene en diferentes formatos para feeds de Atom y RSS
+						if(pubDate.startsWith("2"))
+						{
+							pubDate = pubDate.substring(0, 19);
+							date = sourceAtom.parse(pubDate);
+						}
+						else
+						{
+							date = sourceRSS.parse(pubDate);
+						}
 
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm", Locale.getDefault());
 						long numFecha = Long.parseLong(sdf.format(date));
@@ -315,8 +327,20 @@ public final class FeedDatabase extends SQLiteOpenHelper
 				// Crear el campo numFecha para ordenar a partir de la fecha de publicación
 				String pubDate = a.getPubDate();
 
-				SimpleDateFormat sourceSdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-				Date date = sourceSdf.parse(pubDate);
+				SimpleDateFormat sourceRSS = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+				SimpleDateFormat sourceAtom = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
+				Date date = new Date();
+
+				// La fecha viene en diferentes formatos para feeds de Atom y RSS
+				if(pubDate.startsWith("2"))
+				{
+					pubDate = pubDate.substring(0, 19);
+					date = sourceAtom.parse(pubDate);
+				}
+				else
+				{
+					date = sourceRSS.parse(pubDate);
+				}
 
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm", Locale.getDefault());
 				long numFecha = Long.parseLong(sdf.format(date));
