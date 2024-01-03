@@ -10,8 +10,8 @@ android
 		applicationId "org.juanro.feedtv"
 		minSdkVersion 24
 		targetSdkVersion 34
-		versionCode 20220902
-		versionName '2.3'
+		versionCode 20240103
+		versionName '3.0'
 		useLibrary 'org.apache.http.legacy'
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		multiDexEnabled true
