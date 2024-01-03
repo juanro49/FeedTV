@@ -31,7 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.prof.rssparser.Article;
+import com.prof18.rssparser.model.RssItem;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -52,11 +52,11 @@ import org.juanro.feedtv.R;
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder>
 {
     // Lista que contendrá los artículos
-    private List<Article> articles;
+    private List<RssItem> articles;
     // Contexto
     private Context mContext;
 
-    public ArticleAdapter(List<Article> list, Context context)
+    public ArticleAdapter(List<RssItem> list, Context context)
     {
         this.articles = list;
         this.mContext = context;
@@ -67,7 +67,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
      *
      * @return
      */
-    public List<Article> getArticleList()
+    public List<RssItem> getArticleList()
     {
         return articles;
     }

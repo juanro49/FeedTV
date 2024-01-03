@@ -27,7 +27,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import com.prof.rssparser.Article;
+import com.prof18.rssparser.model.RssItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -224,15 +224,15 @@ public final class FeedDatabase extends SQLiteOpenHelper
      *
 	 * @param lista lista de items
 	 */
-    public void sincronizarEntradas(List<Article> lista)
+    public void sincronizarEntradas(List<RssItem> lista)
 	{
         /*
         	Mapear temporalemente las entradas nuevas para realizar una
             comparación con las locales
         */
-        LinkedHashMap <String, Article> entryMap = new LinkedHashMap<>();
+        LinkedHashMap <String, RssItem> entryMap = new LinkedHashMap<>();
 
-        for (Article e : lista)
+        for (RssItem e : lista)
         {
             entryMap.put(e.getTitle(), e);
         }
@@ -258,7 +258,7 @@ public final class FeedDatabase extends SQLiteOpenHelper
             fecha = c.getString(columnFecha);
             url = c.getString(columnUrl);
 
-            Article articulo = entryMap.get(titulo);
+			RssItem articulo = entryMap.get(titulo);
 
             if (articulo != null)
             {
@@ -308,7 +308,7 @@ public final class FeedDatabase extends SQLiteOpenHelper
         /*
         	Añadir entradas nuevas
         */
-        for (Article a : entryMap.values())
+        for (RssItem a : entryMap.values())
 		{
 			try
 			{

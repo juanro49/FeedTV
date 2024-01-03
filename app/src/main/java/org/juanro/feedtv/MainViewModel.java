@@ -21,16 +21,16 @@ package org.juanro.feedtv;
 
 import android.content.Context;
 import android.database.Cursor;
+import com.prof18.rssparser.model.RssItem;
+import com.prof18.rssparser.model.RssChannel;
+import com.prof18.rssparser.RssParserBuilder;
+import com.prof18.rssparser.RssParser;
 
-import com.prof.rssparser.Article;
-import com.prof.rssparser.Channel;
-import com.prof.rssparser.OnTaskCompleted;
-import com.prof.rssparser.Parser;
-
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -38,13 +38,17 @@ import androidx.lifecycle.ViewModel;
 import org.jetbrains.annotations.NotNull;
 import org.juanro.feedtv.BBDD.FeedDatabase;
 
+import kotlin.coroutines.Continuation;
+import kotlin.coroutines.CoroutineContext;
+import kotlinx.coroutines.Dispatchers;
+
 /**
  * Clase que se encarga de gestionar el parseo de los feeds de noticias
  */
 public class MainViewModel extends ViewModel
 {
 	// Crear lista de artículos (se usa LiveData porque evita memory leaks y mas actualizable)
-	private MutableLiveData<List<Article>> articleListLive = null;
+	private MutableLiveData<List<RssItem>> articleListLive = null;
 
 	// URL del Feed
 	private String urlString = "";
@@ -57,7 +61,7 @@ public class MainViewModel extends ViewModel
 	 *
 	 * @return
 	 */
-	public MutableLiveData<List<Article>> getArticleList()
+	public MutableLiveData<List<RssItem>> getArticleList()
 	{
 		if (articleListLive == null)
 		{
@@ -73,7 +77,7 @@ public class MainViewModel extends ViewModel
 	 *
 	 * @param articleList
 	 */
-	private void setArticleList(List<Article> articleList)
+	private void setArticleList(List<RssItem> articleList)
 	{
 		this.articleListLive.postValue(articleList);
 	}
@@ -114,8 +118,8 @@ public class MainViewModel extends ViewModel
 	public void fetchFeed(final Context context)
 	{
 		// Crear el parseador del RSS
-		Parser parser = new Parser.Builder()
-				.charset(Charset.defaultCharset())
+		RssParser parser = new RssParserBuilder()
+				//.charset(Charset.defaultCharset())
 				//.cacheExpirationMillis() and .context() not called because on Java side, caching is NOT supported
 				.build();
 
@@ -126,64 +130,89 @@ public class MainViewModel extends ViewModel
 		final int COLUMN_IMG = 4;
 
 		// Obtener el feed
-		parser.execute(urlString);
+		RssChannel channel = null;
+		CompletableFuture<RssChannel> suspendResult = new CompletableFuture<>();
+		parser.getRssChannel(urlString, new CustomContinuation<>(suspendResult));
 
-		// Acciones a realizar al terminar
-		parser.onFinish(new OnTaskCompleted()
+		try
 		{
-			// Cosas a hacer cuando el parseo del RSS es correcto
-			@Override
-			public void onTaskCompleted(@NotNull Channel channel)
+			channel = suspendResult.get();
+
+			// Acciones a realizar al terminar cuando el parseo del RSS es correcto
+			List<RssItem> list = channel.getItems();
+
+			// Caching
+			FeedDatabase.getInstance(context.getApplicationContext()).
+					sincronizarEntradas(list);
+
+			// Obtener entradas de la base de datos
+			Cursor c = FeedDatabase.getInstance(context.getApplicationContext()).obtenerEntradas();
+			list.clear();
+
+			c.moveToFirst();
+
+			do
 			{
-				List<Article> list = channel.getArticles();
+				String title = c.getString(COLUMN_TITULO);
+				String link = c.getString(COLUMN_URL);
+				String pubDate = c.getString(COLUMN_FEC);
+				String image = "";
+				List<String> categories = new ArrayList<String>();
 
-				// Caching
-				FeedDatabase.getInstance(context.getApplicationContext()).
-						sincronizarEntradas(list);
-
-				// Obtener entradas de la base de datos
-				Cursor c = FeedDatabase.getInstance(context.getApplicationContext()).obtenerEntradas();
-				list.clear();
-
-				c.moveToFirst();
-
-				do
+				//Mostrar la imagen del feed si el articulo no tiene imagen
+				if(c.getString(COLUMN_IMG) == null && channel.getImage() != null)
 				{
-					String title = c.getString(COLUMN_TITULO);
-					String link = c.getString(COLUMN_URL);
-					String pubDate = c.getString(COLUMN_FEC);
-					String image = "";
-					List<String> categories = new ArrayList<String>();
-					
-					//Mostrar la imagen del feed si el articulo no tiene imagen
-					if(c.getString(COLUMN_IMG) == null && channel.getImage() != null)
-					{
-						image = channel.getImage().getUrl();
-					}
-					else
-					{
-						image = c.getString(COLUMN_IMG);
-					}
+					image = channel.getImage().getUrl();
+				}
+				else
+				{
+					image = c.getString(COLUMN_IMG);
+				}
 
-					Article articulo = new Article("", title, "", link, pubDate, "", "", image, "", "", "", "", categories, null);
+				RssItem articulo = new RssItem("", title, "", link, pubDate, "", "", image, "", "", "", "", categories, null, "");
 
-					list.add(articulo);
-				} while(c.moveToNext());
+				list.add(articulo);
+			} while(c.moveToNext());
 
-				// Añadir artículos obtenidos a la lista
-				setArticleList(list);
+			// Añadir artículos obtenidos a la lista
+			setArticleList(list);
 
-				snackbar.postValue(context.getString(R.string.update_feed_success));
-			}
-
+			snackbar.postValue(context.getString(R.string.update_feed_success));
+		}
+		catch (Exception e)
+		{
 			// Cosas a hacer cuando hay error en el parseo del RSS
-			@Override
-			public void onError(Exception e)
-			{
-				setArticleList(new ArrayList<Article>());
-				e.printStackTrace();
-				snackbar.postValue(context.getString(R.string.update_feed_failed) + e.getMessage());
-			}
-		});
+			setArticleList(new ArrayList<RssItem>());
+			e.printStackTrace();
+			snackbar.postValue(context.getString(R.string.update_feed_failed) + e.getMessage());
+		}
+	}
+
+	/**
+	 * Función que se encarga de obtener tados de funciones suspendidas de kotlin
+	 *
+	 * @param <RssChannel>
+	 */
+	public static class CustomContinuation<RssChannel> implements Continuation<RssChannel>
+	{
+		private final CompletableFuture<RssChannel> future;
+
+		public CustomContinuation(CompletableFuture<RssChannel> future)
+		{
+			this.future = future;
+		}
+
+		@Override
+		public void resumeWith(@NotNull Object o)
+		{
+			future.complete((RssChannel) o);
+		}
+
+		@NonNull
+		@Override
+		public CoroutineContext getContext()
+		{
+			return Dispatchers.getMain();
+		}
 	}
 }
