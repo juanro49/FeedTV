@@ -1,2 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="add_feed">Adder un fluxo</string>
+    <string name="watch_tv">Reguardar le TV</string>
+    <string name="listen_radio">Reguardar radio/TV liberes</string>
+    <string name="settings">Parametros</string>
+    <string name="channel_detail">Detalios de canal</string>
+    <string name="alert_title">Attention!</string>
+    <string name="author"><br/><br/> Create per Juanro49 sub licentia Apache 2.0 <br/><br/></string>
+    <string name="tema_aplicacion">Thema del application</string>
+    <string name="reproductor">Usar un reproductor externe</string>
+    <string name="reproductor_externo_on">Tu es usante un reproductor externe pro reproducer le canales</string>
+    <string name="reproductor_externo_off">Tu es usante un reproductor interne pro reproducer le canales</string>
+    <string name="add">Adder</string>
+    <string name="notAdd">Non adder</string>
+    <string name="title_recentNews">Adder novas recente</string>
+    <string name="edit_feed">Modificar</string>
+    <string name="nombre_feed">Nomine del fluxo de novas</string>
+    <string name="url_feed">URL:</string>
+    <string name="name_feed">Nomine:</string>
+    <string name="titulo_addfeed">Insere le nomine e adresse del fluxo RSS</string>
+    <string name="enlaces_disponibles">Ligamines disponibile</string>
+    <string name="url_detalle">URL</string>
+    <string name="nombre_canal_detalle">Nomine de canal</string>
+    <string name="titulo_lista_noticias">Titulo</string>
+    <string name="title_dialog_rss_list">Modificar le fluxo</string>
+    <string name="delete">Deler</string>
+    <string name="idioma_aplicacion">Lingua del application</string>
+    <string name="idioma_establecido">Lingua definite:</string>
+    <string name="claro">Clar</string>
+    <string name="auto">Automatic</string>
+    <string name="str_en">Anglese</string>
+    <string name="str_ca">Catalano</string>
+    <string name="github"><a href="https://github.com/juanro49/FeedTV/blob/master/README.md">Vider in Github</a></string>
+    <string name="action_about">A proposito de</string>
+    <string name="alert_positive">Clauder</string>
+    <string name="video">Video</string>
+    <string name="version">Version</string>
+    <string name="title_activity_settings">Parametros</string>
+    <string name="add_feed_success">Fluxo addite con successo</string>
+    <string name="fecha_lista_noticias">Data</string>
+    <string name="edit">Modificar</string>
+    <string name="delete_feed_success">Fluxo delite</string>
+    <string name="url_clipboard">URL copiate al area de transferentia</string>
+    <string name="oscuro">Obscur</string>
+    <string name="unlock_gn">Verificar si Google News non es disponibile in tu pais</string>
+    <string name="str_es">Espaniol</string>
+</resources>
