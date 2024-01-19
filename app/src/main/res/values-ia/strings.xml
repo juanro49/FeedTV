@@ -45,4 +45,33 @@
     <string name="oscuro">Obscur</string>
     <string name="unlock_gn">Verificar si Google News non es disponibile in tu pais</string>
     <string name="str_es">Espaniol</string>
+    <string name="about">FeedTV es un application que te permitte de leger novas ab qualcunque medio a transverso de RSS e tamben de poter reguardar canales public de TV in qualcunque loco.</string>
+    <string name="agradecimientos"><br/><br/> FeedTV es possibile gratias a <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a>, <a href="https://github.com/BjoernPetersen/m3u-parser">M3U Parser</a> al repositorio de canales de <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a> e le compilation de radios libere de <a href="https://libertalia.world/@enjey/106982718007217691">enjey</a>.</string>
+    <string name="tema_seguir">Topico a sequer</string>
+    <string name="topic">Topico</string>
+    <string name="titulo_seguir">Insere le topico a sequer e lor fonte</string>
+    <string name="search">Cercar</string>
+    <string name="television">Television FeedTV</string>
+    <string name="alert_message">Non poteva obtener le datos.
+\nVerifica tu connexion.</string>
+    <string name="recentNews">Tu non ha fluxos addite, desira tu adder le fluxo de novas recente?</string>
+    <string name="add_feed_empty">Ambe campos es requirite</string>
+    <string name="mod_feed_success">Fluxo modificate con successo</string>
+    <string name="url_ejemplo">https://www.exemplo.com/feed</string>
+    <string name="dialog_rss_list">Que action tu vole facer con</string>
+    <string name="no_feeds">Non poteva obtener necun articulo</string>
+    <string name="no_connection">Le connexion a Internet non es disponibile</string>
+    <string name="update_feed_success">Articulos actualisate con successo</string>
+    <string name="update_feed_failed">Ocurreva un error al obtener elementos del fluxo. ||</string>
+    <string name="seguir">Sequer</string>
+    <string name="first_start">Adder fluxos ab le menu lateral sinistre pro comenciar</string>
+    <string name="str_nb">Norvegian</string>
+    <string name="str_de">German</string>
+    <string name="str_pl">Polonese</string>
+    <string name="str_fr">Francese</string>
+    <string name="str_it">Italian</string>
+    <string name="str_nl">Neerlandese</string>
+    <string name="str_hr">Croate</string>
+    <string name="str_ru">Russe</string>
+    <string name="radio">Radios e TVs communitari</string>
 </resources>
