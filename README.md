@@ -25,6 +25,8 @@ Manual de uso: https://github.com/juanro49/FeedTV/blob/master/UserManual.pdf
 # Contribuir
 Cualquier persona podrá traducir FeedTV a diferentes idiomas mediante la plataforma [Weblate](https://hosted.weblate.org/projects/feedtv/). También, se pueden enviar fallos y propuestas de mejoras desde la pestaña ["Issues"](https://github.com/juanro49/FeedTV/issues) y además puedes colaborar con proyectos de los que depende FeedTV como [RSS-Parser](https://github.com/prof18/RSS-Parser), [M3UParser](https://github.com/BjoernPetersen/m3u-parser), [TDTChannels](https://github.com/LaQuay/TDTChannels) y haciendo aportaciones a la [lista radios y TV libres y comunitarias](https://libertalia.world/@enjey/106982718007217691).
 
+[![Estado de la traducción](https://hosted.weblate.org/widget/feedtv/feedtv/multi-auto.svg)](https://hosted.weblate.org/engage/feedtv/?utm_source=widget)
+
 ## Agradecimientos
 - [@prof18](https://github.com/prof18) --> [RSSParser](https://github.com/prof18/RSS-Parser)
 - [@BjoernPetersen](https://github.com/BjoernPetersen) --> [M3UParser](https://github.com/BjoernPetersen/m3u-parser)
