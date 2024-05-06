@@ -39,7 +39,7 @@
     <string name="title_activity_settings">Parametros</string>
     <string name="add_feed_success">Fluxo addite con successo</string>
     <string name="fecha_lista_noticias">Data</string>
-    <string name="edit">Modificar</string>
+    <string name="edit">Cambiar</string>
     <string name="delete_feed_success">Fluxo delite</string>
     <string name="url_clipboard">URL copiate al area de transferentia</string>
     <string name="oscuro">Obscur</string>
