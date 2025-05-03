@@ -12,7 +12,7 @@
     <string name="alert_message">தரவைப் பெற இயலாது.\n உங்கள் இணைப்பை சரிபார்க்கவும்.</string>
     <string name="alert_positive">மூடு</string>
     <string name="video">ஒளிதோற்றம்</string>
-    <string name="agradecimientos"><br/> <br/> பார்சருக்கு நன்றி.</string>
+    <string name="agradecimientos"><br/><br/>FeedTV சாத்தியமானது <a href="http://github.com/prof18/RSS-Parser">RSS பாகுபடுத்தி</a>, <a href="https://github.com/BjoernPetersen/m3u-parser">M3U பாகுபடுத்தி</a> <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a> இன் சேனல் களஞ்சியத்திலும் <a href="https://libertalia.world/@enjey/106982718007217691">enjey</a> இலிருந்து இலவச வானொலி நிலையங்களின் தொகுப்பிலும்.</string>
     <string name="reproductor_externo_on">சேனல்களை இயக்க வெளிப்புற பிளேயரைப் பயன்படுத்துகிறது</string>
     <string name="url_feed">URL:</string>
     <string name="titulo_addfeed">ஊட்ட RSS இன் பெயர் மற்றும் முகவரியை உள்ளிடவும்</string>
