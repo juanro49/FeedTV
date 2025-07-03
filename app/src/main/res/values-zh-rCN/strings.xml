@@ -9,4 +9,6 @@
     <string name="video">视频</string>
     <string name="channel_detail">频道详情</string>
     <string name="about">FeedTV是一个让您通过RSS订阅阅读任意媒体新闻，并且随时随地观看公共TV频道的移动应用。</string>
+    <string name="television">FeedTV 电视</string>
+    <string name="action_about">关于</string>
 </resources>
