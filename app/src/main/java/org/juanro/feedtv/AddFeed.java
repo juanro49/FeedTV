@@ -127,14 +127,14 @@ public class AddFeed extends AppCompatActivity
 					url = "https://news.google.com/rss/search?q=" + topic + "&hl=" + config.locale.getLanguage();
 				}
 
-				topic = topic.replaceAll("[+| ]", "") + "GN";
+				topic = topic.replaceAll("[+| -]", "") + "GN";
 				fuentes.insertarEntrada(topic, url);
 				FeedDatabase.getInstance(getApplicationContext()).crearTabla(topic + "_");
 			}
 			else if(bing.isChecked())
 			{
 				url = "https://www.bing.com/news/search?q=" + topic + "&format=rss";
-				topic = topic.replaceAll("[+| ]", "") + "BN";
+				topic = topic.replaceAll("[+| -]", "") + "BN";
 				fuentes.insertarEntrada(topic, url);
 				FeedDatabase.getInstance(getApplicationContext()).crearTabla(topic + "_");
 			}
@@ -154,7 +154,7 @@ public class AddFeed extends AppCompatActivity
 		else
 		{
 			fuentes = new RssList(this);
-			titulo = titulo.replaceAll("[+| ]", "");
+			titulo = titulo.replaceAll("[+| -]", "");
 			fuentes.insertarEntrada(titulo, url.getText().toString());
 
 			FeedDatabase.getInstance(getApplicationContext()).crearTabla(titulo + "_");
