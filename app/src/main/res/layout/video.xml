@@ -22,6 +22,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:fitsSystemWindows="true"
 	android:background="#000000"
 	android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
 	tools:context=".Videoview">

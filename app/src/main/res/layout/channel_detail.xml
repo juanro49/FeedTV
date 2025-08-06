@@ -26,6 +26,7 @@
 	android:id="@+id/detalle"
 	android:padding="10dp"
 	android:orientation="vertical"
+	android:fitsSystemWindows="true"
 	tools:context=".ChannelDetail">
 
 	<ImageView
