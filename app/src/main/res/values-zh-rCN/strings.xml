@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="search">搜索</string>
+    <string name="add_feed">饲料</string>
+    <string name="alert_message">无法获取数据。\n请检查您的网络连接。</string>
+    <string name="settings">设置</string>
+    <string name="alert_title">警告！</string>
+    <string name="alert_positive">关闭</string>
+    <string name="video">视频</string>
+    <string name="channel_detail">频道详情</string>
+    <string name="about">FeedTV是一个让您通过RSS订阅阅读任意媒体新闻，并且随时随地观看公共TV频道的移动应用。</string>
+    <string name="television">FeedTV 电视</string>
+    <string name="action_about">关于</string>
+</resources>

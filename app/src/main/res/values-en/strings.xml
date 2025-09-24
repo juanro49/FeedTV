@@ -60,7 +60,7 @@
     <string name="str_ext">Extremaduran</string>
     <string name="str_en">English</string>
     <string name="str_nb">Norwegian</string>
-    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV is possible thanks to &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, and the channel repository of &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="agradecimientos"><br/><br/> FeedTV is made possible thanks to <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a>, <a href="https://github.com/BjoernPetersen/m3u-parser">M3U Parser</a>, the channel repository of <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a> and the free radio collection of <a href="https://libertalia.world/@enjey/106982718007217691">enjey</a>.</string>
     <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;View on Github&lt;/a&gt;</string>
     <string name="idioma_establecido">Language set:</string>
     <string name="str_de">German</string>
@@ -74,4 +74,6 @@
     <string name="recentNews">You have no feeds added, do you want to add the recent news feed\?</string>
     <string name="title_recentNews">Add recent news</string>
     <string name="notAdd">Do not add</string>
+    <string name="listen_radio">Access free radio/TV</string>
+    <string name="radio">Radio and TV for the community</string>
 </resources>
