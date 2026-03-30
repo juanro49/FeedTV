@@ -23,26 +23,19 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.juanro.feedtv.BBDD.FeedDatabase;
 import org.juanro.feedtv.BBDD.RssList;
+import org.juanro.feedtv.databinding.AddFeedBinding;
 
 public class AddFeed extends AppCompatActivity
 {
-	private EditText nombre, url, tema;
-	private Button submit;
-	private RadioButton google, bing;
-	private CheckBox unlockGN;
-	private RssList fuentes;
-	private SharedPreferences sharedPref;
+	private AddFeedBinding binding;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -51,15 +44,8 @@ public class AddFeed extends AppCompatActivity
 		aplicarTema();
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.add_feed);
-
-		nombre = findViewById(R.id.etNombre);
-		url = findViewById(R.id.etUrl);
-		submit = findViewById(R.id.button);
-		tema = findViewById(R.id.etTema);
-		google = findViewById(R.id.rbGoogle);
-		bing = findViewById(R.id.rbBing);
-		unlockGN = findViewById(R.id.cbGN);
+		binding = AddFeedBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null)
@@ -70,18 +56,23 @@ public class AddFeed extends AppCompatActivity
 		// Modo editar
 		if(getIntent().getExtras() != null)
 		{
-			nombre.setText(getIntent().getExtras().getString("titulo"));
-			nombre.setFocusable(false);
-			url.setText(getIntent().getExtras().getString("url"));
-			submit.setText(this.getString(R.string.edit_feed));
+			binding.etNombre.setText(getIntent().getExtras().getString("titulo"));
+			binding.etNombre.setFocusable(false);
+			binding.etUrl.setText(getIntent().getExtras().getString("url"));
+			binding.button.setText(this.getString(R.string.edit_feed));
 		}
+
+		// Configurar listeners de botones
+		binding.button.setOnClickListener(this::submit);
+		binding.btnSeguir.setOnClickListener(this::submitSeguir);
 	}
 
-	public boolean onOptionsItemSelected(MenuItem item)
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item)
 	{
 		if (item.getItemId() == android.R.id.home)
 		{
-			this.onBackPressed();
+			getOnBackPressedDispatcher().onBackPressed();
 			return true;
 		}
 
@@ -104,39 +95,41 @@ public class AddFeed extends AppCompatActivity
 	// Seguir tema de Google News o Bing News
 	public void submitSeguir(View view)
 	{
-		String topic = tema.getText().toString().replace(" ", "+");
+		String topic = binding.etTema.getText().toString().replace(" ", "+");
 
-		if(tema.getText().toString().isEmpty() || !google.isChecked() && !bing.isChecked())
+		if(topic.isEmpty() || (!binding.rbGoogle.isChecked() && !binding.rbBing.isChecked()))
 		{
 			Toast.makeText(this, this.getString(R.string.add_feed_empty), Toast.LENGTH_LONG).show();
 		}
 		else
 		{
 			Configuration config = getResources().getConfiguration();
-			String url = "";
-			fuentes = new RssList(this);
+			String url;
 
-			if(google.isChecked())
+			try (RssList fuentes = new RssList(this))
 			{
-				if(unlockGN.isChecked())
+				if (binding.rbGoogle.isChecked())
 				{
-					url = "https://news.google.com/rss/search?q=" + topic + "&hl=es-419&gl=CU&ceid=CU:es-419";
-				}
-				else
-				{
-					url = "https://news.google.com/rss/search?q=" + topic + "&hl=" + config.locale.getLanguage();
-				}
+					if (binding.cbGN.isChecked())
+					{
+						url = "https://news.google.com/rss/search?q=" + topic + "&hl=es-419&gl=CU&ceid=CU:es-419";
+					}
+					else
+					{
+						url = "https://news.google.com/rss/search?q=" + topic + "&hl=" + config.getLocales().get(0).getLanguage();
+					}
 
-				topic = topic.replaceAll("[+| -]", "") + "GN";
-				fuentes.insertarEntrada(topic, url);
-				FeedDatabase.getInstance(getApplicationContext()).crearTabla(topic + "_");
-			}
-			else if(bing.isChecked())
-			{
-				url = "https://www.bing.com/news/search?q=" + topic + "&format=rss";
-				topic = topic.replaceAll("[+| -]", "") + "BN";
-				fuentes.insertarEntrada(topic, url);
-				FeedDatabase.getInstance(getApplicationContext()).crearTabla(topic + "_");
+					topic = topic.replaceAll("[+| -]", "") + "GN";
+					fuentes.insertarEntrada(topic, url);
+					FeedDatabase.getInstance(getApplicationContext()).crearTabla(topic + "_");
+				}
+				else if (binding.rbBing.isChecked())
+				{
+					url = "https://www.bing.com/news/search?q=" + topic + "&format=rss";
+					topic = topic.replaceAll("[+| -]", "") + "BN";
+					fuentes.insertarEntrada(topic, url);
+					FeedDatabase.getInstance(getApplicationContext()).crearTabla(topic + "_");
+				}
 			}
 
 			Toast.makeText(this, this.getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
@@ -145,33 +138,41 @@ public class AddFeed extends AppCompatActivity
 
 	public void addFeed()
 	{
-		String titulo = nombre.getText().toString();
+		String titulo = binding.etNombre.getText().toString();
+		String urlStr = binding.etUrl.getText().toString();
 
-		if(nombre.getText().toString().isEmpty() || url.getText().toString().isEmpty())
+		if(titulo.isEmpty() || urlStr.isEmpty())
 		{
 			Toast.makeText(this, this.getString(R.string.add_feed_empty), Toast.LENGTH_LONG).show();
 		}
 		else
 		{
-			fuentes = new RssList(this);
-			titulo = titulo.replaceAll("[+| -]", "");
-			fuentes.insertarEntrada(titulo, url.getText().toString());
+			try (RssList fuentes = new RssList(this))
+			{
+				titulo = titulo.replaceAll("[+| -]", "");
+				fuentes.insertarEntrada(titulo, urlStr);
 
-			FeedDatabase.getInstance(getApplicationContext()).crearTabla(titulo + "_");
+				FeedDatabase.getInstance(getApplicationContext()).crearTabla(titulo + "_");
+			}
 			Toast.makeText(this, this.getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
 		}
 	}
 
 	public void modFeed()
 	{
-		if(nombre.getText().toString().isEmpty() || url.getText().toString().isEmpty())
+		String titulo = binding.etNombre.getText().toString();
+		String urlStr = binding.etUrl.getText().toString();
+
+		if(titulo.isEmpty() || urlStr.isEmpty())
 		{
 			Toast.makeText(this, this.getString(R.string.add_feed_empty), Toast.LENGTH_LONG).show();
 		}
 		else
 		{
-			fuentes = new RssList(this);
-			fuentes.editarEntrada(nombre.getText().toString(), url.getText().toString());
+			try (RssList fuentes = new RssList(this))
+			{
+				fuentes.editarEntrada(titulo, urlStr);
+			}
 
 			Toast.makeText(this, this.getString(R.string.mod_feed_success), Toast.LENGTH_LONG).show();
 		}
@@ -182,9 +183,9 @@ public class AddFeed extends AppCompatActivity
 	 */
 	private void aplicarTema()
 	{
-		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
-		if(sharedPref.getString("tema", "Claro").equals("Claro"))
+		if("Claro".equals(sharedPref.getString("tema", "Claro")))
 		{
 			setTheme(R.style.TemaClaro);
 		}

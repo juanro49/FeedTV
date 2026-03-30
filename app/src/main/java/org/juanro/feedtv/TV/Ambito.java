@@ -19,39 +19,11 @@
 package org.juanro.feedtv.TV;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que representa un ámbito
  */
-public class Ambito implements Serializable
+public record Ambito(String nombre, List<Canal> canales) implements Serializable
 {
-    private String nombre;
-    private ArrayList<Canal> canales;
-
-    public Ambito(String nombre, ArrayList<Canal> canales)
-    {
-        this.nombre = nombre;
-        this.canales = canales;
-    }
-
-    public String getNombre()
-    {
-        return nombre;
-    }
-
-    public void setNombre(String nombre)
-    {
-        this.nombre = nombre;
-    }
-
-    public ArrayList<Canal> getCanales()
-    {
-        return canales;
-    }
-
-    public void setCanales(ArrayList<Canal> canales)
-    {
-        this.canales = canales;
-    }
 }

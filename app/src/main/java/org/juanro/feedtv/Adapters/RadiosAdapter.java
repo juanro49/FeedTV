@@ -20,6 +20,7 @@ package org.juanro.feedtv.Adapters;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -28,12 +29,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,6 +43,7 @@ import net.bjoernpetersen.m3u.model.M3uEntry;
 
 import org.juanro.feedtv.R;
 import org.juanro.feedtv.Videoview;
+import org.juanro.feedtv.databinding.ItemListNoticiasBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,14 +53,13 @@ import java.util.List;
  */
 public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder> implements Filterable
 {
-	private List<M3uEntry> radios;
+	private final List<M3uEntry> radios;
 	private List<M3uEntry> radiosFiltradas;
-	private ItemFilter mFilter = new ItemFilter();
-	private Context mContext;
+	private final ItemFilter mFilter = new ItemFilter();
+	private final Context mContext;
 
 	public RadiosAdapter(Context context, List<M3uEntry> radios)
 	{
-		//super(context, 0, radios);
 		this.radios = radios;
 		this.radiosFiltradas = radios;
 		this.mContext = context;
@@ -69,7 +67,10 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 
 	/**
 	 * Obtiene el filtro de búsqueda en la lista
+	 *
+	 * @return el filtro de elementos
  	 */
+	@Override
 	public Filter getFilter()
 	{
 		return mFilter;
@@ -79,47 +80,49 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 	/**
 	 * Establece la vista de los elementos de la lista
 	 *
-	 * @param viewGroup
-	 * @param viewType
-	 * @return
+	 * @param viewGroup el grupo de la vista
+	 * @param viewType el tipo de la vista
+	 * @return un nuevo ViewHolder
 	 */
 	@NonNull
 	@Override
 	public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType)
 	{
-		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_noticias, viewGroup, false);
-		return new RadiosAdapter.ViewHolder(v);
+		ItemListNoticiasBinding binding = ItemListNoticiasBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
+		return new ViewHolder(binding);
 	}
 
 	/**
 	 * Crea la vista de cada elemento en la lista
 	 *
-	 * @param vh
-	 * @param position
+	 * @param vh el ViewHolder que debe ser actualizado
+	 * @param position la posición del elemento dentro del conjunto de datos del adaptador
 	 */
 	@Override
 	public void onBindViewHolder(@NonNull ViewHolder vh, int position)
 	{
+		M3uEntry radio = radiosFiltradas.get(position);
+
 		// Establecer título
-		vh.title.setText(radiosFiltradas.get(vh.getAbsoluteAdapterPosition()).getTitle());
+		vh.binding.titulo.setText(radio.getTitle());
 
 		// Establecer título alternativo
-		vh.altTitle.setText(radiosFiltradas.get(vh.getAbsoluteAdapterPosition()).getMetadata().get("tvg-name"));
+		vh.binding.fecha.setText(radio.getMetadata().get("tvg-name"));
 
 		// Establecer imagen
 		Picasso.get()
-				.load(radiosFiltradas.get(vh.getAbsoluteAdapterPosition()).getMetadata().getLogo())
+				.load(radio.getMetadata().getLogo())
 				.placeholder(R.drawable.placeholder)
-				.into(vh.image);
+				.into(vh.binding.imagen);
 
 		// Establecer categoría
-		vh.category.setText(radiosFiltradas.get(vh.getAbsoluteAdapterPosition()).getMetadata().get("group-title"));
+		vh.binding.categorias.setText(radio.getMetadata().get("group-title"));
 
 		// Registra las pulsaciones en la lista
 		vh.itemView.setOnClickListener(view ->
 		{
 			SharedPreferences sharedPref = mContext.getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
-			String source = radiosFiltradas.get(vh.getAbsoluteAdapterPosition()).getLocation().getUrl().toString();
+			String source = radio.getLocation().getUrl().toString();
 
 			// Iniciar reproductor
 			if(sharedPref.getBoolean("reproductor", false))
@@ -128,18 +131,17 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 				Uri uri = Uri.parse(source);
 				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				//intent.setDataAndType(uri, "video/*");
-				mContext.getApplicationContext().startActivity(intent);
+				mContext.startActivity(intent);
 			}
 			else
 			{
 				// Reproductor interno
-				Intent i = new Intent(mContext.getApplicationContext(), Videoview.class);
+				Intent i = new Intent(mContext, Videoview.class);
 				Bundle extras = new Bundle();
 				extras.putString("url", source);
 				i.putExtras(extras);
 				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				mContext.getApplicationContext().startActivity(i);
+				mContext.startActivity(i);
 			}
 		});
 
@@ -148,7 +150,7 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 		{
 			// Copiar url
 			ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-			ClipData clip = ClipData.newPlainText("url", radiosFiltradas.get(vh.getAbsoluteAdapterPosition()).getLocation().getUrl().toString());
+			ClipData clip = ClipData.newPlainText("url", radio.getLocation().getUrl().toString());
 			clipboard.setPrimaryClip(clip);
 
 			Toast.makeText(mContext, mContext.getString(R.string.url_clipboard), Toast.LENGTH_LONG).show();
@@ -160,7 +162,7 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 	/**
 	 * Obtiene el tamaño de la lista
 	 *
-	 * @return
+	 * @return el número de elementos en la lista filtrada
 	 */
 	@Override
 	public int getItemCount()
@@ -179,7 +181,7 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 			String filtro = constraint.toString().toLowerCase();
 			FilterResults result = new FilterResults();
 
-			List<M3uEntry> radiosFiltradas = new ArrayList<>();
+			List<M3uEntry> radiosFiltradasLocal = new ArrayList<>();
 			String nombreradio;
 
 			// Comenzar filtrado de radios
@@ -190,17 +192,18 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 				// Comprobar que el nombre del canal contiene la secuencia de búsqueda
 				if (nombreradio != null && nombreradio.toLowerCase().contains(filtro))
 				{
-					radiosFiltradas.add(radios.get(i));
+					radiosFiltradasLocal.add(radios.get(i));
 				}
 			}
 
 			// Enviar lista filtrada a la clase de filtrado
-			result.values = radiosFiltradas;
-			result.count = radiosFiltradas.size();
+			result.values = radiosFiltradasLocal;
+			result.count = radiosFiltradasLocal.size();
 
 			return result;
 		}
 
+		@SuppressLint("NotifyDataSetChanged")
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results)
@@ -217,20 +220,14 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 	/**
 	 * ViewHolder para asociar variables con elementos gráficos
 	 */
-	class ViewHolder extends RecyclerView.ViewHolder
+	public static class ViewHolder extends RecyclerView.ViewHolder
 	{
-		TextView title;
-		TextView altTitle;
-		ImageView image;
-		TextView category;
+		public final ItemListNoticiasBinding binding;
 
-		public ViewHolder(@NonNull View itemView)
+		public ViewHolder(@NonNull ItemListNoticiasBinding binding)
 		{
-			super(itemView);
-			title = itemView.findViewById(R.id.titulo);
-			altTitle = itemView.findViewById(R.id.fecha);
-			image = itemView.findViewById(R.id.imagen);
-			category = itemView.findViewById(R.id.categorias);
+			super(binding.getRoot());
+			this.binding = binding;
 		}
 	}
 }

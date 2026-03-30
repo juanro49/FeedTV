@@ -18,38 +18,36 @@
 
 package org.juanro.feedtv.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.juanro.feedtv.ChannelsActivity;
-import org.juanro.feedtv.R;
 import org.juanro.feedtv.TV.Ambito;
+import org.juanro.feedtv.databinding.ItemListCanalesBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que representa el adapter de la lista de canales
  */
 public class AmbitsAdapter extends RecyclerView.Adapter<AmbitsAdapter.ViewHolder> implements Filterable
 {
-	private ArrayList<Ambito> ambitos;
-	private ArrayList<Ambito> ambitosFiltrados;
-	private ItemFilter mFilter = new ItemFilter();
-	private Context mContext;
+	private final List<Ambito> ambitos;
+	private List<Ambito> ambitosFiltrados;
+	private final ItemFilter mFilter = new ItemFilter();
+	private final Context mContext;
 
-	public AmbitsAdapter(Context context, ArrayList<Ambito> ambitos)
+	public AmbitsAdapter(Context context, List<Ambito> ambitos)
 	{
-		//super(context, 0, ambitos);
 		this.ambitos = ambitos;
 		this.ambitosFiltrados = ambitos;
 		this.mContext = context;
@@ -57,7 +55,10 @@ public class AmbitsAdapter extends RecyclerView.Adapter<AmbitsAdapter.ViewHolder
 
 	/**
 	 * Obtiene el filtro de búsqueda en la lista
+	 *
+	 * @return el filtro de elementos
  	 */
+	@Override
 	public Filter getFilter()
 	{
 		return mFilter;
@@ -67,36 +68,37 @@ public class AmbitsAdapter extends RecyclerView.Adapter<AmbitsAdapter.ViewHolder
 	/**
 	 * Establece la vista de los elementos de la lista
 	 *
-	 * @param viewGroup
-	 * @param viewType
-	 * @return
+	 * @param viewGroup el grupo de la vista
+	 * @param viewType el tipo de la vista
+	 * @return un nuevo ViewHolder
 	 */
 	@NonNull
 	@Override
 	public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType)
 	{
-		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_canales, viewGroup, false);
-		return new AmbitsAdapter.ViewHolder(v);
+		ItemListCanalesBinding binding = ItemListCanalesBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
+		return new ViewHolder(binding);
 	}
 
 	/**
 	 * Crea la vista de cada elemento en la lista
 	 *
-	 * @param vh
-	 * @param position
+	 * @param vh el ViewHolder que debe ser actualizado
+	 * @param position la posición del elemento dentro del conjunto de datos del adaptador
 	 */
 	@Override
 	public void onBindViewHolder(@NonNull ViewHolder vh, int position)
 	{
+		Ambito ambito = ambitosFiltrados.get(position);
 		// Establecer título
-		vh.titleView.setText(ambitosFiltrados.get(vh.getAbsoluteAdapterPosition()).getNombre());
+		vh.binding.channelTitle.setText(ambito.nombre());
 
 		// Registra las pulsaciones en la lista
 		vh.itemView.setOnClickListener(view ->
 		{
 			// Inicia la activity de detalles del canal seleccionado
 			Intent intent = new Intent(mContext, ChannelsActivity.class);
-			intent.putExtra("Ambito", ambitosFiltrados.get(vh.getAbsoluteAdapterPosition()));
+			intent.putExtra("Ambito", ambito);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			mContext.startActivity(intent);
 		});
@@ -105,7 +107,7 @@ public class AmbitsAdapter extends RecyclerView.Adapter<AmbitsAdapter.ViewHolder
 	/**
 	 * Obtiene el tamaño de la lista
 	 *
-	 * @return
+	 * @return el número de elementos en la lista filtrada
 	 */
 	@Override
 	public int getItemCount()
@@ -124,28 +126,29 @@ public class AmbitsAdapter extends RecyclerView.Adapter<AmbitsAdapter.ViewHolder
 			String filtro = constraint.toString().toLowerCase();
 			FilterResults result = new FilterResults();
 
-			ArrayList<Ambito> ambitosFiltrados = new ArrayList<>();
+			ArrayList<Ambito> ambitosFiltradosLocal = new ArrayList<>();
 			String nombreAmbito;
 
 			// Comenzar filtrado de canales
 			for (int i = 0; i < ambitos.size(); i++)
 			{
-				nombreAmbito = ambitos.get(i).getNombre();
+				nombreAmbito = ambitos.get(i).nombre();
 
 				// Comprobar que el nombre del canal contiene la secuencia de búsqueda
 				if (nombreAmbito.toLowerCase().contains(filtro))
 				{
-					ambitosFiltrados.add(ambitos.get(i));
+					ambitosFiltradosLocal.add(ambitos.get(i));
 				}
 			}
 
 			// Enviar lista filtrada a la clase de filtrado
-			result.values = ambitosFiltrados;
-			result.count = ambitosFiltrados.size();
+			result.values = ambitosFiltradosLocal;
+			result.count = ambitosFiltradosLocal.size();
 
 			return result;
 		}
 
+		@SuppressLint("NotifyDataSetChanged")
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results)
@@ -159,16 +162,14 @@ public class AmbitsAdapter extends RecyclerView.Adapter<AmbitsAdapter.ViewHolder
 	/**
 	 * ViewHolder para asociar variables con elementos gráficos
 	 */
-	class ViewHolder extends RecyclerView.ViewHolder
+	public static class ViewHolder extends RecyclerView.ViewHolder
 	{
-		ImageView imageView;
-		TextView titleView;
+		public final ItemListCanalesBinding binding;
 
-		public ViewHolder(@NonNull View itemView)
+		public ViewHolder(@NonNull ItemListCanalesBinding binding)
 		{
-			super(itemView);
-			imageView = itemView.findViewById(R.id.channel_icon);
-			titleView = itemView.findViewById(R.id.channel_title);
+			super(binding.getRoot());
+			this.binding = binding;
 		}
 	}
 }

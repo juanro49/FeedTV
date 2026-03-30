@@ -7,4 +7,5 @@
     <color name="colorBackgroundFloating">#181C1D</color>
     <color name="colorFontWhite">#FFFFFF</color>
     <color name="colorFontBlack">#000000</color>
+    <color name="ic_launcher_background">#0F36AA</color>
 </resources>

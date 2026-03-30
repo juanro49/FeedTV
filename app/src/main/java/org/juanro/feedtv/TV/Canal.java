@@ -20,64 +20,11 @@ package org.juanro.feedtv.TV;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que representa un canal
  */
-public class Canal implements Serializable
+public record Canal(String nombre, String web, String logo, List<Opciones> opciones) implements Serializable
 {
-    private String nombre;
-    private String web;
-    private String logo;
-
-    private ArrayList<Opciones> opciones;
-
-    public Canal(String nombre, String web, String logo, ArrayList<Opciones> opciones)
-    {
-        this.nombre = nombre;
-        this.web = web;
-        this.logo = logo;
-        this.opciones = opciones;
-    }
-
-    public String getNombre()
-    {
-        return nombre;
-    }
-
-    public void setNombre(String nombre)
-    {
-        this.nombre = nombre;
-    }
-
-    public String getWeb()
-    {
-        return web;
-    }
-
-    public void setWeb(String web)
-    {
-        this.web = web;
-    }
-
-    public String getLogo()
-    {
-        return logo;
-    }
-
-    public void setLogo(String logo)
-    {
-        this.logo = logo;
-    }
-
-    public ArrayList<Opciones> getOpciones()
-    {
-        return opciones;
-    }
-
-    public void setOpciones(ArrayList<Opciones> opciones)
-    {
-        this.opciones = opciones;
-    }
 }

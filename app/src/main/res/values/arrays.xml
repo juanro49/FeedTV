@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- Tema aplicación -->
 	<string-array name="temas">
@@ -26,6 +27,9 @@
 		<item>@string/str_nl</item>
 		<item>@string/str_hr</item>
 		<item>@string/str_ru</item>
+		<item>@string/str_sv</item>
+		<item>@string/str_ia</item>
+		<item>@string/str_zh</item>
 	</string-array>
 
 	<!-- Valores idioma aplicación -->
@@ -43,5 +47,8 @@
 		<item>nl</item>
 		<item>hr</item>
 		<item>ru</item>
+		<item>sv</item>
+		<item>ia</item>
+		<item>zh</item>
 	</string-array>
 </resources>

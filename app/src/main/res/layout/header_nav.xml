@@ -17,16 +17,10 @@
 ~
 ~
 -->
-
-<FrameLayout
+<ImageView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:fitsSystemWindows="true">
-
-	<ImageView
-		android:layout_width="match_parent"
-		android:layout_height="180dp"
-		android:src="@drawable/side_nav_bar"
-		android:scaleType="centerCrop" />
-</FrameLayout>
+	android:layout_height="180dp"
+	android:src="@drawable/side_nav_bar"
+	android:scaleType="centerCrop"
+	android:fitsSystemWindows="true" />

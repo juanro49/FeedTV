@@ -3,8 +3,7 @@
     <string name="fecha_lista_noticias">Date</string>
     <string name="reproductor_externo_on">You are using an external player to play the channels</string>
     <string name="action_about">About</string>
-    <string name="alert_message">Cannot fetch data.
-\nCheck your connection.</string>
+    <string name="alert_message">Cannot fetch data.\nCheck your connection.</string>
     <string name="tema_aplicacion">App theme</string>
     <string name="titulo_addfeed">Type in the name and the address of the RSS-feed</string>
     <string name="nombre_feed">Name of news source</string>
@@ -29,7 +28,7 @@
     <string name="add_feed_success">Feed added successfully</string>
     <string name="mod_feed_success">Feed modified successfully</string>
     <string name="title_dialog_rss_list">Edit feed</string>
-    <string name="dialog_rss_list">What action do you want to take with</string>
+    <string name="dialog_rss_list">What action do you want to take with </string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="delete_feed_success">Feed deleted</string>
@@ -37,7 +36,7 @@
     <string name="no_connection">Internet connection is not available</string>
     <string name="first_start">Add feeds from the left side menu to get started</string>
     <string name="update_feed_success">Articles updated successfully</string>
-    <string name="update_feed_failed">An error has occurred while obtaining items from the feed. ||</string>
+    <string name="update_feed_failed">An error has occurred while obtaining items from the feed. || </string>
     <string name="url_clipboard">URL copied to clipboard</string>
     <string name="seguir">Follow</string>
     <string name="tema_seguir">Topic to follow</string>
@@ -60,9 +59,9 @@
     <string name="str_ext">Extremaduran</string>
     <string name="str_en">English</string>
     <string name="str_nb">Norwegian</string>
-    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV is possible thanks to &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, and the channel repository of &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV is possible thanks to &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, the channel repository of &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt; and free radios collection of &lt;a href=\'https://libertalia.world/@enjey/106982718007217691\'&gt;enjey&lt;/a&gt;.</string>
     <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;View on Github&lt;/a&gt;</string>
-    <string name="idioma_establecido">Language set:</string>
+    <string name="idioma_establecido">Language set: </string>
     <string name="str_de">German</string>
     <string name="str_ca">Catalan</string>
     <string name="str_pl">Polish</string>
@@ -71,7 +70,13 @@
     <string name="str_fr">French</string>
     <string name="str_ru">Russian</string>
     <string name="str_hr">Croatian</string>
-    <string name="recentNews">You have no feeds added, do you want to add the recent news feed\?</string>
+    <string name="str_sv">Swedish</string>
+    <string name="str_ia">Interlingua</string>
+    <string name="str_zh">Chinese</string>
+    <string name="recentNews">You have no feeds added, do you want to add the recent news feed?</string>
     <string name="title_recentNews">Add recent news</string>
     <string name="notAdd">Do not add</string>
+    <string name="radio">Community radios and TVs</string>
+    <string name="custom_m3u">Load custom M3U list</string>
+    <string name="title_activity_custom_m3u">Custom M3U</string>
 </resources>

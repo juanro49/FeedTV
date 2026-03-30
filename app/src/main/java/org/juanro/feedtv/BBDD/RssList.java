@@ -32,7 +32,7 @@ import android.provider.BaseColumns;
 public class RssList extends SQLiteOpenHelper
 {
 	// Metainformación de la base de datos
-	public static String FEED_TABLE_NAME = "fuentes";
+	public static final String FEED_TABLE_NAME = "fuentes";
 	public static final String STRING_TYPE = "TEXT";
 	public static final String INT_TYPE = "INTEGER";
 
@@ -126,7 +126,7 @@ public class RssList extends SQLiteOpenHelper
 
 	/**
 	 * Eliminar entrada
-	 * @param fuente
+	 * @param fuente nombre de la fuente a eliminar
 	 */
 	public void eliminarEntradas(String fuente)
 	{

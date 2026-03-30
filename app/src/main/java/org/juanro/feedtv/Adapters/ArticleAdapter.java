@@ -24,11 +24,9 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.prof18.rssparser.model.RssItem;
@@ -45,16 +43,18 @@ import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.juanro.feedtv.R;
+import org.juanro.feedtv.databinding.ItemListNoticiasBinding;
 
 /**
  * Clase que representa el adapter de la lista de artículos
  */
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder>
 {
+    private static final String TAG = "ArticleAdapter";
     // Lista que contendrá los artículos
-    private List<RssItem> articles;
+    private final List<RssItem> articles;
     // Contexto
-    private Context mContext;
+    private final Context mContext;
 
     public ArticleAdapter(List<RssItem> list, Context context)
     {
@@ -65,8 +65,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     /**
      * Obtener lista de artículos
      *
-     * @return
+     * @return la lista de artículos
      */
+    @SuppressWarnings("unused")
     public List<RssItem> getArticleList()
     {
         return articles;
@@ -75,23 +76,23 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     /**
      * Establece la vista de los elementos de la lista
      *
-     * @param viewGroup
-     * @param i
-     * @return
+     * @param viewGroup el grupo de la vista
+     * @param i el tipo de la vista
+     * @return un nuevo ViewHolder
      */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i)
     {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_noticias, viewGroup, false);
-        return new ViewHolder(v);
+        ItemListNoticiasBinding binding = ItemListNoticiasBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
+        return new ViewHolder(binding);
     }
 
     /**
      * Crea la vista de cada elemento de la lista
      *
-     * @param viewHolder
-     * @param position
+     * @param viewHolder el ViewHolder que debe ser actualizado
+     * @param position la posición del elemento dentro del conjunto de datos del adaptador
      */
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int position)
@@ -108,7 +109,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
             SimpleDateFormat sourceRSS = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
             SimpleDateFormat sourceAtom = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
-            Date date = new Date();
+            Date date;
 
             // La fecha viene en diferentes formatos para feeds de Atom y RSS
             if(sourceDateString.startsWith("2"))
@@ -122,11 +123,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             }
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm", Locale.getDefault());
-            pubDateString = sdf.format(date);
+            pubDateString = date != null ? sdf.format(date) : String.valueOf(currentArticle.getPubDate());
         }
         catch (ParseException e)
         {
-            e.printStackTrace();
+            Log.e(TAG, "Error al parsear la fecha", e);
             pubDateString = String.valueOf(currentArticle.getPubDate());
         }
 
@@ -134,39 +135,24 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         //Comprobamos si el titulo tiene CDATA para eliminarlo
         title = currentArticle.getTitle();
 
-        if(title.contains("<![CDATA["))
+        if(title != null && title.contains("<![CDATA["))
         {
             title = title.replace("<![CDATA[", "").replace("]]>", "");
         }
 
-        viewHolder.title.setText(title);
+        viewHolder.binding.titulo.setText(title);
 
         // Setear imagen
         Picasso.get()
                 .load(currentArticle.getImage())
                 .placeholder(R.drawable.placeholder)
-                .into(viewHolder.image);
+                .into(viewHolder.binding.imagen);
 
         // Setear fecha
-        viewHolder.pubDate.setText(pubDateString);
-
-        // Obtener categorías del artículo
-        StringBuilder categories = new StringBuilder();
-
-        for (int i = 0; i < currentArticle.getCategories().size(); i++)
-        {
-            if (i == currentArticle.getCategories().size() - 1)
-            {
-                categories.append(currentArticle.getCategories().get(i));
-            }
-            else
-            {
-                categories.append(currentArticle.getCategories().get(i)).append(", ");
-            }
-        }
+        viewHolder.binding.fecha.setText(pubDateString);
 
         // Setear categorías
-        viewHolder.category.setText(categories.toString());
+        viewHolder.binding.categorias.setText(formatCategories(currentArticle.getCategories()));
 
         // Accion pulsación larga
         viewHolder.itemView.setOnLongClickListener(v ->
@@ -187,15 +173,41 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             // Obtener url del artículo
             String url = articles.get(viewHolder.getAbsoluteAdapterPosition()).getLink();
 
-            // Abrir url en formato Custom Tab
-            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-            builder.setShareState(CustomTabsIntent.SHARE_STATE_DEFAULT);
-            CustomTabsIntent cti = builder.build();
-            cti.intent.putExtra(Intent.EXTRA_REFERRER, Uri.parse(Intent.URI_ANDROID_APP_SCHEME + "//" + mContext.getPackageName()));
-            // Hacer compatible con versiones anteriores a Android 6
-            cti.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            cti.launchUrl(mContext, Uri.parse(url));
+            if (url != null) {
+                // Abrir url en formato Custom Tab
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                builder.setShareState(CustomTabsIntent.SHARE_STATE_DEFAULT);
+                CustomTabsIntent cti = builder.build();
+                cti.intent.putExtra(Intent.EXTRA_REFERRER, Uri.parse(Intent.URI_ANDROID_APP_SCHEME + "//" + mContext.getPackageName()));
+                // Hacer compatible con versiones anteriores a Android 6
+                cti.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                cti.launchUrl(mContext, Uri.parse(url));
+            }
         });
+    }
+
+    /**
+     * Formatea la lista de categorías en una cadena separada por comas
+     *
+     * @param categoryList lista de categorías
+     * @return cadena formateada
+     */
+    private String formatCategories(List<String> categoryList) {
+        StringBuilder categories = new StringBuilder();
+        if (categoryList != null) {
+            for (int i = 0; i < categoryList.size(); i++)
+            {
+                if (i == categoryList.size() - 1)
+                {
+                    categories.append(categoryList.get(i));
+                }
+                else
+                {
+                    categories.append(categoryList.get(i)).append(", ");
+                }
+            }
+        }
+        return categories.toString();
     }
 
     // Obtener tamaño de la lista
@@ -208,20 +220,14 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     /**
      * ViewHolder para asociar variables con elementos gráficos
      */
-    class ViewHolder extends RecyclerView.ViewHolder
+    public static class ViewHolder extends RecyclerView.ViewHolder
 	{
-        TextView title;
-        TextView pubDate;
-        ImageView image;
-        TextView category;
+        public final ItemListNoticiasBinding binding;
 
-        private ViewHolder(View itemView)
+        private ViewHolder(ItemListNoticiasBinding binding)
 		{
-            super(itemView);
-            title = itemView.findViewById(R.id.titulo);
-            pubDate = itemView.findViewById(R.id.fecha);
-            image = itemView.findViewById(R.id.imagen);
-            category = itemView.findViewById(R.id.categorias);
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

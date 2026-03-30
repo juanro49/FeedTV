@@ -23,33 +23,6 @@ import java.io.Serializable;
 /**
  * Clase que representa las opciones de un canal
  */
-public class Opciones implements Serializable
+public record Opciones(String formato, String url) implements Serializable
 {
-    private String url;
-    private String formato;
-
-    public Opciones(String formato, String url)
-    {
-        this.url = url;
-    }
-
-    public String getUrl()
-	{
-        return url;
-    }
-
-    public void setUrl(String url)
-	{
-        this.url = url;
-    }
-
-	public String getFormato()
-	{
-		return formato;
-	}
-
-	public void setFormato(String formato)
-	{
-		this.formato = formato;
-	}
 }

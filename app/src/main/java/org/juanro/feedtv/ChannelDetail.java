@@ -25,14 +25,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,6 +39,7 @@ import com.squareup.picasso.Picasso;
 
 import org.juanro.feedtv.TV.Canal;
 import org.juanro.feedtv.TV.Opciones;
+import org.juanro.feedtv.databinding.ChannelDetailBinding;
 
 import java.util.ArrayList;
 
@@ -48,10 +48,6 @@ import java.util.ArrayList;
  */
 public class ChannelDetail extends AppCompatActivity
 {
-	private Canal canal;
-	private TextView titulo, url, subtitulo;
-	private ImageView imagen;
-	private ListView fuentes;
 	private SharedPreferences sharedPref;
 
 	@Override
@@ -61,13 +57,8 @@ public class ChannelDetail extends AppCompatActivity
 		aplicarTema();
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.channel_detail);
-
-		titulo = findViewById(R.id.channelName);
-		imagen = findViewById(R.id.channelImage);
-		url = findViewById(R.id.channelUrl);
-		subtitulo = findViewById(R.id.channelElements);
-		fuentes = findViewById(R.id.channelSources);
+		ChannelDetailBinding binding = ChannelDetailBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
 		// Establecer botón de atrás en action bar
 		ActionBar actionBar = getSupportActionBar();
@@ -81,82 +72,93 @@ public class ChannelDetail extends AppCompatActivity
 
 		// Obtener canal de la anterior activity
 		Intent intent = getIntent();
-		canal = (Canal) intent.getSerializableExtra("canal");
-
-		titulo.setText(canal.getNombre());
-		url.setText(canal.getWeb());
-
-		Picasso.get()
-				.load(canal.getLogo())
-				.placeholder(R.drawable.ic_launcher_foreground)
-				.into(imagen);
-
-		if (!canal.getOpciones().isEmpty())
+		Canal canal;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
 		{
-			// Crear lista con enlaces del canal
-			ArrayList<String> sources = new ArrayList<>();
+			canal = intent.getSerializableExtra("canal", Canal.class);
+		}
+		else
+		{
+			//noinspection deprecation
+			canal = (Canal) intent.getSerializableExtra("canal");
+		}
 
-			for (Opciones opcion : canal.getOpciones())
+		if (canal != null)
+		{
+			binding.channelName.setText(canal.nombre());
+			binding.channelUrl.setText(canal.web());
+
+			Picasso.get()
+					.load(canal.logo())
+					.placeholder(R.drawable.ic_launcher_foreground)
+					.into(binding.channelImage);
+
+			if (!canal.opciones().isEmpty())
 			{
-				sources.add(opcion.getUrl());
+				// Crear lista con enlaces del canal
+				ArrayList<String> sources = new ArrayList<>();
+
+				for (Opciones opcion : canal.opciones())
+				{
+					sources.add(opcion.url());
+				}
+
+				// Crear adapter y asignarlo a la lista de fuentes
+				ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sources);
+				binding.channelSources.setAdapter(adapter);
+
+				// Obtener pulsaciones sobre la lista
+				binding.channelSources.setOnItemClickListener((parent, view, position, id) ->
+				{
+					String source = parent.getItemAtPosition(position).toString();
+
+					// Iniciar reproductor
+					if(sharedPref.getBoolean("reproductor", false))
+					{
+						// Reproductor externo
+						Uri uri = Uri.parse(source);
+						Intent intent1 = new Intent(Intent.ACTION_VIEW, uri);
+						startActivity(intent1);
+					}
+					else
+					{
+						// Reproductor interno
+						Intent i = new Intent(this, Videoview.class);
+						Bundle extras = new Bundle();
+						extras.putString("url", source);
+						i.putExtras(extras);
+						startActivity(i);
+					}
+				});
+
+				// Accion pulsación larga
+				binding.channelSources.setOnItemLongClickListener((parent, view, position, id) ->
+				{
+					// Copiar url
+					ClipboardManager clipboard = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
+					ClipData clip = ClipData.newPlainText("url", parent.getItemAtPosition(position).toString());
+					clipboard.setPrimaryClip(clip);
+
+					Toast.makeText(this, this.getString(R.string.url_clipboard), Toast.LENGTH_LONG).show();
+
+					return true;
+				});
 			}
-
-			// Crear adapter y asignarlo a la lista de fuentes
-			ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sources);
-			fuentes.setAdapter(adapter);
-
-			// Obtener pulsaciones sobre la lista
-			fuentes.setOnItemClickListener((parent, view, position, id) ->
-			{
-				String source = fuentes.getItemAtPosition(position).toString();
-
-				// Iniciar reproductor
-				if(sharedPref.getBoolean("reproductor", false))
-				{
-					// Reproductor externo
-					Uri uri = Uri.parse(source);
-					Intent intent1 = new Intent(Intent.ACTION_VIEW, uri);
-					//intent.setDataAndType(uri, "video/*");
-					startActivity(intent1);
-				}
-				else
-				{
-					// Reproductor interno
-					Intent i = new Intent(getApplicationContext(), Videoview.class);
-					Bundle extras = new Bundle();
-					extras.putString("url", source);
-					i.putExtras(extras);
-					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					getApplicationContext().startActivity(i);
-				}
-			});
-
-			// Accion pulsación larga
-			fuentes.setOnItemLongClickListener((parent, view, position, id) ->
-			{
-				// Copiar url
-				ClipboardManager clipboard = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
-				ClipData clip = ClipData.newPlainText("url", fuentes.getItemAtPosition(position).toString());
-				clipboard.setPrimaryClip(clip);
-
-				Toast.makeText(this, this.getString(R.string.url_clipboard), Toast.LENGTH_LONG).show();
-
-				return true;
-			});
 		}
 	}
 
 	/**
 	 * Acciones menú
 	 *
-	 * @param item
-	 * @return
+	 * @param item El elemento de menú seleccionado
+	 * @return boolean Devuelve true si se maneja la pulsación
 	 */
-	public boolean onOptionsItemSelected(MenuItem item)
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item)
 	{
 		if (item.getItemId() == android.R.id.home)
 		{
-			this.onBackPressed();
+			getOnBackPressedDispatcher().onBackPressed();
 			return true;
 		}
 
@@ -170,7 +172,7 @@ public class ChannelDetail extends AppCompatActivity
 	{
 		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
-		if(sharedPref.getString("tema", "Claro").equals("Claro"))
+		if("Claro".equals(sharedPref.getString("tema", "Claro")))
 		{
 			setTheme(R.style.TemaClaro);
 		}

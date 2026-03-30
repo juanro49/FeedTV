@@ -18,69 +18,75 @@
 ~   Layout basado en el creado por LaQuay
 ~
 -->
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:id="@+id/detalle"
-	android:padding="10dp"
+	android:padding="16dp"
 	android:orientation="vertical"
 	android:fitsSystemWindows="true"
 	tools:context=".ChannelDetail">
 
-	<ImageView
-		android:id="@+id/channelImage"
-		android:layout_width="96dp"
-		android:layout_height="96dp"
-		android:adjustViewBounds="true" />
-
-
-	<TextView
-		android:id="@+id/channelName"
-		android:layout_width="wrap_content"
+	<LinearLayout
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:fontFamily="sans-serif-medium"
-		android:text="@string/nombre_canal_detalle"
-		android:layout_toEndOf="@+id/channelImage"
-		android:paddingStart="20dp"
-		android:textSize="20sp" />
+		android:orientation="horizontal"
+		android:gravity="center_vertical">
 
-	<TextView
-		android:id="@+id/channelUrl"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:autoLink="web"
-		android:fontFamily="sans-serif-light"
-		android:paddingTop="10dp"
-		android:text="@string/url_detalle"
-		android:layout_below="@+id/channelName"
-		android:layout_toEndOf="@+id/channelImage"
-		android:paddingStart="20dp"
-		android:textSize="16sp" />
+		<ImageView
+			android:id="@+id/channelImage"
+			android:layout_width="96dp"
+			android:layout_height="96dp"
+			android:adjustViewBounds="true"
+			android:contentDescription="@string/nombre_canal_detalle"
+			tools:src="@drawable/placeholder" />
 
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingStart="16dp"
+			android:paddingEnd="0dp">
+
+			<TextView
+				android:id="@+id/channelName"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="sans-serif-medium"
+				android:text="@string/nombre_canal_detalle"
+				android:textSize="20sp" />
+
+			<TextView
+				android:id="@+id/channelUrl"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:autoLink="web"
+				android:fontFamily="sans-serif-light"
+				android:paddingTop="8dp"
+				android:text="@string/url_detalle"
+				android:textSize="16sp" />
+		</LinearLayout>
+	</LinearLayout>
 
 	<TextView
 		android:id="@+id/channelElements"
-		android:layout_width="wrap_content"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:autoLink="web"
 		android:fontFamily="sans-serif-light"
-		android:paddingTop="20dp"
-		android:paddingBottom="10dp"
-		android:layout_below="@+id/channelImage"
+		android:paddingTop="24dp"
+		android:paddingBottom="8dp"
 		android:text="@string/enlaces_disponibles"
-		android:paddingStart="20dp"
 		android:textSize="16sp"
 		android:textStyle="bold" />
 
 	<ListView
 		android:id="@+id/channelSources"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="5dp"
-		android:autoLink="web"
-		android:layout_below="@+id/channelElements"
-		android:fontFamily="sans-serif-light"
-		android:textSize="16sp" />
-</RelativeLayout>
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:divider="@android:color/transparent"
+		android:dividerHeight="4dp"
+		android:fontFamily="sans-serif-light" />
+
+</LinearLayout>

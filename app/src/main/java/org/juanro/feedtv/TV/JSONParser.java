@@ -24,8 +24,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
@@ -34,6 +32,7 @@ import org.json.JSONObject;
 import org.juanro.feedtv.Http.VolleyController;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -42,17 +41,38 @@ import java.util.ArrayList;
 public class JSONParser
 {
 	public static final String TAG = JSONParser.class.getSimpleName();
-	private static JSONParser instance;
-	private ArrayList<Ambito> ambitos;
-	private String url = "https://www.tdtchannels.com/lists/tv.json";
+	private static volatile JSONParser instance;
+	private List<Ambito> ambitos;
+	private static final String TV_URL = "https://www.tdtchannels.com/lists/tv.json";
 
+	private JSONParser() {}
+
+	/**
+	 * Método para obtener una instancia única (Thread-safe)
+	 *
+	 * @return instancia de JSONParser
+	 */
+	public static JSONParser getInstance()
+	{
+		if (instance == null)
+		{
+			synchronized (JSONParser.class)
+			{
+				if (instance == null)
+				{
+					instance = new JSONParser();
+				}
+			}
+		}
+		return instance;
+	}
 
 	/**
 	 * Método que carga la lista de objetos parseados a la interfaz que lo envía a TvActivity
 	 *
-	 * @param forceUpdate
-	 * @param context
-	 * @param responseServerCallback
+	 * @param forceUpdate si se debe ignorar la caché
+	 * @param context contexto de la aplicación
+	 * @param responseServerCallback callback de respuesta
 	 */
 	public void loadChannels(boolean forceUpdate, final Context context, final ResponseServerCallback responseServerCallback)
 	{
@@ -63,136 +83,91 @@ public class JSONParser
 		}
 		else
 		{
-			Log.i(TAG, "Cargar canales desde el servidor: " + url);
+			Log.i(TAG, "Cargar canales desde el servidor: " + TV_URL);
 			ambitos = new ArrayList<>();
-			downloadChannels(url, ambitos, context, responseServerCallback);
+			downloadChannels(context.getApplicationContext(), responseServerCallback);
 		}
 	}
 
-	private JSONParser()
-	{
-	}
-
 	/**
-	 * Método para obtener una instancia única
-	 *
-	 * @return
+	 * Método que se encarga de realizar la descarga y parseo del JSON
 	 */
-	public static JSONParser getInstance()
+	private void downloadChannels(final Context appContext, final ResponseServerCallback callback)
 	{
-		if (instance == null)
-		{
-			instance = new JSONParser();
-		}
-
-		return instance;
-	}
-
-	/**
-	 * Método que se encarga de parsear el JSON
-	 *
-	 * @param URL
-	 * @param ambitos
-	 * @param context
-	 * @param responseServerCallback
-	 */
-	private void downloadChannels(final String URL, final ArrayList<Ambito> ambitos, final Context context, final ResponseServerCallback responseServerCallback)
-	{
-		// Petición del JSON
-		JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(
+		JsonObjectRequest jsonRequest = new JsonObjectRequest(
 				Request.Method.GET,
-				URL,
+				TV_URL,
 				null,
-				new Response.Listener<JSONObject>()
-				{
-					/**
-					 * Cosas a hacer cuando la respuesta es correcta
-					 *
-					 * @param response
-					 */
-					@Override
-					public void onResponse(JSONObject response)
+				response -> {
+					Log.i(TAG, "JSON obtenido correctamente");
+					try
 					{
-						Log.i(TAG, "JSON obtenido correctamente");
-
-						// Parsear elementos del JSON
-						try
-						{
-							JSONArray countries = response.getJSONArray("countries");
-
-							for (int i = 0; i < countries.length(); i++)
-							{
-								JSONObject jsonElement = countries.getJSONObject(i);
-								JSONArray ambitsArray = jsonElement.getJSONArray("ambits");
-
-								for (int j = 0; j < ambitsArray.length(); j++)
-								{
-									JSONObject ambitJson = ambitsArray.getJSONObject(j);
-									JSONArray channelsArray = ambitJson.getJSONArray("channels");
-									ArrayList<Canal> canales = new ArrayList<>();
-									String ambitName = ambitJson.getString("name");
-
-									for (int k = 0; k < channelsArray.length(); k++)
-									{
-										JSONObject channelJson = channelsArray.getJSONObject(k);
-
-										String channelName = channelJson.getString("name");
-										String channelWeb = channelJson.getString("web");
-										String channelLogo = channelJson.getString("logo");
-
-										JSONArray channelOptionsJson = channelJson.getJSONArray("options");
-										ArrayList<Opciones> channelOptions = new ArrayList<>();
-
-										for (int l = 0; l < channelOptionsJson.length(); l++)
-										{
-											JSONObject optionJson = channelOptionsJson.getJSONObject(l);
-
-											String optionFormat = optionJson.getString("format");
-											String optionURL = optionJson.getString("url");
-
-											channelOptions.add(new Opciones(optionFormat, optionURL));
-										}
-
-										// Añadir canal obtenido a la lista de ese ámbito
-										canales.add(new Canal(channelName, channelWeb, channelLogo, channelOptions));
-									}
-
-									// Añadir ámbito obtenido a la lista
-									ambitos.add(new Ambito(ambitName, canales));
-								}
-							}
-						}
-						catch (JSONException e)
-						{
-							Toast.makeText(context.getApplicationContext(), "ERROR:" + e.getMessage(), Toast.LENGTH_LONG).show();
-							Log.e(TAG, "ERROR al parsear el JSON");
-						}
-
-						// Enviar lista de canales al método de carga en la actividad principal
-						responseServerCallback.onChannelsLoadServer(ambitos);
+						List<Ambito> parsedAmbits = parseResponse(response);
+						ambitos.clear();
+						ambitos.addAll(parsedAmbits);
 					}
+					catch (JSONException e)
+					{
+						Toast.makeText(appContext, "ERROR: " + e.getMessage(), Toast.LENGTH_LONG).show();
+						Log.e(TAG, "ERROR al parsear el JSON: " + e.getMessage());
+					}
+					callback.onChannelsLoadServer(ambitos);
 				},
-				new Response.ErrorListener()
-				{
-					/**
-					 * Cosas a hacer cuando la respuesta es incorrecta
-					 *
-					 * @param error
-					 */
-					@Override
-					public void onErrorResponse(VolleyError error)
-					{
-						String errorMessage = new String(error.networkResponse.data);
-						Log.e(TAG, "Error al acceder a la URL " + URL);
-						Toast.makeText(context.getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_LONG).show();
-						// Enviar lista de canales vacío al método de carga en la actividad principal
-						responseServerCallback.onChannelsLoadServer(ambitos);
+				error -> {
+					String errorMessage = "Error de red";
+					if (error.networkResponse != null && error.networkResponse.data != null) {
+						errorMessage = new String(error.networkResponse.data);
 					}
+					Log.e(TAG, "Error al acceder a la URL " + TV_URL);
+					Toast.makeText(appContext, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+					callback.onChannelsLoadServer(ambitos);
 				}
 		);
 
-		// Añadir JSON a la cola de peticiones
-		VolleyController.getInstance(context).addToQueue(jsonArrayRequest);
+		VolleyController.getInstance(appContext).addToQueue(jsonRequest);
+	}
+
+	/**
+	 * Lógica de parseo del objeto JSON a la estructura de clases
+	 */
+	private List<Ambito> parseResponse(JSONObject response) throws JSONException {
+		List<Ambito> ambitList = new ArrayList<>();
+		JSONArray countries = response.getJSONArray("countries");
+
+		for (int i = 0; i < countries.length(); i++) {
+			JSONObject countryJson = countries.getJSONObject(i);
+			JSONArray ambitsArray = countryJson.getJSONArray("ambits");
+
+			for (int j = 0; j < ambitsArray.length(); j++) {
+				JSONObject ambitJson = ambitsArray.getJSONObject(j);
+				String ambitName = ambitJson.getString("name");
+				JSONArray channelsArray = ambitJson.getJSONArray("channels");
+				
+				List<Canal> canales = new ArrayList<>();
+				for (int k = 0; k < channelsArray.length(); k++) {
+					JSONObject channelJson = channelsArray.getJSONObject(k);
+					
+					JSONArray optionsJson = channelJson.getJSONArray("options");
+					List<Opciones> channelOptions = new ArrayList<>();
+					for (int l = 0; l < optionsJson.length(); l++) {
+						JSONObject optionJson = optionsJson.getJSONObject(l);
+						channelOptions.add(new Opciones(
+								optionJson.getString("format"),
+								optionJson.getString("url")
+						));
+					}
+
+					canales.add(new Canal(
+							channelJson.getString("name"),
+							channelJson.getString("web"),
+							channelJson.getString("logo"),
+							channelOptions
+					));
+				}
+				ambitList.add(new Ambito(ambitName, canales));
+			}
+		}
+		return ambitList;
 	}
 
 	/**
@@ -200,6 +175,6 @@ public class JSONParser
 	 */
 	public interface ResponseServerCallback
 	{
-		void onChannelsLoadServer(ArrayList<Ambito> ambitos);
+		void onChannelsLoadServer(List<Ambito> ambitos);
 	}
 }

@@ -24,12 +24,13 @@
 	android:layout_height="match_parent"
 	android:fitsSystemWindows="true"
 	android:scrollbars="vertical"
-	android:isScrollContainer="true"
+	android:fillViewport="true"
 	tools:context=".AddFeed">
 
 	<RelativeLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="wrap_content"
+		android:paddingBottom="16dp">
 
 		<TextView
 			android:id="@+id/tvTitulo"
@@ -61,21 +62,22 @@
 
 		<EditText
 			android:id="@+id/etNombre"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:hint="@string/nombre_feed"
 			android:layout_toEndOf="@+id/tvNombre"
 			android:layout_alignBaseline="@+id/tvNombre"
 			android:layout_marginStart="20dp"
-			android:inputType="text" />
+			android:layout_marginEnd="16dp"
+			android:inputType="textCapWords" />
 
 		<EditText
 			android:id="@+id/etUrl"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_alignBaseline="@+id/tvUrl"
-			android:layout_alignEnd="@+id/etNombre"
 			android:layout_marginStart="20dp"
+			android:layout_marginEnd="16dp"
 			android:layout_toEndOf="@+id/tvUrl"
 			android:hint="@string/url_ejemplo"
 			android:inputType="textUri" />
@@ -84,10 +86,9 @@
 			android:id="@+id/button"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/tvUrl"
+			android:layout_below="@+id/etUrl"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="20dp"
-			android:onClick="submit"
 			android:text="@string/add" />
 
 		<TextView
@@ -133,11 +134,11 @@
 
 		<EditText
 			android:id="@+id/etTema"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_alignBaseline="@+id/tvTema"
-			android:layout_alignEnd="@+id/etNombre"
 			android:layout_marginStart="20dp"
+			android:layout_marginEnd="16dp"
 			android:layout_toEndOf="@+id/tvTema"
 			android:hint="@string/tema_seguir"
 			android:inputType="text" />
@@ -147,7 +148,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/unlock_gn"
-			android:layout_below="@+id/tvTema"
+			android:layout_below="@+id/etTema"
 			android:layout_alignStart="@+id/tvTema"
 			android:layout_marginTop="15dp"
 			android:layout_marginEnd="20dp" />
@@ -159,7 +160,6 @@
 			android:layout_below="@+id/cbGN"
 			android:layout_centerHorizontal="true"
 			android:layout_marginTop="20dp"
-			android:onClick="submitSeguir"
 			android:text="@string/seguir" />
 	</RelativeLayout>
 </androidx.core.widget.NestedScrollView>

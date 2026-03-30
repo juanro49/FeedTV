@@ -18,28 +18,24 @@
 package org.juanro.feedtv;
 
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import net.bjoernpetersen.m3u.model.M3uEntry;
 
 import org.juanro.feedtv.Adapters.RadiosAdapter;
 import org.juanro.feedtv.Radio.M3UParser;
+import org.juanro.feedtv.databinding.ActivityCustomM3uBinding;
 
 import java.util.List;
 
@@ -48,28 +44,20 @@ import java.util.List;
  */
 public class CustomM3uActivity extends AppCompatActivity implements M3UParser.ResponseServerCallback
 {
+	private ActivityCustomM3uBinding binding;
 	private RadiosAdapter mAdapter;
-	private RecyclerView lista;
-	private SwipeRefreshLayout swipe;
-	private EditText etUrl;
-	private Button btnLoad;
-	private SharedPreferences sharedPref;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		aplicarTema();
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_custom_m3u);
+		binding = ActivityCustomM3uBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
-		etUrl = findViewById(R.id.et_url);
-		btnLoad = findViewById(R.id.btn_load);
-		swipe = findViewById(R.id.swiperefresh);
-		lista = findViewById(R.id.lista);
-
-		lista.setLayoutManager(new LinearLayoutManager(this));
-		lista.setItemAnimator(new DefaultItemAnimator());
-		lista.setHasFixedSize(true);
+		binding.lista.setLayoutManager(new LinearLayoutManager(this));
+		binding.lista.setItemAnimator(new DefaultItemAnimator());
+		binding.lista.setHasFixedSize(true);
 
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null)
@@ -77,80 +65,111 @@ public class CustomM3uActivity extends AppCompatActivity implements M3UParser.Re
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 
-		btnLoad.setOnClickListener(v -> cargarM3u());
+		binding.btnLoad.setOnClickListener(v -> cargarM3u());
 
-		swipe.setOnRefreshListener(this::cargarM3u);
+		binding.swiperefresh.setOnRefreshListener(this::cargarM3u);
 	}
 
 	private void cargarM3u()
 	{
-		String url = etUrl.getText().toString().trim();
+		String url = binding.etUrl.getText().toString().trim();
 		if (url.isEmpty())
 		{
 			Toast.makeText(this, "Introduce una URL", Toast.LENGTH_SHORT).show();
-			swipe.setRefreshing(false);
+			binding.swiperefresh.setRefreshing(false);
 			return;
 		}
 
-		swipe.setRefreshing(true);
+		binding.swiperefresh.setRefreshing(true);
 		new Thread(() -> M3UParser.getInstance().loadRadios(true, url, CustomM3uActivity.this, CustomM3uActivity.this)).start();
 	}
 
+	/**
+	 * Crea la lista con las radios obtenidas
+	 *
+	 * @param entradasM3u Lista de entradas M3U
+	 */
 	@Override
 	public void onChannelsLoadServer(List<M3uEntry> entradasM3u)
 	{
 		runOnUiThread(() -> {
 			mAdapter = new RadiosAdapter(getApplicationContext(), entradasM3u);
-			lista.setAdapter(mAdapter);
-			mAdapter.notifyDataSetChanged();
-			swipe.setRefreshing(false);
+			binding.lista.setAdapter(mAdapter);
+			binding.swiperefresh.setRefreshing(false);
 		});
 	}
 
+	/**
+	 * Crear menu
+	 *
+	 * @param menu El menú de opciones en el que se colocan los elementos.
+	 * @return boolean Debe devolver true para que se muestre el menú; si devuelve false, no se mostrará.
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		getMenuInflater().inflate(R.menu.menu, menu);
 		MenuItem searchItem = menu.findItem(R.id.action_search);
-		if (getApplicationContext() != null)
-		{
-			Drawable drawable = DrawableCompat.wrap(searchItem.getIcon());
-			DrawableCompat.setTint(drawable, ContextCompat.getColor(getApplicationContext(), android.R.color.white));
-			searchItem.setIcon(drawable);
-		}
-		return true;
-	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch (item.getItemId())
+		if (searchItem != null)
 		{
-			case android.R.id.home:
-				onBackPressed();
-				return true;
-			case R.id.action_search:
-				SearchView searchView = (SearchView) item.getActionView();
+			// Cambiar color botón de búsqueda
+			if (searchItem.getIcon() != null)
+			{
+				searchItem.getIcon().setTint(ContextCompat.getColor(this, android.R.color.white));
+			}
+
+			// Configurar el buscador una sola vez
+			SearchView searchView = (SearchView) searchItem.getActionView();
+			if (searchView != null)
+			{
 				searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
 				{
 					@Override
 					public boolean onQueryTextSubmit(String texto) { return false; }
+
 					@Override
 					public boolean onQueryTextChange(String texto)
 					{
-						if (mAdapter != null) mAdapter.getFilter().filter(texto);
-						return false;
+						if (mAdapter != null)
+						{
+							mAdapter.getFilter().filter(texto);
+						}
+						return true;
 					}
 				});
-				return true;
+			}
 		}
+
+		return true;
+	}
+
+	/**
+	 * Acciones botones menú
+	 *
+	 * @param item El elemento de menú que fue seleccionado.
+	 * @return boolean Devuelve false para permitir que continúe el procesamiento normal del menú, true para consumirlo aquí.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item)
+	{
+		if (item.getItemId() == android.R.id.home)
+		{
+			getOnBackPressedDispatcher().onBackPressed();
+			return true;
+		}
+
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Método que aplica el tema de la aplicación
+	 */
 	private void aplicarTema()
 	{
-		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
-		if(sharedPref.getString("tema", "Claro").equals("Claro"))
+		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+
+		if("Claro".equals(sharedPref.getString("tema", "Claro")))
 		{
 			setTheme(R.style.TemaClaro);
 		}

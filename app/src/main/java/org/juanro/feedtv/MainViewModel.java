@@ -21,6 +21,8 @@ package org.juanro.feedtv;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
+
 import com.prof18.rssparser.model.RssItem;
 import com.prof18.rssparser.model.RssChannel;
 import com.prof18.rssparser.RssParserBuilder;
@@ -29,6 +31,8 @@ import com.prof18.rssparser.RssParser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -47,172 +51,123 @@ import kotlinx.coroutines.Dispatchers;
  */
 public class MainViewModel extends ViewModel
 {
-	// Crear lista de artículos (se usa LiveData porque evita memory leaks y mas actualizable)
-	private MutableLiveData<List<RssItem>> articleListLive = null;
-
-	// URL del Feed
+	private static final String TAG = "MainViewModel";
+	private final MutableLiveData<List<RssItem>> articleListLive = new MutableLiveData<>(new ArrayList<>());
 	private String urlString = "";
+	private final MutableLiveData<String> snackbar = new MutableLiveData<>();
+	private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-	// Crear snackbar (similar a toast)
-	private MutableLiveData<String> snackbar = new MutableLiveData<>();
-
-	/**
-	 * Obtener la lista de artículos
-	 *
-	 * @return
-	 */
-	public MutableLiveData<List<RssItem>> getArticleList()
+	public LiveData<List<RssItem>> getArticleList()
 	{
-		if (articleListLive == null)
-		{
-			articleListLive = new MutableLiveData<>();
-		}
-
 		return articleListLive;
 	}
 
-
-	/**
-	 * Añadir artículos a la lista
-	 *
-	 * @param articleList
-	 */
-	private void setArticleList(List<RssItem> articleList)
-	{
-		this.articleListLive.postValue(articleList);
-	}
-
-	/**
-	 * Establecer url del feed
-	 *
-	 * @param url
-	 */
 	public void setUrl(String url)
 	{
 		this.urlString = url;
 	}
 
-	/**
-	 * Obtiene la snackbar
-	 *
-	 * @return
-	 */
 	public LiveData<String> getSnackbar()
 	{
 		return snackbar;
 	}
 
-	/**
-	 * Reinicia el valor de la snackbar una vez mostrada
-	 */
 	public void onSnackbarShowed()
 	{
 		snackbar.setValue(null);
 	}
 
-	/**
-	 * Obtiene el Feed de noticias
-	 *
-	 * @param context
-	 */
 	public void fetchFeed(final Context context)
 	{
-		// Crear el parseador del RSS
-		RssParser parser = new RssParserBuilder()
-				//.charset(Charset.defaultCharset())
-				//.cacheExpirationMillis() and .context() not called because on Java side, caching is NOT supported
-				.build();
+		if (urlString == null || urlString.isEmpty()) return;
 
-		// Mapeado rápido de indices
-		final int COLUMN_TITULO = 1;
-		final int COLUMN_FEC = 2;
-		final int COLUMN_URL = 3;
-		final int COLUMN_IMG = 4;
+		RssParser parser = new RssParserBuilder().build();
+		CompletableFuture<RssChannel> future = new CompletableFuture<>();
+		
+		// Iniciar petición asíncrona de RSS
+		parser.getRssChannel(urlString, new CustomContinuation<>(future));
 
-		// Obtener el feed
-		RssChannel channel = null;
-		CompletableFuture<RssChannel> suspendResult = new CompletableFuture<>();
-		parser.getRssChannel(urlString, new CustomContinuation<>(suspendResult));
+		future.thenAcceptAsync(channel -> {
+			try {
+				if (channel == null) throw new Exception("Channel is null");
 
-		try
-		{
-			channel = suspendResult.get();
+				List<RssItem> items = channel.getItems();
+				FeedDatabase db = FeedDatabase.getInstance(context);
 
-			// Acciones a realizar al terminar cuando el parseo del RSS es correcto
-			List<RssItem> list = channel.getItems();
+				// Sincronizar con DB en segundo plano
+				db.sincronizarEntradas(items);
 
-			// Caching
-			FeedDatabase.getInstance(context.getApplicationContext()).
-					sincronizarEntradas(list);
+				// Obtener entradas finales de la DB
+				try (Cursor c = db.obtenerEntradas()) {
+					List<RssItem> listFromDb = new ArrayList<>();
 
-			// Obtener entradas de la base de datos
-			Cursor c = FeedDatabase.getInstance(context.getApplicationContext()).obtenerEntradas();
-			list.clear();
+					if (c.moveToFirst()) {
+						final int colTitulo = 1, colFec = 2, colUrl = 3, colImg = 4;
+						do {
+							String image = c.getString(colImg);
+							if (image == null && channel.getImage() != null) {
+								image = channel.getImage().getUrl();
+							}
 
-			c.moveToFirst();
-
-			do
-			{
-				String title = c.getString(COLUMN_TITULO);
-				String link = c.getString(COLUMN_URL);
-				String pubDate = c.getString(COLUMN_FEC);
-				String image = "";
-				List<String> categories = new ArrayList<String>();
-
-				//Mostrar la imagen del feed si el articulo no tiene imagen
-				if(c.getString(COLUMN_IMG) == null && channel.getImage() != null)
-				{
-					image = channel.getImage().getUrl();
+							listFromDb.add(new RssItem("", c.getString(colTitulo), "", c.getString(colUrl), 
+									c.getString(colFec), "", "", image, "", "", "", "", 
+									new ArrayList<>(), null, "", null, null, null));
+						} while (c.moveToNext());
+					}
+					articleListLive.postValue(listFromDb);
 				}
-				else
-				{
-					image = c.getString(COLUMN_IMG);
-				}
+				
+				snackbar.postValue(context.getString(R.string.update_feed_success));
 
-				RssItem articulo = new RssItem("", title, "", link, pubDate, "", "", image, "", "", "", "", categories, null, "", null, null, null);
+			} catch (Exception e) {
+				handleError(context, e);
+			}
+		}, executor).exceptionally(ex -> {
+			handleError(context, ex);
+			return null;
+		});
+	}
 
-				list.add(articulo);
-			} while(c.moveToNext());
+	private void handleError(Context context, Throwable e) {
+		Log.e(TAG, "Error fetching feed", e);
+		articleListLive.postValue(new ArrayList<>());
+		snackbar.postValue(context.getString(R.string.update_feed_failed) + e.getMessage());
+	}
 
-			// Añadir artículos obtenidos a la lista
-			setArticleList(list);
-
-			snackbar.postValue(context.getString(R.string.update_feed_success));
-		}
-		catch (Exception e)
-		{
-			// Cosas a hacer cuando hay error en el parseo del RSS
-			setArticleList(new ArrayList<RssItem>());
-			e.printStackTrace();
-			snackbar.postValue(context.getString(R.string.update_feed_failed) + e.getMessage());
-		}
+	@Override
+	protected void onCleared() {
+		executor.shutdown();
 	}
 
 	/**
-	 * Función que se encarga de obtener tados de funciones suspendidas de kotlin
-	 *
-	 * @param <RssChannel>
+	 * Clase para manejar la continuación de corrutinas desde Java
 	 */
-	public static class CustomContinuation<RssChannel> implements Continuation<RssChannel>
-	{
-		private final CompletableFuture<RssChannel> future;
+	public static class CustomContinuation<T> implements Continuation<T> {
+		private final CompletableFuture<T> future;
 
-		public CustomContinuation(CompletableFuture<RssChannel> future)
-		{
+		public CustomContinuation(CompletableFuture<T> future) {
 			this.future = future;
 		}
 
 		@Override
-		public void resumeWith(@NotNull Object o)
-		{
-			future.complete((RssChannel) o);
+		@SuppressWarnings("unchecked")
+		public void resumeWith(@NotNull Object o) {
+			if (o instanceof Throwable) {
+				future.completeExceptionally((Throwable) o);
+			} else {
+				try {
+					// Casting genérico para interoperar con Kotlin
+					future.complete((T) o);
+				} catch (ClassCastException e) {
+					future.completeExceptionally(e);
+				}
+			}
 		}
 
 		@NonNull
 		@Override
-		public CoroutineContext getContext()
-		{
-			return Dispatchers.getMain();
+		public CoroutineContext getContext() {
+			return Dispatchers.getIO();
 		}
 	}
 }

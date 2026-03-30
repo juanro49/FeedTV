@@ -18,23 +18,19 @@
 ~
 -->
 
-<RelativeLayout
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/swiperefresh"
 	android:layout_height="match_parent"
 	android:layout_width="match_parent"
 	android:fitsSystemWindows="true">
 
-	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-		android:layout_height="match_parent"
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/lista"
 		android:layout_width="match_parent"
-		android:id="@+id/swiperefresh">
+		android:layout_height="match_parent"
+		android:scrollbars="vertical"
+		tools:listitem="@layout/item_list_noticias"/>
 
-		<androidx.recyclerview.widget.RecyclerView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:id="@+id/lista"
-			android:scrollbars="vertical"
-			tools:listitem="@layout/item_list_noticias"/>
-	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-</RelativeLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

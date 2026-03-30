@@ -32,22 +32,20 @@ import com.android.volley.toolbox.Volley;
 public class VolleyController
 {
     private static VolleyController instance;
-    private RequestQueue requestQueue;
-    private VolleyCore volley;
+    private final RequestQueue requestQueue;
 
     private VolleyController(Context ctx)
 	{
-        volley = new VolleyCore(ctx);
-        requestQueue = volley.getRequestQueue();
+        requestQueue = Volley.newRequestQueue(ctx.getApplicationContext());
     }
 
 	/**
 	 * Obtiene la instancia de volley
 	 *
-	 * @param ctx
-	 * @return
+	 * @param ctx Contexto de la aplicación
+	 * @return Instancia única de VolleyController
 	 */
-	public static VolleyController getInstance(Context ctx)
+	public static synchronized VolleyController getInstance(Context ctx)
 	{
         if (instance == null) {
 			instance = new VolleyController(ctx);
@@ -58,19 +56,13 @@ public class VolleyController
 	/**
 	 * Método para añadir peticiones a la cola
 	 *
-	 * @param request
+	 * @param request Petición a añadir
 	 */
-    public void addToQueue(Request request)
+    public void addToQueue(Request<?> request)
 	{
         if (request != null)
         {
             request.setTag(this);
-
-            if (requestQueue == null)
-			{
-				requestQueue = volley.getRequestQueue();
-			}
-
             request.setRetryPolicy(new DefaultRetryPolicy(60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(request);
         }
@@ -79,31 +71,12 @@ public class VolleyController
 	/**
 	 * Eliminar elementos de la cola
 	 */
+    @SuppressWarnings("unused")
 	public void removeAllDataInQueue()
 	{
         if (requestQueue != null)
         {
             requestQueue.cancelAll(this);
-        }
-    }
-
-    private class VolleyCore
-	{
-        private RequestQueue mRequestQueue;
-
-        private VolleyCore(Context context)
-		{
-            mRequestQueue = Volley.newRequestQueue(context);
-        }
-
-		/**
-		 * Obtiene instancia de la cola de peticiones
-		 *
-		 * @return
-		 */
-		public RequestQueue getRequestQueue()
-		{
-            return mRequestQueue;
         }
     }
 }

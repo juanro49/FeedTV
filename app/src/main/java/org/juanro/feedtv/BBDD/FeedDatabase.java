@@ -41,60 +41,60 @@ import java.util.Locale;
  */
 public final class FeedDatabase extends SQLiteOpenHelper
 {
-    // Mapeado de indices
-    private static final int columnId = 0;
-    private static final int columnTitulo = 1;
-    private static final int columnFecha = 2;
-    private static final int columnUrl = 3;
+	// Mapeado de indices
+	private static final int columnId = 0;
+	private static final int columnTitulo = 1;
+	private static final int columnFecha = 2;
+	private static final int columnUrl = 3;
 
-    // Instancia única
-    private static FeedDatabase singleton;
+	// Instancia única
+	private static FeedDatabase singleton;
 
-    // Etiqueta de depuración
-    private static final String TAG = FeedDatabase.class.getSimpleName();
+	// Etiqueta de depuración
+	private static final String TAG = FeedDatabase.class.getSimpleName();
 
-    // Nombre de la base de datos
-    public static final String DATABASE_NAME = "Feed.db";
+	// Nombre de la base de datos
+	public static final String DATABASE_NAME = "Feed.db";
 
-    // Versión actual de la base de datos
-    public static final int DATABASE_VERSION = 1;
+	// Versión actual de la base de datos
+	public static final int DATABASE_VERSION = 1;
 
 
-    private FeedDatabase(Context context)
+	private FeedDatabase(Context context)
 	{
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
+		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	}
 
-    /**
-     * Retorna la instancia unica de la base de datos
-     *
-     * @param context contexto donde se ejecutarán las peticiones
-     * @return Instancia
-     */
-    public static synchronized FeedDatabase getInstance(Context context)
+	/**
+	 * Retorna la instancia unica de la base de datos
+	 *
+	 * @param context contexto donde se ejecutarán las peticiones
+	 * @return Instancia
+	 */
+	public static synchronized FeedDatabase getInstance(Context context)
 	{
-        if (singleton == null)
-        {
-            singleton = new FeedDatabase(context.getApplicationContext());
-        }
+		if (singleton == null)
+		{
+			singleton = new FeedDatabase(context.getApplicationContext());
+		}
 
-        return singleton;
-    }
+		return singleton;
+	}
 
-    @Override
-    public void onCreate(SQLiteDatabase db)
+	@Override
+	public void onCreate(SQLiteDatabase db)
 	{
-        // Crear tabla en la BD
-        db.execSQL(crearTabla);
-    }
+		// Crear tabla en la BD
+		db.execSQL(crearTabla);
+	}
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+	@Override
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
-        // Añade los cambios que se realizarán en el esquema de la BBDD
-        db.execSQL("DROP TABLE IF EXISTS " + nombreTabla);
-        onCreate(db);
-    }
+		// Añade los cambios que se realizarán en el esquema de la BBDD
+		db.execSQL("DROP TABLE IF EXISTS " + nombreTabla);
+		onCreate(db);
+	}
 
 	// Nombre Tabla
 	public static String nombreTabla = "entrada";
@@ -124,7 +124,7 @@ public final class FeedDatabase extends SQLiteOpenHelper
 	/**
 	 * Crea una nueva tabla en la base de datos
 	 *
-	 * @param tabla nueva tabla
+	 * @param tabla nombre de la nueva tabla
 	 */
 	public void crearTabla(String tabla)
 	{
@@ -143,7 +143,7 @@ public final class FeedDatabase extends SQLiteOpenHelper
 	/**
 	 * Elimina la tabla de un feed eliminado
 	 *
-	 * @param tabla
+	 * @param tabla nombre de la tabla a eliminar
 	 */
 	public void eliminarTabla(String tabla)
 	{
@@ -154,202 +154,166 @@ public final class FeedDatabase extends SQLiteOpenHelper
 	/**
 	 * Indica la tabla a usar por el feed
 	 *
-	 * @param tabla
+	 * @param tabla nombre de la tabla
 	 */
 	public void setTabla(String tabla)
 	{
-		Cursor c;
-		c = getReadableDatabase().rawQuery("select name from sqlite_master where type = 'table' and name in('" + tabla + "', '" + tabla + "_')", null);
-		c.moveToFirst();
-		nombreTabla = c.getString(0);
-		c.close();
+		try (Cursor c = getReadableDatabase().rawQuery("select name from sqlite_master where type = 'table' and name in('" + tabla + "', '" + tabla + "_')", null))
+		{
+			if (c.moveToFirst())
+			{
+				nombreTabla = c.getString(0);
+			}
+		}
 	}
 
-    /**
-     * Obtiene todos los registros de la tabla
-     *
-     * @return cursor con los registros
-     */
-    public Cursor obtenerEntradas()
+	/**
+	 * Obtiene todos los registros de la tabla
+	 *
+	 * @return cursor con los registros
+	 */
+	public Cursor obtenerEntradas()
 	{
-        return getReadableDatabase().rawQuery("select * from " + nombreTabla + " order by " + Columnas.NUMFECHA + " desc", null);
-    }
+		return getReadableDatabase().rawQuery("select * from " + nombreTabla + " order by " + Columnas.NUMFECHA + " desc", null);
+	}
 
-    /**
-     * Inserta un registro en la tabla
-     *
-     * @param titulo      titulo de la entrada
-     * @param fecha       fecha de la entrada
-     * @param url         url del articulo
-     * @param thumb_url   url de la miniatura
-     */
-    public void insertarEntrada(String titulo, String fecha, String url, String thumb_url, long numFecha)
+	/**
+	 * Inserta un registro en la tabla
+	 *
+	 * @param titulo      titulo de la entrada
+	 * @param fecha       fecha de la entrada
+	 * @param url         url del articulo
+	 * @param thumb_url   url de la miniatura
+	 * @param numFecha    fecha en formato numérico para ordenar
+	 */
+	public void insertarEntrada(String titulo, String fecha, String url, String thumb_url, long numFecha)
 	{
-        ContentValues values = new ContentValues();
-        values.put(Columnas.TITULO, titulo);
-        values.put(Columnas.FECHA, fecha);
-        values.put(Columnas.URL, url);
-        values.put(Columnas.URL_MINIATURA, thumb_url);
-        values.put(Columnas.NUMFECHA, numFecha);
+		ContentValues values = new ContentValues();
+		values.put(Columnas.TITULO, titulo);
+		values.put(Columnas.FECHA, fecha);
+		values.put(Columnas.URL, url);
+		values.put(Columnas.URL_MINIATURA, thumb_url);
+		values.put(Columnas.NUMFECHA, numFecha);
 
-        // Insertando el registro en la base de datos
-        getWritableDatabase().insert(nombreTabla, null, values);
-    }
+		// Insertando el registro en la base de datos
+		getWritableDatabase().insert(nombreTabla, null, values);
+	}
 
-    /**
-     * Modifica los valores de las columnas de la tabla
-     *
-     * @param id          identificador de la entrada
-     * @param titulo      titulo nuevo de la entrada
-     * @param fecha       fecha nueva para la entrada
-     * @param url         url nueva para la entrada
-     * @param thumb_url   url nueva para la miniatura de la entrada
-     */
-    public void actualizarEntrada(int id, String titulo, String fecha, String url, String thumb_url, long numFecha)
+	/**
+	 * Modifica los valores de las columnas de la tabla
+	 *
+	 * @param id          identificador de la entrada
+	 * @param titulo      titulo nuevo de la entrada
+	 * @param fecha       fecha nueva para la entrada
+	 * @param url         url nueva para la entrada
+	 * @param thumb_url   url nueva para la miniatura de la entrada
+	 * @param numFecha    fecha en formato numérico para ordenar
+	 */
+	public void actualizarEntrada(int id, String titulo, String fecha, String url, String thumb_url, long numFecha)
 	{
-        ContentValues values = new ContentValues();
-        values.put(Columnas.TITULO, titulo);
-        values.put(Columnas.FECHA, fecha);
-        values.put(Columnas.URL, url);
-        values.put(Columnas.URL_MINIATURA, thumb_url);
-        values.put(Columnas.NUMFECHA, numFecha);
+		ContentValues values = new ContentValues();
+		values.put(Columnas.TITULO, titulo);
+		values.put(Columnas.FECHA, fecha);
+		values.put(Columnas.URL, url);
+		values.put(Columnas.URL_MINIATURA, thumb_url);
+		values.put(Columnas.NUMFECHA, numFecha);
 
-        // Modificar entrada
-        getWritableDatabase().update(nombreTabla, values, Columnas.id + "= ?", new String[]{String.valueOf(id)});
-    }
+		// Modificar entrada
+		getWritableDatabase().update(nombreTabla, values, Columnas.id + "= ?", new String[]{String.valueOf(id)});
+	}
 
-    /**
-     * Procesa una lista de items para su almacenamiento local
-     * y sincronización.
-     *
+	/**
+	 * Procesa una lista de items para su almacenamiento local
+	 * y sincronización.
+	 *
 	 * @param lista lista de items
 	 */
-    public void sincronizarEntradas(List<RssItem> lista)
+	public void sincronizarEntradas(List<RssItem> lista)
 	{
-        /*
-        	Mapear temporalemente las entradas nuevas para realizar una
-            comparación con las locales
-        */
-        LinkedHashMap <String, RssItem> entryMap = new LinkedHashMap<>();
+		/*
+			Mapear temporalemente las entradas nuevas para realizar una
+			comparación con las locales
+		*/
+		LinkedHashMap <String, RssItem> entryMap = new LinkedHashMap<>();
 
-        for (RssItem e : lista)
-        {
-            entryMap.put(e.getTitle(), e);
-        }
+		for (RssItem e : lista)
+		{
+			if (e.getTitle() != null)
+			{
+				entryMap.put(e.getTitle(), e);
+			}
+		}
 
 
-        /*
-        	Obtener las entradas locales y comenzar a comparar las entradas
-        */
+		/*
+			Obtener las entradas locales y comenzar a comparar las entradas
+		*/
 		Log.i(TAG, "Consultar entradas actualmente almacenadas");
 
-		Cursor c = obtenerEntradas();
-		Log.i(TAG, "Se encontraron " + c.getCount() + " entradas locales, comparando con las obtenidas del feed");
+		try (Cursor c = obtenerEntradas())
+		{
+			Log.i(TAG, "Se encontraron " + c.getCount() + " entradas locales, comparando con las obtenidas del feed");
 
-        int id;
-        String titulo;
-        String fecha;
-        String url;
+			int id;
+			String titulo;
+			String fecha;
+			String url;
 
-        while (c.moveToNext())
-        {
-            id = c.getInt(columnId);
-            titulo = c.getString(columnTitulo);
-            fecha = c.getString(columnFecha);
-            url = c.getString(columnUrl);
+			while (c.moveToNext())
+			{
+				id = c.getInt(columnId);
+				titulo = c.getString(columnTitulo);
+				fecha = c.getString(columnFecha);
+				url = c.getString(columnUrl);
 
-			RssItem articulo = entryMap.get(titulo);
+				RssItem articulo = entryMap.get(titulo);
 
-            if (articulo != null)
-            {
-                // Eliminar entradas existentes de la lista para prevenir su futura inserción
-                entryMap.remove(titulo);
-
-				String link = articulo.getLink();
-
-				if(link.contains("?"))
+				if (articulo != null)
 				{
-					link = link + "&utm_source=FeedTV&utm_medium=RSS";
-				}
-				else
-				{
-					link = link + "?utm_source=FeedTV&utm_medium=RSS";
-				}
+					// Eliminar entradas existentes de la lista para prevenir su futura inserción
+					entryMap.remove(titulo);
 
-                // Comprobar si la entrada necesita ser actualizada
-                if ((articulo.getTitle() != null && !articulo.getTitle().equals(titulo)) ||
-                        (articulo.getPubDate() != null && !articulo.getPubDate().equals(fecha)) ||
-                        (link != null && !link.equals(url)))
-                {
-					try
+					String link = articulo.getLink();
+
+					if (link != null)
 					{
-						// Crear el campo numFecha para ordenar a partir de la fecha de publicación
-						String pubDate = articulo.getPubDate();
-
-						SimpleDateFormat sourceRSS = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-						SimpleDateFormat sourceAtom = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
-						Date date = new Date();
-
-						// La fecha viene en diferentes formatos para feeds de Atom y RSS
-						if(pubDate.startsWith("2"))
+						if (link.contains("?"))
 						{
-							pubDate = pubDate.substring(0, 19);
-							date = sourceAtom.parse(pubDate);
+							link = link + "&utm_source=FeedTV&utm_medium=RSS";
 						}
 						else
 						{
-							date = sourceRSS.parse(pubDate);
+							link = link + "?utm_source=FeedTV&utm_medium=RSS";
 						}
+					}
 
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm", Locale.getDefault());
-						long numFecha = Long.parseLong(sdf.format(date));
-
+					// Comprobar si la entrada necesita ser actualizada
+					if ((articulo.getTitle() != null && !articulo.getTitle().equals(titulo)) ||
+							(articulo.getPubDate() != null && !articulo.getPubDate().equals(fecha)) ||
+							(link != null && !link.equals(url)))
+					{
+						long numFecha = parsePubDate(articulo.getPubDate());
 						// Actualizar artículo
 						actualizarEntrada(id, articulo.getTitle(), articulo.getPubDate(), link, articulo.getImage(), numFecha);
 					}
-					catch (ParseException e)
-					{
-						e.printStackTrace();
-					}
-                }
-            }
-        }
+				}
+			}
+		}
 
-        c.close();
-
-        /*
-        	Añadir entradas nuevas
-        */
-        for (RssItem a : entryMap.values())
+		/*
+			Añadir entradas nuevas
+		*/
+		for (RssItem a : entryMap.values())
 		{
-			try
+			long numFecha = parsePubDate(a.getPubDate());
+
+			Log.i(TAG, "Insertado: " + a.getTitle());
+			// Insertar artículo con link source feedtv
+			String link = a.getLink();
+
+			if (link != null)
 			{
-				// Crear el campo numFecha para ordenar a partir de la fecha de publicación
-				String pubDate = a.getPubDate();
-
-				SimpleDateFormat sourceRSS = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-				SimpleDateFormat sourceAtom = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
-				Date date = new Date();
-
-				// La fecha viene en diferentes formatos para feeds de Atom y RSS
-				if(pubDate.startsWith("2"))
-				{
-					pubDate = pubDate.substring(0, 19);
-					date = sourceAtom.parse(pubDate);
-				}
-				else
-				{
-					date = sourceRSS.parse(pubDate);
-				}
-
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm", Locale.getDefault());
-				long numFecha = Long.parseLong(sdf.format(date));
-
-				Log.i(TAG, "Insertado: " + a.getTitle());
-				// Insertar artículo con link source feedtv
-				String link = a.getLink();
-
-				if(link.contains("?"))
+				if (link.contains("?"))
 				{
 					link = link + "&utm_source=feedtv&utm_medium=feed";
 				}
@@ -357,52 +321,90 @@ public final class FeedDatabase extends SQLiteOpenHelper
 				{
 					link = link + "?utm_source=feedtv&utm_medium=feed";
 				}
+			}
 
-				insertarEntrada(a.getTitle(), a.getPubDate(), link, a.getImage(), numFecha);
-			}
-			catch (ParseException e)
-			{
-				e.printStackTrace();
-			}
+			insertarEntrada(a.getTitle(), a.getPubDate(), link, a.getImage(), numFecha);
 		}
 
-        /*
-        	Eliminar artículos antiguos
-        */
-        eliminarEntradas();
+		/*
+			Eliminar artículos antiguos
+		*/
+		eliminarEntradas();
 
-        Log.i(TAG, "Se actualizaron los registros");
-    }
+		Log.i(TAG, "Se actualizaron los registros");
+	}
+
+	/**
+	 * Parsea la fecha de publicación del artículo
+	 *
+	 * @param pubDate fecha en formato texto
+	 * @return fecha en formato numérico (long)
+	 */
+	private long parsePubDate(String pubDate)
+	{
+		if (pubDate == null) return 0;
+
+		try
+		{
+			SimpleDateFormat sourceRSS = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+			SimpleDateFormat sourceAtom = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
+			Date date;
+
+			// La fecha viene en diferentes formatos para feeds de Atom y RSS
+			if (pubDate.startsWith("2"))
+			{
+				if (pubDate.length() > 19)
+				{
+					pubDate = pubDate.substring(0, 19);
+				}
+				date = sourceAtom.parse(pubDate);
+			}
+			else
+			{
+				date = sourceRSS.parse(pubDate);
+			}
+
+			if (date != null)
+			{
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm", Locale.getDefault());
+				return Long.parseLong(sdf.format(date));
+			}
+		}
+		catch (ParseException e)
+		{
+			Log.e(TAG, "Error al parsear la fecha: " + pubDate, e);
+		}
+		return 0;
+	}
 
 	/**
 	 * Método para eliminar entradas
 	 */
 	public void eliminarEntradas()
-    {
-        int i = 1;
-        Cursor c = obtenerEntradas();
-
-        if(c.getCount() > 20)
+	{
+		int i = 1;
+		try (Cursor c = obtenerEntradas())
 		{
-			c.moveToFirst();
-
-			do
+			if (c.getCount() > 20)
 			{
-				if(i > 20)
+				c.moveToFirst();
+
+				do
 				{
-					Log.i(TAG, "Eliminando: titulo=" + c.getString(columnTitulo));
+					if (i > 20)
+					{
+						Log.i(TAG, "Eliminando: titulo=" + c.getString(columnTitulo));
 
-					// Eliminar entrada
-					getWritableDatabase().delete(
-							nombreTabla,
-							Columnas.TITULO + "= ?",
-							new String[]{String.valueOf(c.getString(columnTitulo))});
-				}
+						// Eliminar entrada
+						getWritableDatabase().delete(
+								nombreTabla,
+								Columnas.TITULO + "= ?",
+								new String[]{String.valueOf(c.getString(columnTitulo))});
+					}
 
-				i++;
-			} while(c.moveToNext());
+					i++;
+				} while (c.moveToNext());
+			}
 		}
-
-        c.close();
-    }
+	}
 }

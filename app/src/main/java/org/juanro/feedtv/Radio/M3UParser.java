@@ -19,15 +19,10 @@
 package org.juanro.feedtv.Radio;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
-
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 
 import net.bjoernpetersen.m3u.M3uParser;
 import net.bjoernpetersen.m3u.model.M3uEntry;
@@ -35,12 +30,11 @@ import net.bjoernpetersen.m3u.model.M3uEntry;
 import org.juanro.feedtv.Http.InputStreamVolleyRequest;
 import org.juanro.feedtv.Http.VolleyController;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 /**
@@ -49,17 +43,39 @@ import java.util.Objects;
 public class M3UParser
 {
 	public static final String TAG = M3UParser.class.getSimpleName();
-	private static M3UParser instance;
+	private static volatile M3UParser instance;
 	private List<M3uEntry> entradasM3u;
+	private String urlCacheada = "";
 	public static final String DEFAULT_URL = "https://archive.org/download/radiosrecopiladas2019/radios_recopiladas.m3u";
 
+	private M3UParser() {}
+
 	/**
-	 * Método que carga la lista de objetos parseados a la interfaz que lo envía a RadioActivity
-	 * usando la URL por defecto.
+	 * Método para obtener una instancia única (Thread-safe)
 	 *
-	 * @param forceUpdate
-	 * @param context
-	 * @param responseServerCallback
+	 * @return instancia de M3UParser
+	 */
+	public static M3UParser getInstance()
+	{
+		if (instance == null)
+		{
+			synchronized (M3UParser.class)
+			{
+				if (instance == null)
+				{
+					instance = new M3UParser();
+				}
+			}
+		}
+		return instance;
+	}
+
+	/**
+	 * Método que carga la lista usando la URL por defecto.
+	 *
+	 * @param forceUpdate si se debe ignorar la caché
+	 * @param context contexto de la aplicación
+	 * @param responseServerCallback callback de respuesta
 	 */
 	public void loadRadios(boolean forceUpdate, final Context context, final ResponseServerCallback responseServerCallback)
 	{
@@ -67,16 +83,16 @@ public class M3UParser
 	}
 
 	/**
-	 * Método que carga la lista de objetos parseados desde una URL específica
+	 * Método que carga la lista desde una URL específica
 	 *
-	 * @param forceUpdate
-	 * @param url
-	 * @param context
-	 * @param responseServerCallback
+	 * @param forceUpdate si se debe ignorar la caché
+	 * @param url dirección del M3U
+	 * @param context contexto de la aplicación
+	 * @param responseServerCallback callback de respuesta
 	 */
 	public void loadRadios(boolean forceUpdate, String url, final Context context, final ResponseServerCallback responseServerCallback)
 	{
-		if (!forceUpdate && entradasM3u != null && !entradasM3u.isEmpty())
+		if (!forceUpdate && url.equals(urlCacheada) && entradasM3u != null && !entradasM3u.isEmpty())
 		{
 			Log.i(TAG, "Cargar radios desde la cache");
 			responseServerCallback.onChannelsLoadServer(entradasM3u);
@@ -84,114 +100,57 @@ public class M3UParser
 		else
 		{
 			Log.i(TAG, "Cargar radios desde el servidor: " + url);
-			entradasM3u = new ArrayList<>();
-			downloadRadios(url, entradasM3u, context, responseServerCallback);
+			downloadRadios(url, context.getApplicationContext(), responseServerCallback);
 		}
 	}
 
-	private M3UParser()
-	{
-	}
-
 	/**
-	 * Método para obtener una instancia única
-	 *
-	 * @return
+	 * Realiza la descarga y parseo del M3U
 	 */
-	public static M3UParser getInstance()
+	private void downloadRadios(final String url, final Context appContext, final ResponseServerCallback callback)
 	{
-		if (instance == null)
-		{
-			instance = new M3UParser();
-		}
-
-		return instance;
-	}
-
-	/**
-	 * Método que se encarga de parsear el M3U
-	 *
-	 * @param URL
-	 * @param entradasM3u
-	 * @param context
-	 * @param responseServerCallback
-	 */
-	private void downloadRadios(final String URL, final List<M3uEntry> entradasM3u, final Context context, final ResponseServerCallback responseServerCallback)
-	{
-		InputStreamVolleyRequest prueba = new InputStreamVolleyRequest(
+		InputStreamVolleyRequest request = new InputStreamVolleyRequest(
 				Request.Method.GET,
-				URL,
-				new Response.Listener<byte[]>()
-				{
-					@RequiresApi(api = Build.VERSION_CODES.O)
-					@Override
-					public void onResponse(byte[] response)
+				url,
+				response -> {
+					Log.i(TAG, "M3U obtenido correctamente");
+					try
 					{
-						Log.i(TAG, "M3U obtenido correctamente");
+						String content = new String(response, StandardCharsets.UTF_8);
+						List<M3uEntry> entradasTotales = M3uParser.parse(content);
 
-						try
+						if (url.equals(DEFAULT_URL))
 						{
-							FileOutputStream outputStream;
-							//Guardamos el fichero obtenido
-							outputStream = context.openFileOutput("temp_list.m3u", Context.MODE_PRIVATE);
-							outputStream.write(response);
-							outputStream.close();
-
-							// Parseamos el fichero obtenido
-							Path m3uFile = context.getFileStreamPath("temp_list.m3u").toPath();
-							ArrayList<M3uEntry> entradasTotales = new ArrayList<>(M3uParser.parse(m3uFile));
-
-							boolean isDefaultUrl = URL.equals(DEFAULT_URL);
-
-							for (int i = 0; i < entradasTotales.size(); i++)
-							{
-								if (isDefaultUrl)
-								{
-									// Si es la URL por defecto, mantenemos el filtrado original
-									if (Objects.equals(entradasTotales.get(i).getMetadata().get("tv-libre-comunitaria"), "yes") || Objects.equals(entradasTotales.get(i).getMetadata().get("radio-libre-comunitaria"), "yes"))
-									{
-										entradasM3u.add(entradasTotales.get(i));
-									}
-								}
-								else
-								{
-									// Si es una URL personalizada, añadimos todas las entradas
-									entradasM3u.add(entradasTotales.get(i));
-								}
-							}
-						} catch (IOException e)
-						{
-							Toast.makeText(context.getApplicationContext(), "ERROR:" + e.getMessage(), Toast.LENGTH_LONG).show();
-							Log.e(TAG, "Error al parsear la lista M3U: " + e.getMessage());
+							// Filtrado optimizado con Streams para la URL por defecto
+							entradasM3u = entradasTotales.stream()
+									.filter(entry -> Objects.equals(entry.getMetadata().get("tv-libre-comunitaria"), "yes")
+											|| Objects.equals(entry.getMetadata().get("radio-libre-comunitaria"), "yes"))
+									.collect(Collectors.toCollection(ArrayList::new));
 						}
-
-						// Enviar lista de canales al método de carga en la actividad principal
-						responseServerCallback.onChannelsLoadServer(entradasM3u);
+						else
+						{
+							entradasM3u = new ArrayList<>(entradasTotales);
+						}
+						urlCacheada = url;
+					} catch (Exception e)
+					{
+						Toast.makeText(appContext, "ERROR: " + e.getMessage(), Toast.LENGTH_LONG).show();
+						Log.e(TAG, "Error al parsear la lista M3U: " + e.getMessage());
+						entradasM3u = new ArrayList<>();
 					}
+					callback.onChannelsLoadServer(entradasM3u);
 				},
-				new Response.ErrorListener()
-				{
-					/**
-					 * Cosas a hacer cuando la respuesta es incorrecta
-					 *
-					 * @param error
-					 */
-					@Override
-					public void onErrorResponse(VolleyError error)
-					{
-						String errorMessage = "Error de red";
-						if (error.networkResponse != null && error.networkResponse.data != null) {
-							errorMessage = new String(error.networkResponse.data);
-						}
-						Log.e(TAG, "Error al acceder a la URL " + URL);
-						Toast.makeText(context.getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_LONG).show();
-						// Enviar lista de canales al método de carga en la actividad principal
-						responseServerCallback.onChannelsLoadServer(entradasM3u);
+				error -> {
+					String errorMessage = "Error de red";
+					if (error.networkResponse != null && error.networkResponse.data != null) {
+						errorMessage = new String(error.networkResponse.data);
 					}
+					Log.e(TAG, "Error al acceder a la URL " + url);
+					Toast.makeText(appContext, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+					callback.onChannelsLoadServer(new ArrayList<>());
 				}, null);
 
-		// Añadir M3U a la cola de peticiones
-		VolleyController.getInstance(context).addToQueue(prueba);
+		VolleyController.getInstance(appContext).addToQueue(request);
 	}
 
 	/**

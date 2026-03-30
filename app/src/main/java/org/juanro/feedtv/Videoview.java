@@ -23,144 +23,141 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
-import androidx.annotation.OptIn;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.media3.common.MediaItem;
-import androidx.media3.common.util.UnstableApi;
 import androidx.media3.exoplayer.ExoPlayer;
-import androidx.media3.ui.PlayerView;
+
+import org.juanro.feedtv.databinding.VideoBinding;
 
 /**
  * Clase que representa un reproductor de vídeo simple
  */
 public class Videoview extends AppCompatActivity
 {
-    private SharedPreferences sharedPref;
-    private String url;
-    private ExoPlayer exoPlayer;
-    private PlayerView playerView;
-    private boolean fullscreen = false;
+	private VideoBinding binding;
+	private ExoPlayer exoPlayer;
+	private boolean fullscreen = false;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        // Establecer tema de la aplicación
-        aplicarTema();
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.video);
-
-        playerView = findViewById(R.id.videoPlayerView);
-
-        // Seteamos las acciones a realizar al pulsar boton de pantalla completa
-        playerView.setFullscreenButtonClickListener(isFullScreen ->
-        {
-            if(fullscreen) {
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-
-                if(getSupportActionBar() != null)
-                {
-                    getSupportActionBar().show();
-                }
-
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-                fullscreen = false;
-            }else{
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
-                        |View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                        |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-
-                if(getSupportActionBar() != null)
-                {
-                    getSupportActionBar().hide();
-                }
-
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                fullscreen = true;
-            }
-        });
-
-        // Establecer botón de atrás en action bar
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-        {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        // Obtener elementos de la activity anterior
-        Intent i = getIntent();
-        Bundle extras = i.getExtras();
-
-        if (extras.getString("url") != null)
-        {
-            url = extras.getString("url");
-            play(url);
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (exoPlayer != null) {
-            exoPlayer.release();
-        }
-    }
-
-    /**
-     * Acciones botones menú
-     *
-     * @param item
-     * @return
-     */
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-            {
-                this.onBackPressed();
-                return true;
-            }
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Método que configura el reproductor y lo ejecuta
-     *
-     * @param url
-     */
-    private void play(String url)
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
 	{
-        exoPlayer = new ExoPlayer.Builder(getApplicationContext()).build();
-        playerView.setPlayer(exoPlayer);
-        // Establecemos el enlace a reproducir.
-        MediaItem mediaItem = MediaItem.fromUri(url);
-        exoPlayer.setMediaItem(mediaItem);
-        // Lanzamos la reproducción
-        exoPlayer.prepare();
-        exoPlayer.setPlayWhenReady(true);
-        exoPlayer.play();
-    }
+		// Establecer tema de la aplicación
+		aplicarTema();
 
-    /**
-     * Método que aplica el tema de la aplicación
-     */
-    private void aplicarTema()
-    {
-        sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+		super.onCreate(savedInstanceState);
+		binding = VideoBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
-        if(sharedPref.getString("tema", "Claro").equals("Claro"))
-        {
-            setTheme(R.style.TemaClaro);
-        }
-        else
-        {
-            setTheme(R.style.TemaOscuro);
-        }
-    }
+		WindowInsetsControllerCompat controller = new WindowInsetsControllerCompat(getWindow(), getWindow().getDecorView());
+
+		// Seteamos las acciones a realizar al pulsar boton de pantalla completa
+		binding.videoPlayerView.setFullscreenButtonClickListener(isFullScreen ->
+		{
+			if(fullscreen) {
+				controller.show(WindowInsetsCompat.Type.systemBars());
+
+				if(getSupportActionBar() != null)
+				{
+					getSupportActionBar().show();
+				}
+
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+				fullscreen = false;
+			}else{
+				controller.hide(WindowInsetsCompat.Type.systemBars());
+				controller.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+
+				if(getSupportActionBar() != null)
+				{
+					getSupportActionBar().hide();
+				}
+
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+				fullscreen = true;
+			}
+		});
+
+		// Establecer botón de atrás en action bar
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null)
+		{
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+
+		// Obtener elementos de la activity anterior
+		Intent i = getIntent();
+		Bundle extras = i.getExtras();
+
+		if (extras != null && extras.getString("url") != null)
+		{
+			String url = extras.getString("url");
+			play(url);
+		}
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (exoPlayer != null) {
+			exoPlayer.release();
+		}
+	}
+
+	/**
+	 * Acciones botones menú
+	 *
+	 * @param item El elemento del menú seleccionado
+	 * @return boolean Devuelve true si se manejó la selección
+	 */
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item)
+	{
+		if (item.getItemId() == android.R.id.home)
+		{
+			getOnBackPressedDispatcher().onBackPressed();
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Método que configura el reproductor y lo ejecuta
+	 *
+	 * @param url La URL del vídeo a reproducir
+	 */
+	private void play(String url)
+	{
+		exoPlayer = new ExoPlayer.Builder(this).build();
+		binding.videoPlayerView.setPlayer(exoPlayer);
+		// Establecemos el enlace a reproducir.
+		MediaItem mediaItem = MediaItem.fromUri(url);
+		exoPlayer.setMediaItem(mediaItem);
+		// Lanzamos la reproducción
+		exoPlayer.prepare();
+		exoPlayer.setPlayWhenReady(true);
+		exoPlayer.play();
+	}
+
+	/**
+	 * Método que aplica el tema de la aplicación
+	 */
+	private void aplicarTema()
+	{
+		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+
+		if("Claro".equals(sharedPref.getString("tema", "Claro")))
+		{
+			setTheme(R.style.TemaClaro);
+		}
+		else
+		{
+			setTheme(R.style.TemaOscuro);
+		}
+	}
 }

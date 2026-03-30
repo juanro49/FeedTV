@@ -13,20 +13,17 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  *
- *
  */
 
 package org.juanro.feedtv.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,22 +33,23 @@ import com.squareup.picasso.Picasso;
 import org.juanro.feedtv.ChannelDetail;
 import org.juanro.feedtv.R;
 import org.juanro.feedtv.TV.Canal;
+import org.juanro.feedtv.databinding.ItemListCanalesBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que representa el adapter de la lista de canales
  */
 public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHolder> implements Filterable
 {
-	private ArrayList<Canal> canales;
-	private ArrayList<Canal> canalesFiltrados;
-	private ItemFilter mFilter = new ItemFilter();
-	private Context mContext;
+	private final List<Canal> canales;
+	private List<Canal> canalesFiltrados;
+	private final ItemFilter mFilter = new ItemFilter();
+	private final Context mContext;
 
-	public ChannelsAdapter(Context context, ArrayList<Canal> canales)
+	public ChannelsAdapter(Context context, List<Canal> canales)
 	{
-		//super(context, 0, canales);
 		this.canales = canales;
 		this.canalesFiltrados = canales;
 		this.mContext = context;
@@ -59,7 +57,10 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
 
 	/**
 	 * Obtiene el filtro de búsqueda en la lista
+	 *
+	 * @return el filtro de elementos
  	 */
+	@Override
 	public Filter getFilter()
 	{
 		return mFilter;
@@ -69,34 +70,37 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
 	/**
 	 * Establece la vista de los elementos de la lista
 	 *
-	 * @param viewGroup
-	 * @param viewType
-	 * @return
+	 * @param viewGroup el grupo de la vista
+	 * @param viewType el tipo de la vista
+	 * @return un nuevo ViewHolder
 	 */
 	@NonNull
 	@Override
 	public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType)
 	{
-		View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_list_canales, viewGroup, false);
-		return new ChannelsAdapter.ViewHolder(v);
+		ItemListCanalesBinding binding = ItemListCanalesBinding.inflate(LayoutInflater.from(viewGroup.getContext()), viewGroup, false);
+		return new ViewHolder(binding);
 	}
 
 	/**
 	 * Crea la vista de cada elemento en la lista
 	 *
-	 * @param vh
+	 * @param vh el ViewHolder que debe ser actualizado
+	 * @param position la posición del elemento dentro del conjunto de datos del adaptador
 	 */
 	@Override
 	public void onBindViewHolder(@NonNull ViewHolder vh, int position)
 	{
+		Canal canal = canalesFiltrados.get(position);
+
 		// Establecer título
-		vh.titleView.setText(canalesFiltrados.get(vh.getAbsoluteAdapterPosition()).getNombre());
+		vh.binding.channelTitle.setText(canal.nombre());
 
 		// Establecer imagen
 		Picasso.get()
-				.load(canalesFiltrados.get(vh.getAbsoluteAdapterPosition()).getLogo())
+				.load(canal.logo())
 				.placeholder(R.drawable.placeholder)
-				.into(vh.imageView);
+				.into(vh.binding.channelIcon);
 
 
 		// Registra las pulsaciones en la lista
@@ -104,7 +108,7 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
 		{
 			// Inicia la activity de detalles del canal seleccionado
 			Intent intent = new Intent(mContext, ChannelDetail.class);
-			intent.putExtra("canal", canalesFiltrados.get(vh.getAbsoluteAdapterPosition()));
+			intent.putExtra("canal", canal);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			mContext.startActivity(intent);
 		});
@@ -113,7 +117,7 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
 	/**
 	 * Obtiene el tamaño de la lista
 	 *
-	 * @return
+	 * @return el número de elementos en la lista filtrada
 	 */
 	@Override
 	public int getItemCount()
@@ -132,28 +136,29 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
 			String filtro = constraint.toString().toLowerCase();
 			FilterResults result = new FilterResults();
 
-			ArrayList<Canal> canalesFiltrados = new ArrayList<>();
+			ArrayList<Canal> canalesFiltradosLocal = new ArrayList<>();
 			String nombreCanal;
 
 			// Comenzar filtrado de canales
 			for (int i = 0; i < canales.size(); i++)
 			{
-				nombreCanal = canales.get(i).getNombre();
+				nombreCanal = canales.get(i).nombre();
 
 				// Comprobar que el nombre del canal contiene la secuencia de búsqueda
 				if (nombreCanal.toLowerCase().contains(filtro))
 				{
-					canalesFiltrados.add(canales.get(i));
+					canalesFiltradosLocal.add(canales.get(i));
 				}
 			}
 
 			// Enviar lista filtrada a la clase de filtrado
-			result.values = canalesFiltrados;
-			result.count = canalesFiltrados.size();
+			result.values = canalesFiltradosLocal;
+			result.count = canalesFiltradosLocal.size();
 
 			return result;
 		}
 
+		@SuppressLint("NotifyDataSetChanged")
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results)
@@ -167,16 +172,14 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
 	/**
 	 * ViewHolder para asociar variables con elementos gráficos
 	 */
-	class ViewHolder extends RecyclerView.ViewHolder
+	public static class ViewHolder extends RecyclerView.ViewHolder
 	{
-		ImageView imageView;
-		TextView titleView;
+		public final ItemListCanalesBinding binding;
 
-		public ViewHolder(@NonNull View itemView)
+		public ViewHolder(@NonNull ItemListCanalesBinding binding)
 		{
-			super(itemView);
-			imageView = itemView.findViewById(R.id.channel_icon);
-			titleView = itemView.findViewById(R.id.channel_title);
+			super(binding.getRoot());
+			this.binding = binding;
 		}
 	}
 }

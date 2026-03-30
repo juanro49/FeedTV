@@ -23,14 +23,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,18 +34,17 @@ import android.view.MenuItem;
 import org.juanro.feedtv.Adapters.AmbitsAdapter;
 import org.juanro.feedtv.TV.Ambito;
 import org.juanro.feedtv.TV.JSONParser;
+import org.juanro.feedtv.databinding.ActivityTvBinding;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que muestra la lista de canales
  */
 public class TvActivity extends AppCompatActivity implements JSONParser.ResponseServerCallback
 {
+	private ActivityTvBinding binding;
 	private AmbitsAdapter mAdapter;
-	private RecyclerView lista;
-	private SwipeRefreshLayout swipe;
-	private SharedPreferences sharedPref;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -58,15 +53,12 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 		aplicarTema();
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_tv);
+		binding = ActivityTvBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
-
-		swipe = findViewById(R.id.swiperefresh);
-
-		lista = findViewById(R.id.lista);
-		lista.setLayoutManager(new GridLayoutManager(this, 2));
-		lista.setItemAnimator(new DefaultItemAnimator());
-		lista.setHasFixedSize(true);
+		binding.lista.setLayoutManager(new GridLayoutManager(this, 2));
+		binding.lista.setItemAnimator(new DefaultItemAnimator());
+		binding.lista.setHasFixedSize(true);
 
 		// Establecer botón de atrás en action bar
 		ActionBar actionBar = getSupportActionBar();
@@ -76,16 +68,11 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 		}
 
 		// Recargar elementos con swipe
-		swipe.setOnRefreshListener(() ->
-		{
-			Thread cargar1 = new Thread(cargarDatos);
-			cargar1.start();
-		});
+		binding.swiperefresh.setOnRefreshListener(() -> new Thread(cargarDatos).start());
 
 		// Cargar los canales del JSON remoto en un nuevo hilo
-		swipe.setRefreshing(true);
-		Thread cargar = new Thread(cargarDatos);
-		cargar.start();
+		binding.swiperefresh.setRefreshing(true);
+		new Thread(cargarDatos).start();
 	}
 
 	/**
@@ -96,70 +83,48 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 	/**
 	 * Crear la lista con los ambitos obtenidos
 	 *
-	 * @param ambitos
+	 * @param ambitos lista de ámbitos
 	 */
 	@Override
-	public void onChannelsLoadServer(ArrayList<Ambito> ambitos)
+	public void onChannelsLoadServer(List<Ambito> ambitos)
 	{
-		mAdapter = new AmbitsAdapter(getApplicationContext(), ambitos);
-		lista.setAdapter(mAdapter);
-		mAdapter.notifyDataSetChanged();
+		runOnUiThread(() -> {
+			mAdapter = new AmbitsAdapter(getApplicationContext(), ambitos);
+			binding.lista.setAdapter(mAdapter);
 
-		//Detener animación de carga
-		swipe.setRefreshing(false);
+			//Detener animación de carga
+			binding.swiperefresh.setRefreshing(false);
+		});
 	}
 
 	/**
 	 * Crear menu
 	 *
-	 * @param menu
-	 * @return
+	 * @param menu menu a crear
+	 * @return true si se crea correctamente
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.menu, menu);
 		MenuItem searchItem = menu.findItem(R.id.action_search);
 
-		// Cambiar color botón de búsqueda
-		if (getApplicationContext() != null)
+		if (searchItem != null)
 		{
-			Drawable drawable = DrawableCompat.wrap(searchItem.getIcon());
-			DrawableCompat.setTint(drawable, ContextCompat.getColor(getApplicationContext(), android.R.color.white));
-			menu.findItem(R.id.action_search).setIcon(drawable);
-		}
-
-		return true;
-	}
-
-	/**
-	 * Acciones botones menú
-	 *
-	 * @param item
-	 * @return
-	 */
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch (item.getItemId())
-		{
-			case android.R.id.home:
+			// Cambiar color botón de búsqueda de forma más directa
+			if (searchItem.getIcon() != null)
 			{
-				this.onBackPressed();
-				return true;
+				searchItem.getIcon().setTint(ContextCompat.getColor(this, android.R.color.white));
 			}
 
-			case R.id.action_search:
+			// Configurar el buscador una sola vez
+			SearchView searchView = (SearchView) searchItem.getActionView();
+			if (searchView != null)
 			{
-				// Mostrar resultados búsqueda
-				SearchView searchView = (SearchView) item.getActionView();
 				searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
 				{
 					@Override
-					public boolean onQueryTextSubmit(String texto)
-					{
-						return false;
-					}
+					public boolean onQueryTextSubmit(String texto) { return false; }
 
 					@Override
 					public boolean onQueryTextChange(String texto)
@@ -168,11 +133,28 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 						{
 							mAdapter.getFilter().filter(texto);
 						}
-
-						return false;
+						return true;
 					}
 				});
 			}
+		}
+
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	/**
+	 * Acciones botones menú
+	 *
+	 * @param item item pulsado
+	 * @return true si se maneja la pulsación
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if (item.getItemId() == android.R.id.home)
+		{
+			getOnBackPressedDispatcher().onBackPressed();
+			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -183,7 +165,7 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 	 */
 	private void aplicarTema()
 	{
-		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
 		if(sharedPref.getString("tema", "Claro").equals("Claro"))
 		{

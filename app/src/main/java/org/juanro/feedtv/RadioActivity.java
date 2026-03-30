@@ -20,7 +20,6 @@
 package org.juanro.feedtv;
 
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,16 +28,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import net.bjoernpetersen.m3u.model.M3uEntry;
 
 import org.juanro.feedtv.Adapters.RadiosAdapter;
 import org.juanro.feedtv.Radio.M3UParser;
+import org.juanro.feedtv.databinding.ActivityRadioBinding;
 
 import java.util.List;
 
@@ -47,10 +44,8 @@ import java.util.List;
  */
 public class RadioActivity extends AppCompatActivity implements M3UParser.ResponseServerCallback
 {
+	private ActivityRadioBinding binding;
 	private RadiosAdapter mAdapter;
-	private RecyclerView lista;
-	private SwipeRefreshLayout swipe;
-	private SharedPreferences sharedPref;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -59,15 +54,12 @@ public class RadioActivity extends AppCompatActivity implements M3UParser.Respon
 		aplicarTema();
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_radio);
+		binding = ActivityRadioBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
-
-		swipe = findViewById(R.id.swiperefresh);
-
-		lista = findViewById(R.id.lista);
-		lista.setLayoutManager(new LinearLayoutManager(this));
-		lista.setItemAnimator(new DefaultItemAnimator());
-		lista.setHasFixedSize(true);
+		binding.lista.setLayoutManager(new LinearLayoutManager(this));
+		binding.lista.setItemAnimator(new DefaultItemAnimator());
+		binding.lista.setHasFixedSize(true);
 
 		// Establecer botón de atrás en action bar
 		ActionBar actionBar = getSupportActionBar();
@@ -77,16 +69,11 @@ public class RadioActivity extends AppCompatActivity implements M3UParser.Respon
 		}
 
 		// Recargar elementos con swipe
-		swipe.setOnRefreshListener(() ->
-		{
-			Thread cargar1 = new Thread(cargarDatos);
-			cargar1.start();
-		});
+		binding.swiperefresh.setOnRefreshListener(() -> new Thread(cargarDatos).start());
 
 		// Cargar los canales del M3U remoto en un nuevo hilo
-		swipe.setRefreshing(true);
-		Thread cargar = new Thread(cargarDatos);
-		cargar.start();
+		binding.swiperefresh.setRefreshing(true);
+		new Thread(cargarDatos).start();
 	}
 
 	/**
@@ -97,24 +84,25 @@ public class RadioActivity extends AppCompatActivity implements M3UParser.Respon
 	/**
 	 * Crear la lista con los ambitos obtenidos
 	 *
-	 * @param entradasM3u
+	 * @param entradasM3u Lista de entradas M3U
 	 */
 	@Override
 	public void onChannelsLoadServer(List<M3uEntry> entradasM3u)
 	{
-		mAdapter = new RadiosAdapter(getApplicationContext(), entradasM3u);
-		lista.setAdapter(mAdapter);
-		mAdapter.notifyDataSetChanged();
+		runOnUiThread(() -> {
+			mAdapter = new RadiosAdapter(getApplicationContext(), entradasM3u);
+			binding.lista.setAdapter(mAdapter);
 
-		//Detener animación de carga
-		swipe.setRefreshing(false);
+			//Detener animación de carga
+			binding.swiperefresh.setRefreshing(false);
+		});
 	}
 
 	/**
 	 * Crear menu
 	 *
-	 * @param menu
-	 * @return
+	 * @param menu El menú de opciones en el que se colocan los elementos.
+	 * @return boolean Debe devolver true para que se muestre el menú; si devuelve false, no se mostrará.
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -123,44 +111,22 @@ public class RadioActivity extends AppCompatActivity implements M3UParser.Respon
 		getMenuInflater().inflate(R.menu.menu, menu);
 		MenuItem searchItem = menu.findItem(R.id.action_search);
 
-		// Cambiar color botón de búsqueda
-		if (getApplicationContext() != null)
+		if (searchItem != null)
 		{
-			Drawable drawable = DrawableCompat.wrap(searchItem.getIcon());
-			DrawableCompat.setTint(drawable, ContextCompat.getColor(getApplicationContext(), android.R.color.white));
-			menu.findItem(R.id.action_search).setIcon(drawable);
-		}
-
-		return true;
-	}
-
-	/**
-	 * Acciones botones menú
-	 *
-	 * @param item
-	 * @return
-	 */
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch (item.getItemId())
-		{
-			case android.R.id.home:
+			// Cambiar color botón de búsqueda
+			if (searchItem.getIcon() != null)
 			{
-				this.onBackPressed();
-				return true;
+				searchItem.getIcon().setTint(ContextCompat.getColor(this, android.R.color.white));
 			}
 
-			case R.id.action_search:
+			// Configurar el buscador una sola vez
+			SearchView searchView = (SearchView) searchItem.getActionView();
+			if (searchView != null)
 			{
-				// Mostrar resultados búsqueda
-				SearchView searchView = (SearchView) item.getActionView();
 				searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
 				{
 					@Override
-					public boolean onQueryTextSubmit(String texto)
-					{
-						return false;
-					}
+					public boolean onQueryTextSubmit(String texto) { return false; }
 
 					@Override
 					public boolean onQueryTextChange(String texto)
@@ -169,11 +135,28 @@ public class RadioActivity extends AppCompatActivity implements M3UParser.Respon
 						{
 							mAdapter.getFilter().filter(texto);
 						}
-
-						return false;
+						return true;
 					}
 				});
 			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Acciones botones menú
+	 *
+	 * @param item El elemento de menú que fue seleccionado.
+	 * @return boolean Devuelve false para permitir que continúe el procesamiento normal del menú, true para consumirlo aquí.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		if (item.getItemId() == android.R.id.home)
+		{
+			getOnBackPressedDispatcher().onBackPressed();
+			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -184,9 +167,9 @@ public class RadioActivity extends AppCompatActivity implements M3UParser.Respon
 	 */
 	private void aplicarTema()
 	{
-		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
-		if(sharedPref.getString("tema", "Claro").equals("Claro"))
+		if("Claro".equals(sharedPref.getString("tema", "Claro")))
 		{
 			setTheme(R.style.TemaClaro);
 		}

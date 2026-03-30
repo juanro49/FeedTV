@@ -25,9 +25,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceFragmentCompat;
+
+import org.juanro.feedtv.databinding.SettingsActivityBinding;
 
 import java.util.Locale;
 
@@ -36,9 +39,7 @@ import java.util.Locale;
  */
 public class SettingsActivity extends AppCompatActivity
 {
-	private SharedPreferences sharedPref;
-	private Configuration config = new Configuration();
-	private Locale locale;
+	private final Configuration config = new Configuration();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -47,8 +48,16 @@ public class SettingsActivity extends AppCompatActivity
 		aplicarTema();
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.settings_activity);
-		getSupportFragmentManager().beginTransaction().replace(R.id.settings, new SettingsFragment()).commit();
+		SettingsActivityBinding binding = SettingsActivityBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
+
+		if (savedInstanceState == null)
+		{
+			getSupportFragmentManager().beginTransaction()
+					.replace(R.id.settings, new SettingsFragment())
+					.commit();
+		}
+
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null)
 		{
@@ -73,13 +82,13 @@ public class SettingsActivity extends AppCompatActivity
 		}
 	}
 
-	public boolean onOptionsItemSelected(MenuItem item)
+	@Override
+	public boolean onOptionsItemSelected(@NonNull MenuItem item)
 	{
-		switch (item.getItemId())
+		if (item.getItemId() == android.R.id.home)
 		{
-			case android.R.id.home:
-				this.onBackPressed();
-				return true;
+			getOnBackPressedDispatcher().onBackPressed();
+			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -90,7 +99,7 @@ public class SettingsActivity extends AppCompatActivity
 	 */
 	private void aplicarTema()
 	{
-		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
 		if(sharedPref.getString("tema", "Claro").equals("Claro"))
 		{
@@ -107,79 +116,20 @@ public class SettingsActivity extends AppCompatActivity
 	 */
 	private void aplicarIdioma()
 	{
-		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 		String lang = sharedPref.getString("lang", "auto");
 
-		switch(lang)
-		{
-			case "auto":
-				config.setToDefaults();
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + lang);
-				break;
-			case "es":
-				locale = new Locale("es");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
-			case "ext":
-				locale = new Locale("ext");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
-			case "en":
-				locale = new Locale("en");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
-			case "nb":
-				locale = new Locale("nb");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
-			case "de":
-				locale = new Locale("de");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
-			case "ca":
-				locale = new Locale("ca");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
-			case "pl":
-				locale = new Locale("pl");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
-			case "fr":
-				locale = new Locale("fr");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
-			case "it":
-				locale = new Locale("it");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
-			case "nl":
-				locale = new Locale("nl");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
-			case "hr":
-				locale = new Locale("hr");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
-			case "ru":
-				locale = new Locale("ru");
-				config.locale = locale;
-				Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.locale.getLanguage());
-				break;
+		if ("auto".equals(lang)) {
+			config.setToDefaults();
+			Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + lang);
+		} else {
+			Locale locale = new Locale(lang);
+			config.setLocale(locale);
+			Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.getLocales().get(0).getLanguage());
 		}
 
 		getResources().updateConfiguration(config, null);
-		Intent refresh = new Intent(getApplicationContext(), MainActivity.class);
+		Intent refresh = new Intent(this, MainActivity.class);
 		refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(refresh);
 		finish();
