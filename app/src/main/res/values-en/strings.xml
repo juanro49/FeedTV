@@ -1,32 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ The MIT License (MIT)
+  ~
+  ~    Copyright (c) 2019 Juanro49
+  ~
+  ~    Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~    of this software and associated documentation files (the "Software"), to deal
+  ~    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~    copies of the Software, and to permit persons to whom the Software is
+  ~    furnished to do so, subject to the following conditions:
+  ~
+  ~    The above copyright notice and this permission notice shall be included in all
+  ~    copies or substantial portions of the Software.
+  ~
+  ~    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+  ~    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~    SOFTWARE.
+  ~
+  -->
 <resources>
-    <string name="fecha_lista_noticias">Date</string>
-    <string name="reproductor_externo_on">You are using an external player to play the channels</string>
-    <string name="action_about">About</string>
-    <string name="alert_message">Cannot fetch data.\nCheck your connection.</string>
-    <string name="tema_aplicacion">App theme</string>
-    <string name="titulo_addfeed">Type in the name and the address of the RSS-feed</string>
-    <string name="nombre_feed">Name of news source</string>
-    <string name="alert_positive">Close</string>
-    <string name="alert_title">Warning!</string>
-    <string name="url_detalle">URL</string>
-    <string name="url_ejemplo">https://example.org/feed</string>
-    <string name="about">FeedTV is an app that lets you read news from any medium via RSS, in addition to perusing public TV channels from anywhere.</string>
-    <string name="enlaces_disponibles">Available links</string>
-    <string name="titulo_lista_noticias">Title</string>
-    <string name="url_feed">URL:</string>
-    <string name="title_activity_settings">Settings</string>
-    <string name="nombre_canal_detalle">Channel name</string>
-    <string name="reproductor_externo_off">You are using the internal player to play the channels</string>
-    <string name="video">Video</string>
-    <string name="name_feed">Name:</string>
-    <string name="author">&lt;br /&gt;&lt;br /&gt;Created by Juanro49, licensed Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
     <string name="app_name">FeedTV</string>
+    <string name="search">Search</string>
+    <string name="add_feed">Add feed</string>
+    <string name="watch_tv">Watch TV</string>
+    <string name="listen_radio">Watch free radio/TV</string>
+    <string name="settings">Settings</string>
+    <string name="action_about">About</string>
+    <string name="television">FeedTV TV</string>
+    <string name="channel_detail">Channel details</string>
+    <string name="alert_title">Warning!</string>
+    <string name="alert_message">Cannot fetch data.\nCheck your connection.</string>
+    <string name="alert_positive">Close</string>
+    <string name="video">Video</string>
+    <string name="about">FeedTV is an app that lets you read news from any medium via RSS, in addition to perusing public TV channels from anywhere.</string>
+    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV is possible thanks to &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, the channel repository of &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt; and free radios collection of &lt;a href=\'https://libertalia.world/@enjey/106982718007217691\'&gt;enjey&lt;/a&gt;.</string>
+    <string name="author">&lt;br /&gt;&lt;br /&gt;Created by Juanro49, licensed Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
+    <string name="version">Version</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="tema_aplicacion">App theme</string>
+    <string name="reproductor">Use external player</string>
+    <string name="reproductor_externo_on">You are using an external player to play the channels</string>
+    <string name="reproductor_externo_off">You are using the internal player to play the channels</string>
     <string name="add">Add</string>
+    <string name="notAdd">Do not add</string>
+    <string name="title_recentNews">Add recent news</string>
+    <string name="recentNews">You have no feeds added, do you want to add the recent news feed?</string>
     <string name="edit_feed">Modify</string>
     <string name="add_feed_empty">Both fields are required</string>
     <string name="add_feed_success">Feed added successfully</string>
     <string name="mod_feed_success">Feed modified successfully</string>
+    <string name="url_ejemplo">https://example.org/feed</string>
+    <string name="nombre_feed">Name of news source</string>
+    <string name="url_feed">URL:</string>
+    <string name="name_feed">Name:</string>
+    <string name="titulo_addfeed">Type in the name and the address of the RSS-feed</string>
+    <string name="enlaces_disponibles">Available links</string>
+    <string name="url_detail">URL</string>
+    <string name="nombre_canal_detalle">Channel name</string>
+    <string name="titulo_lista_noticias">Title</string>
+    <string name="fecha_lista_noticias">Date</string>
     <string name="title_dialog_rss_list">Edit feed</string>
     <string name="dialog_rss_list">What action do you want to take with </string>
     <string name="delete">Delete</string>
@@ -43,15 +79,8 @@
     <string name="topic">Topic</string>
     <string name="titulo_seguir">Enter the topic to follow and its source</string>
     <string name="unlock_gn">Check if Google News is not available in your country</string>
-    <string name="reproductor">Use external player</string>
-    <string name="add_feed">Add feed</string>
-    <string name="search">Search</string>
-    <string name="watch_tv">Watch TV</string>
-    <string name="settings">Settings</string>
-    <string name="television">FeedTV TV</string>
-    <string name="channel_detail">Channel details</string>
-    <string name="version">Version</string>
     <string name="idioma_aplicacion">App language</string>
+    <string name="idioma_establecido">Language set: </string>
     <string name="claro">Light</string>
     <string name="oscuro">Dark</string>
     <string name="auto">Auto</string>
@@ -59,23 +88,18 @@
     <string name="str_ext">Extremaduran</string>
     <string name="str_en">English</string>
     <string name="str_nb">Norwegian</string>
-    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV is possible thanks to &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, the channel repository of &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt; and free radios collection of &lt;a href=\'https://libertalia.world/@enjey/106982718007217691\'&gt;enjey&lt;/a&gt;.</string>
-    <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;View on Github&lt;/a&gt;</string>
-    <string name="idioma_establecido">Language set: </string>
     <string name="str_de">German</string>
     <string name="str_ca">Catalan</string>
     <string name="str_pl">Polish</string>
-    <string name="str_nl">Dutch</string>
-    <string name="str_it">Italian</string>
     <string name="str_fr">French</string>
-    <string name="str_ru">Russian</string>
+    <string name="str_it">Italian</string>
+    <string name="str_nl">Dutch</string>
     <string name="str_hr">Croatian</string>
+    <string name="str_ru">Russian</string>
     <string name="str_sv">Swedish</string>
     <string name="str_ia">Interlingua</string>
     <string name="str_zh">Chinese</string>
-    <string name="recentNews">You have no feeds added, do you want to add the recent news feed?</string>
-    <string name="title_recentNews">Add recent news</string>
-    <string name="notAdd">Do not add</string>
+    <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;View on Github&lt;/a&gt;</string>
     <string name="radio">Community radios and TVs</string>
     <string name="custom_m3u">Load custom M3U list</string>
     <string name="title_activity_custom_m3u">Custom M3U</string>
