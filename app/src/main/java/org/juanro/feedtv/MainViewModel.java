@@ -169,7 +169,7 @@ public class MainViewModel extends ViewModel
 					image = c.getString(COLUMN_IMG);
 				}
 
-				RssItem articulo = new RssItem("", title, "", link, pubDate, "", "", image, "", "", "", "", categories, null, "", null, null);
+				RssItem articulo = new RssItem("", title, "", link, pubDate, "", "", image, "", "", "", "", categories, null, "", null, null, null);
 
 				list.add(articulo);
 			} while(c.moveToNext());

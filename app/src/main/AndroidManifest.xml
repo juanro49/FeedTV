@@ -66,6 +66,11 @@
 			android:label="@string/radio">
 		</activity>
 
+		<activity
+			android:name=".CustomM3uActivity"
+			android:label="@string/title_activity_custom_m3u">
+		</activity>
+
 		<uses-library
 			android:name="org.apache.http.legacy"
 			android:required="false" />

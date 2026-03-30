@@ -375,6 +375,13 @@ public class MainActivity extends AppCompatActivity
 				break;
 			}
 
+			case R.id.custom_m3u:
+			{
+				Intent i = new Intent(getApplicationContext(), CustomM3uActivity.class);
+				startActivity(i);
+				break;
+			}
+
 			case R.id.ajustes:
 			{
 				Intent i = new Intent(getApplicationContext(), SettingsActivity.class);

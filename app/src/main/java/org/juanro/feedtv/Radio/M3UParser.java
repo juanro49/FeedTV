@@ -44,23 +44,37 @@ import java.util.Objects;
 
 
 /**
- * Clase que se encarga de parsear el JSON en objetos Java
+ * Clase que se encarga de parsear el M3U en objetos Java
  */
 public class M3UParser
 {
 	public static final String TAG = M3UParser.class.getSimpleName();
 	private static M3UParser instance;
 	private List<M3uEntry> entradasM3u;
-	private String url = "https://archive.org/download/radiosrecopiladas2019/radios_recopiladas.m3u";
+	public static final String DEFAULT_URL = "https://archive.org/download/radiosrecopiladas2019/radios_recopiladas.m3u";
 
 	/**
-	 * Método que carga la lista de objetos parseados a la interfaz que lo envía a TvActivity
+	 * Método que carga la lista de objetos parseados a la interfaz que lo envía a RadioActivity
+	 * usando la URL por defecto.
 	 *
 	 * @param forceUpdate
 	 * @param context
 	 * @param responseServerCallback
 	 */
 	public void loadRadios(boolean forceUpdate, final Context context, final ResponseServerCallback responseServerCallback)
+	{
+		loadRadios(forceUpdate, DEFAULT_URL, context, responseServerCallback);
+	}
+
+	/**
+	 * Método que carga la lista de objetos parseados desde una URL específica
+	 *
+	 * @param forceUpdate
+	 * @param url
+	 * @param context
+	 * @param responseServerCallback
+	 */
+	public void loadRadios(boolean forceUpdate, String url, final Context context, final ResponseServerCallback responseServerCallback)
 	{
 		if (!forceUpdate && entradasM3u != null && !entradasM3u.isEmpty())
 		{
@@ -95,7 +109,7 @@ public class M3UParser
 	}
 
 	/**
-	 * Método que se encarga de parsear el JSON
+	 * Método que se encarga de parsear el M3U
 	 *
 	 * @param URL
 	 * @param entradasM3u
@@ -119,18 +133,29 @@ public class M3UParser
 						{
 							FileOutputStream outputStream;
 							//Guardamos el fichero obtenido
-							outputStream = context.openFileOutput("radios_recopiladas.m3u", Context.MODE_PRIVATE);
+							outputStream = context.openFileOutput("temp_list.m3u", Context.MODE_PRIVATE);
 							outputStream.write(response);
 							outputStream.close();
 
 							// Parseamos el fichero obtenido
-							Path m3uFile = context.getFileStreamPath("radios_recopiladas.m3u").toPath();
+							Path m3uFile = context.getFileStreamPath("temp_list.m3u").toPath();
 							ArrayList<M3uEntry> entradasTotales = new ArrayList<>(M3uParser.parse(m3uFile));
+
+							boolean isDefaultUrl = URL.equals(DEFAULT_URL);
 
 							for (int i = 0; i < entradasTotales.size(); i++)
 							{
-								if (Objects.equals(entradasTotales.get(i).getMetadata().get("tv-libre-comunitaria"), "yes") || Objects.equals(entradasTotales.get(i).getMetadata().get("radio-libre-comunitaria"), "yes"))
+								if (isDefaultUrl)
 								{
+									// Si es la URL por defecto, mantenemos el filtrado original
+									if (Objects.equals(entradasTotales.get(i).getMetadata().get("tv-libre-comunitaria"), "yes") || Objects.equals(entradasTotales.get(i).getMetadata().get("radio-libre-comunitaria"), "yes"))
+									{
+										entradasM3u.add(entradasTotales.get(i));
+									}
+								}
+								else
+								{
+									// Si es una URL personalizada, añadimos todas las entradas
 									entradasM3u.add(entradasTotales.get(i));
 								}
 							}
@@ -154,7 +179,10 @@ public class M3UParser
 					@Override
 					public void onErrorResponse(VolleyError error)
 					{
-						String errorMessage = new String(error.networkResponse.data);
+						String errorMessage = "Error de red";
+						if (error.networkResponse != null && error.networkResponse.data != null) {
+							errorMessage = new String(error.networkResponse.data);
+						}
 						Log.e(TAG, "Error al acceder a la URL " + URL);
 						Toast.makeText(context.getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_LONG).show();
 						// Enviar lista de canales al método de carga en la actividad principal

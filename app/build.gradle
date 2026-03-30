@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 
 android
 {
+    namespace 'org.juanro.feedtv'
 	compileSdk 36
-	buildToolsVersion '36.0.0'
 
 	defaultConfig
 	{
@@ -14,7 +14,6 @@ android
 		versionName '3.0.1'
 		useLibrary 'org.apache.http.legacy'
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-		multiDexEnabled true
 	}
 
 	packagingOptions
@@ -31,7 +30,6 @@ android
 		{
 			minifyEnabled false
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-			zipAlignEnabled true
 		}
 	}
 
@@ -46,12 +44,11 @@ android
 		checkReleaseBuilds false
 	}
 
-    namespace 'org.juanro.feedtv'
-    /*compileOptions
+	compileOptions
 	{
 		sourceCompatibility JavaVersion.VERSION_1_8
 		targetCompatibility JavaVersion.VERSION_1_8
-	}*/
+	}
 }
 
 dependencies
@@ -59,34 +56,37 @@ dependencies
 	implementation fileTree(dir: 'libs', include: ['*.jar'])
     
 	// RSS Parser
-	implementation 'com.prof18.rssparser:rssparser:6.1.0-alpha02'
+	implementation 'com.prof18.rssparser:rssparser:6.1.5'
 
-	//M3U parser
+	// M3U parser
 	implementation "com.github.bjoernpetersen:m3u-parser:1.4.0"
 
-	// UI
-	implementation 'com.google.android.material:material:1.14.0-alpha03'
+	// UI & AndroidX
+	implementation 'androidx.appcompat:appcompat:1.7.1'
+	implementation 'com.google.android.material:material:1.14.0-alpha10'
 	implementation 'androidx.recyclerview:recyclerview:1.4.0'
 	implementation 'androidx.cardview:cardview:1.0.0'
 	implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-	implementation 'androidx.lifecycle:lifecycle-runtime:2.10.0-alpha01'
+	implementation 'androidx.preference:preference:1.2.1'
+	implementation 'androidx.browser:browser:1.10.0'
+	implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'
+
+	// Lifecycle
+	implementation 'androidx.lifecycle:lifecycle-runtime:2.11.0-alpha03'
 	implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+	// Media & Network
 	implementation 'com.squareup.picasso:picasso:2.71828'
 	implementation 'com.android.volley:volley:1.2.1'
-	implementation 'com.google.android.exoplayer:exoplayer:2.19.1'
+	implementation 'androidx.media3:media3-exoplayer:1.10.0'
+	implementation 'androidx.media3:media3-ui:1.10.0'
+	
+	// Others
 	implementation 'org.conscrypt:conscrypt-android:2.5.3'
-	implementation 'androidx.browser:browser:1.9.0'
+	implementation 'org.jetbrains:annotations:26.1.0'
 	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-	implementation 'androidx.preference:preference:1.2.1'
-	implementation 'androidx.multidex:multidex:2.0.1'
-	implementation 'org.jetbrains:annotations:26.0.2'
 
 	testImplementation 'junit:junit:4.13.2'
 	androidTestImplementation 'androidx.test:runner:1.7.0'
 	androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
-
-	//implementation 'dev.dworks.libs:volleyplus:0.1.4'
-	//implementation 'com.squareup.okhttp3:okhttp:4.4.0'
-	//implementation 'org.simpleframework:simple-xml:2.7.1'
-	//implementation 'com.mikepenz:materialize:1.2.1'
 }

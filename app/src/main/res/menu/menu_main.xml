@@ -42,6 +42,12 @@
 		app:showAsAction="never" />
 
 	<item
+		android:id="@+id/custom_m3u"
+		android:orderInCategory="100"
+		android:title="@string/custom_m3u"
+		app:showAsAction="never" />
+
+	<item
 		android:id="@+id/ajustes"
 		android:orderInCategory="100"
 		android:title="@string/settings"

@@ -25,12 +25,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.OptIn;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.exoplayer2.ExoPlayer;
-import com.google.android.exoplayer2.MediaItem;
-import com.google.android.exoplayer2.ui.StyledPlayerView;
+import androidx.media3.common.MediaItem;
+import androidx.media3.common.util.UnstableApi;
+import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.ui.PlayerView;
 
 /**
  * Clase que representa un reproductor de vídeo simple
@@ -40,7 +41,7 @@ public class Videoview extends AppCompatActivity
     private SharedPreferences sharedPref;
     private String url;
     private ExoPlayer exoPlayer;
-    private StyledPlayerView playerView;
+    private PlayerView playerView;
     private boolean fullscreen = false;
 
     @Override
@@ -55,7 +56,7 @@ public class Videoview extends AppCompatActivity
         playerView = findViewById(R.id.videoPlayerView);
 
         // Seteamos las acciones a realizar al pulsar boton de pantalla completa
-        playerView.setControllerOnFullScreenModeChangedListener(isFullScreen ->
+        playerView.setFullscreenButtonClickListener(isFullScreen ->
         {
             if(fullscreen) {
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
@@ -103,7 +104,9 @@ public class Videoview extends AppCompatActivity
     @Override
     public void onDestroy() {
         super.onDestroy();
-        exoPlayer.release();
+        if (exoPlayer != null) {
+            exoPlayer.release();
+        }
     }
 
     /**

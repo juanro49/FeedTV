@@ -98,4 +98,6 @@
 	<string name="str_ru">Ruso</string>
 	<string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Ver en Github&lt;/a&gt;</string>
     <string name="radio">Radios y TVs comunitarias</string>
+	<string name="custom_m3u">Cargar lista M3U personalizada</string>
+	<string name="title_activity_custom_m3u">M3U Personalizado</string>
 </resources>
