@@ -64,7 +64,7 @@
 				android:autoLink="web"
 				android:fontFamily="sans-serif-light"
 				android:paddingTop="8dp"
-				android:text="@string/url_detalle"
+				android:text="@string/url_detail"
 				android:textSize="16sp" />
 		</LinearLayout>
 	</LinearLayout>

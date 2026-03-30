@@ -30,7 +30,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.prof18.rssparser.model.RssItem;
-import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +40,9 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.RecyclerView;
+
+import coil.Coil;
+import coil.request.ImageRequest;
 
 import org.juanro.feedtv.R;
 import org.juanro.feedtv.databinding.ItemListNoticiasBinding;
@@ -89,7 +91,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     }
 
     /**
-     * Crea la vista de cada elemento de la lista
+     * Crea la vista de cada elemento en la lista
      *
      * @param viewHolder el ViewHolder que debe ser actualizado
      * @param position la posición del elemento dentro del conjunto de datos del adaptador
@@ -142,11 +144,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
         viewHolder.binding.titulo.setText(title);
 
-        // Setear imagen
-        Picasso.get()
-                .load(currentArticle.getImage())
+        // Setear imagen con Coil
+        ImageRequest request = new ImageRequest.Builder(mContext)
+                .data(currentArticle.getImage())
                 .placeholder(R.drawable.placeholder)
-                .into(viewHolder.binding.imagen);
+                .target(viewHolder.binding.imagen)
+                .build();
+        Coil.imageLoader(mContext).enqueue(request);
 
         // Setear fecha
         viewHolder.binding.fecha.setText(pubDateString);

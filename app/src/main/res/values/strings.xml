@@ -59,7 +59,7 @@
 	<string name="name_feed">Nombre:</string>
 	<string name="titulo_addfeed">Introduce el nombre y la dirección del Feed RSS</string>
 	<string name="enlaces_disponibles">Enlaces disponibles</string>
-	<string name="url_detalle">URL</string>
+	<string name="url_detail">URL</string>
 	<string name="nombre_canal_detalle">Nombre canal</string>
 	<string name="titulo_lista_noticias">Título</string>
 	<string name="fecha_lista_noticias">Fecha</string>

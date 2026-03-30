@@ -37,8 +37,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
-
+import coil.Coil;
+import coil.request.ImageRequest;
 import net.bjoernpetersen.m3u.model.M3uEntry;
 
 import org.juanro.feedtv.R;
@@ -109,11 +109,13 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 		// Establecer título alternativo
 		vh.binding.fecha.setText(radio.getMetadata().get("tvg-name"));
 
-		// Establecer imagen
-		Picasso.get()
-				.load(radio.getMetadata().getLogo())
+		// Establecer imagen con Coil
+		ImageRequest request = new ImageRequest.Builder(mContext)
+				.data(radio.getMetadata().getLogo())
 				.placeholder(R.drawable.placeholder)
-				.into(vh.binding.imagen);
+				.target(vh.binding.imagen)
+				.build();
+		Coil.imageLoader(mContext).enqueue(request);
 
 		// Establecer categoría
 		vh.binding.categorias.setText(radio.getMetadata().get("group-title"));

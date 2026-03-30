@@ -25,7 +25,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -34,14 +33,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.IntentCompat;
 
-import com.squareup.picasso.Picasso;
+import coil.Coil;
+import coil.request.ImageRequest;
 
 import org.juanro.feedtv.TV.Canal;
 import org.juanro.feedtv.TV.Opciones;
 import org.juanro.feedtv.databinding.ChannelDetailBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase que representa los detalles de un canal
@@ -70,33 +72,27 @@ public class ChannelDetail extends AppCompatActivity
 		// Cargamos el archivo de preferencias
 		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
-		// Obtener canal de la anterior activity
+		// Obtener canal de la anterior activity de forma segura (AndroidX IntentCompat)
 		Intent intent = getIntent();
-		Canal canal;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-		{
-			canal = intent.getSerializableExtra("canal", Canal.class);
-		}
-		else
-		{
-			//noinspection deprecation
-			canal = (Canal) intent.getSerializableExtra("canal");
-		}
+		Canal canal = IntentCompat.getSerializableExtra(intent, "canal", Canal.class);
 
 		if (canal != null)
 		{
 			binding.channelName.setText(canal.nombre());
 			binding.channelUrl.setText(canal.web());
 
-			Picasso.get()
-					.load(canal.logo())
+			// Carga de imagen con Coil
+			ImageRequest request = new ImageRequest.Builder(this)
+					.data(canal.logo())
 					.placeholder(R.drawable.ic_launcher_foreground)
-					.into(binding.channelImage);
+					.target(binding.channelImage)
+					.build();
+			Coil.imageLoader(this).enqueue(request);
 
 			if (!canal.opciones().isEmpty())
 			{
 				// Crear lista con enlaces del canal
-				ArrayList<String> sources = new ArrayList<>();
+				List<String> sources = new ArrayList<>();
 
 				for (Opciones opcion : canal.opciones())
 				{
@@ -117,8 +113,8 @@ public class ChannelDetail extends AppCompatActivity
 					{
 						// Reproductor externo
 						Uri uri = Uri.parse(source);
-						Intent intent1 = new Intent(Intent.ACTION_VIEW, uri);
-						startActivity(intent1);
+						Intent externalIntent = new Intent(Intent.ACTION_VIEW, uri);
+						startActivity(externalIntent);
 					}
 					else
 					{

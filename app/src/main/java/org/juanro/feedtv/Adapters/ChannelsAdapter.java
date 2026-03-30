@@ -28,7 +28,8 @@ import android.widget.Filterable;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import coil.Coil;
+import coil.request.ImageRequest;
 
 import org.juanro.feedtv.ChannelDetail;
 import org.juanro.feedtv.R;
@@ -96,11 +97,13 @@ public class ChannelsAdapter extends RecyclerView.Adapter<ChannelsAdapter.ViewHo
 		// Establecer título
 		vh.binding.channelTitle.setText(canal.nombre());
 
-		// Establecer imagen
-		Picasso.get()
-				.load(canal.logo())
+		// Establecer imagen con Coil
+		ImageRequest request = new ImageRequest.Builder(mContext)
+				.data(canal.logo())
 				.placeholder(R.drawable.placeholder)
-				.into(vh.binding.channelIcon);
+				.target(vh.binding.channelIcon)
+				.build();
+		Coil.imageLoader(mContext).enqueue(request);
 
 
 		// Registra las pulsaciones en la lista
