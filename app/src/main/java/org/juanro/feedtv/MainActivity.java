@@ -22,7 +22,6 @@ package org.juanro.feedtv;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.os.Bundle;
@@ -37,6 +36,9 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -47,8 +49,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.juanro.feedtv.Adapters.ArticleAdapter;
-import org.juanro.feedtv.BBDD.FeedDatabase;
-import org.juanro.feedtv.BBDD.RssList;
+import org.juanro.feedtv.BBDD.AppDatabase;
+import org.juanro.feedtv.BBDD.RssFeed;
 import org.juanro.feedtv.databinding.ActivityMainBinding;
 
 
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity
 	private MainViewModel viewModel;
 	private ArrayAdapter<String> adapter;
 	private String elemento;
+	private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -77,9 +80,15 @@ public class MainActivity extends AppCompatActivity
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 
-		// Cargar Fuentes de noticias guardadas
-		adapter = new ArrayAdapter<>(this, R.layout.simple_list_item_white, cargarFuentes());
+		// Inicializar adaptador de la lista de feeds (vacío inicialmente)
+		adapter = new ArrayAdapter<>(this, R.layout.simple_list_item_white, new ArrayList<>());
 		binding.listaFeeds.setAdapter(adapter);
+
+		// Obtener objeto que contiene el Feed
+		viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+		// Cargar Fuentes desde Room y poblar artículos iniciales
+		refreshFeeds();
 
 		// Obtener pulsación lista fuentes
 		binding.listaFeeds.setOnItemClickListener((parent, view, pos, id) -> onFeedsItemClick(parent, pos));
@@ -90,9 +99,6 @@ public class MainActivity extends AppCompatActivity
 			onFeedsItemLongClick(parent, pos);
 			return true;
 		});
-
-		// Obtener objeto que contiene el Feed
-		viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
 		// Setear la lista en la que se mostrarán los artículos
 		binding.contentMain.listaNoticias.setLayoutManager(new LinearLayoutManager(this));
@@ -109,15 +115,17 @@ public class MainActivity extends AppCompatActivity
 		// Obtener artículos y mostrarlos
 		viewModel.getArticleList().observe(this, articles ->
 		{
-			if (articles != null)
+			if (articles != null && !articles.isEmpty())
 			{
 				// Asociar adapter con RecyclerView
 				mAdapter = new ArticleAdapter(articles, MainActivity.this);
 				binding.contentMain.listaNoticias.setAdapter(mAdapter);
 			}
-			else
+			else if (articles != null)
 			{
-				Toast.makeText(getApplicationContext(), getString(R.string.no_feeds), Toast.LENGTH_LONG).show();
+				// Si la lista está vacía pero no es nula, es el estado inicial o tras borrar todo
+				mAdapter = new ArticleAdapter(new ArrayList<>(), MainActivity.this);
+				binding.contentMain.listaNoticias.setAdapter(mAdapter);
 			}
 
 			binding.contentMain.swipeLayout.setRefreshing(false);
@@ -140,10 +148,7 @@ public class MainActivity extends AppCompatActivity
 		{
 			if(isNetworkAvailable())
 			{
-				// Limpiar lista de artículos
-				binding.contentMain.swipeLayout.setRefreshing(true);
-
-				// Obtener Feed
+				// Intentar obtener Feed (El ViewModel manejará si no hay URL seleccionada)
 				viewModel.fetchFeed(getApplicationContext());
 			}
 			else
@@ -152,118 +157,92 @@ public class MainActivity extends AppCompatActivity
 				binding.contentMain.swipeLayout.setRefreshing(false);
 			}
 		});
-
-		if (isNetworkAvailable())
-		{
-			// Cargar artículos al inicio
-			if(adapter.isEmpty())
-			{
-				// Si no el listado de RSS está vacio, se consulta si se quiere añadir el rss de noticias recientes
-				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-				builder.setMessage(getString(R.string.recentNews));
-				builder.setTitle(getString(R.string.title_recentNews));
-				builder.setCancelable(true);
-				builder.setIcon(android.R.drawable.ic_dialog_alert);
-
-				// Añadir
-				builder.setPositiveButton(getString(R.string.add), (dialog, id) ->
-				{
-					try (RssList fuentes = new RssList(MainActivity.this))
-					{
-						String url = "https://www.meneame.net/rss?status=all";
-						fuentes.insertarEntrada("News", url);
-						FeedDatabase.getInstance(getApplicationContext()).crearTabla("News_");
-
-						// Recargamos las fuentes
-						adapter.add("News");
-					}
-
-					adapter.notifyDataSetChanged();
-					binding.listaFeeds.performItemClick(binding.listaFeeds.getSelectedView(),0, 0);
-
-					Toast.makeText(this, this.getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
-				});
-
-				// No añadir
-				builder.setNegativeButton(getString(R.string.notAdd), (dialog, id) ->
-				{
-					Toast.makeText(this, getString(R.string.first_start), Toast.LENGTH_LONG).show();
-					binding.drawerlayout.openDrawer(GravityCompat.START);
-				});
-
-				AlertDialog alert = builder.create();
-				alert.show();
-			}
-			else
-			{
-				binding.listaFeeds.performItemClick(binding.listaFeeds.getSelectedView(),0, 0);
-			}
-		}
-		else
-		{
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(R.string.alert_message)
-					.setTitle(R.string.alert_title)
-					.setCancelable(false)
-					.setPositiveButton(R.string.alert_positive,
-							(dialog, id) -> finish());
-
-			AlertDialog alert = builder.create();
-			alert.show();
-		}
 	}
 
-	public void onResume()
+	@Override
+	protected void onResume()
 	{
 		super.onResume();
-		adapter.clear();
-		adapter.addAll(cargarFuentes());
-		adapter.notifyDataSetChanged();
+		refreshFeeds();
+	}
+
+	/**
+	 * Actualiza la lista de feeds desde la base de datos Room
+	 */
+	private void refreshFeeds()
+	{
+		executor.execute(() -> {
+			AppDatabase db = AppDatabase.getInstance(MainActivity.this);
+			List<RssFeed> feeds = db.feedDao().getAll();
+			List<String> titles = new ArrayList<>();
+			for (RssFeed f : feeds) {
+				titles.add(f.getTitle());
+			}
+
+			runOnUiThread(() -> {
+				adapter.clear();
+				adapter.addAll(titles);
+				adapter.notifyDataSetChanged();
+
+				// Cargar los 20 artículos más recientes globales al inicio
+				viewModel.fetchGlobalRecentArticles(getApplicationContext());
+
+				// Si está vacía, ofrecer añadir feed por defecto
+				if (titles.isEmpty() && isNetworkAvailable()) {
+					showDefaultFeedDialog();
+				}
+			});
+		});
+	}
+
+	private void showDefaultFeedDialog()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		builder.setMessage(getString(R.string.recentNews));
+		builder.setTitle(getString(R.string.title_recentNews));
+		builder.setCancelable(true);
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+		builder.setPositiveButton(getString(R.string.add), (dialog, id) -> {
+			executor.execute(() -> {
+				AppDatabase db = AppDatabase.getInstance(MainActivity.this);
+				db.feedDao().insert(new RssFeed("News", "https://www.meneame.net/rss?status=all"));
+				refreshFeeds();
+			});
+			Toast.makeText(this, getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
+		});
+
+		builder.setNegativeButton(getString(R.string.notAdd), (dialog, id) -> {
+			Toast.makeText(this, getString(R.string.first_start), Toast.LENGTH_LONG).show();
+			binding.drawerlayout.openDrawer(GravityCompat.START);
+		});
+
+		builder.create().show();
 	}
 
 	/**
 	 * Selecciona el feed correspondiente pulsado en la lista de feeds de la barra lateral
-	 *
-	 * @param parent Adaptador de la vista
-	 * @param pos Posición pulsada
 	 */
 	private void onFeedsItemClick(AdapterView<?> parent, int pos)
 	{
 		binding.contentMain.swipeLayout.setRefreshing(true);
+		String fuente = parent.getItemAtPosition(pos).toString();
 
-		new Thread(() ->
-		{
-			String fuente = parent.getItemAtPosition(pos).toString();
-			try (RssList listaRss = new RssList(getApplicationContext()))
-			{
-				try (Cursor c = listaRss.obtenerEntradas())
-				{
-					if (c.moveToFirst())
-					{
-						do
-						{
-							if (c.getString(1).equals(fuente))
-							{
-								String url = c.getString(2);
-								viewModel.setUrl(url);
-								FeedDatabase.getInstance(MainActivity.this).setTabla(fuente);
-								viewModel.fetchFeed(getApplicationContext());
-								break;
-							}
-						} while (c.moveToNext());
-					}
-				}
+		executor.execute(() -> {
+			AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+			RssFeed feed = db.feedDao().findByTitle(fuente);
+			if (feed != null) {
+				viewModel.setUrl(feed.getUrl());
+				viewModel.setFeedName(feed.getTitle());
+				viewModel.fetchFeed(getApplicationContext());
 			}
-		}).start();
+		});
 
 		binding.drawerlayout.closeDrawers();
 	}
 
 	/**
-	 * Acciones al pulsar de forma prolongada un feed en la lista de feeds de la barra lateral
-	 *
-	 * @param parent Adaptador de la vista
-	 * @param pos Posición pulsada
+	 * Acciones al pulsar de forma prolongada un feed
 	 */
 	public void onFeedsItemLongClick(AdapterView<?> parent, int pos)
 	{
@@ -276,56 +255,32 @@ public class MainActivity extends AppCompatActivity
 		builder.setIcon(android.R.drawable.ic_dialog_alert);
 
 		// Eliminar
-		builder.setPositiveButton(getString(R.string.delete), (dialog, id) ->
-		{
-			try (RssList fuente = new RssList(MainActivity.this))
-			{
-				// Eliminar fuente de la base de datos y de la lista
-				fuente.eliminarEntradas(elemento);
-				FeedDatabase.getInstance(MainActivity.this).eliminarTabla(elemento);
-				adapter.remove(elemento);
-			}
-
-			adapter.notifyDataSetChanged();
+		builder.setPositiveButton(getString(R.string.delete), (dialog, id) -> {
+			executor.execute(() -> {
+				AppDatabase db = AppDatabase.getInstance(MainActivity.this);
+				db.feedDao().deleteByTitle(elemento);
+				refreshFeeds();
+			});
 			Toast.makeText(MainActivity.this, getString(R.string.delete_feed_success), Toast.LENGTH_LONG).show();
 		});
 
 		// Editar
-		builder.setNegativeButton(getString(R.string.edit), (dialog, id) ->
-		{
-			String url = "";
-			try (RssList fuente = new RssList(MainActivity.this))
-			{
-				try (Cursor c = fuente.obtenerEntradas())
-				{
-					if (c.moveToFirst())
-					{
-						do
-						{
-							if (c.getString(1).equals(elemento))
-							{
-								url = c.getString(2);
-								break;
-							}
-						} while (c.moveToNext());
-					}
-				}
+		builder.setNegativeButton(getString(R.string.edit), (dialog, id) -> executor.execute(() -> {
+			AppDatabase db = AppDatabase.getInstance(MainActivity.this);
+			RssFeed feed = db.feedDao().findByTitle(elemento);
+			if (feed != null) {
+				runOnUiThread(() -> {
+					Intent i = new Intent(MainActivity.this, AddFeed.class);
+					i.putExtra("titulo", feed.getTitle());
+					i.putExtra("url", feed.getUrl());
+					startActivity(i);
+				});
 			}
-			Intent i = new Intent(this, AddFeed.class);
-			i.putExtra("titulo", elemento);
-			i.putExtra("url", url);
-			startActivity(i);
-		});
+		}));
 
-		AlertDialog alert = builder.create();
-		alert.show();
+		builder.create().show();
 	}
 
-	/**
-	 * Inicia el menú correspondiente pulsado en la barra lateral
-	 *
-	 * @param item ID del elemento de menú seleccionado
-	 */
 	private void onItemSelected(int item)
 	{
 		if (item == R.id.about)
@@ -351,9 +306,6 @@ public class MainActivity extends AppCompatActivity
 		binding.drawerlayout.closeDrawers();
 	}
 
-	/**
-	 * Muestra el diálogo de información de la aplicación
-	 */
 	private void showAboutDialog()
 	{
 		String aboutMessage = getString(R.string.about) +
@@ -371,7 +323,6 @@ public class MainActivity extends AppCompatActivity
 
 		alertDialog.show();
 
-		// Permitir que los enlaces en el HTML sean clickeables
 		TextView messageView = alertDialog.findViewById(android.R.id.message);
 		if (messageView != null)
 		{
@@ -379,30 +330,19 @@ public class MainActivity extends AppCompatActivity
 		}
 	}
 
-	/**
-	 * Comprueba si existe conexión a internet
-	 *
-	 * @return boolean True si hay conexión
-	 */
-	public boolean isNetworkAvailable()
-	{
-		ConnectivityManager connectivityManager
-				= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		if (connectivityManager != null) {
-			NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
-			return capabilities != null && (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-					capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-					capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET));
-		}
-		return false;
-	}
+    public boolean isNetworkAvailable()
+    {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
+            return capabilities != null && (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || 
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || 
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET));
+        }
+        return false;
+    }
 
-	/**
-	 * Acción al pulsar botones de menu
-	 *
-	 * @param item El elemento seleccionado
-	 * @return boolean True si se maneja la pulsación
-	 */
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item)
 	{
@@ -415,34 +355,6 @@ public class MainActivity extends AppCompatActivity
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * Carga la lista de fuentes de noticias
-	 *
-	 * @return ArrayList con los nombres de las fuentes
-	 */
-	public ArrayList<String> cargarFuentes()
-	{
-		ArrayList <String> fuentes = new ArrayList<>();
-		try (RssList rss = new RssList(this))
-		{
-			try (Cursor c = rss.obtenerEntradas())
-			{
-				if (c.moveToFirst())
-				{
-					do
-					{
-						fuentes.add(c.getString(1));
-					} while (c.moveToNext());
-				}
-			}
-		}
-
-		return fuentes;
-	}
-
-	/**
-	 * Método que aplica el tema de la aplicación
-	 */
 	private void aplicarTema()
 	{
 		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
@@ -457,3 +369,4 @@ public class MainActivity extends AppCompatActivity
 		}
 	}
 }
+

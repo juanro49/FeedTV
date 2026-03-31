@@ -1,0 +1,310 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "f554e9fe30391f630672dced0a37c119",
+    "entities": [
+      {
+        "tableName": "fuentes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT, `url` TEXT, `description` TEXT, `link` TEXT, `lastBuildDate` TEXT, `updatePeriod` TEXT, `itunesAuthor` TEXT, `itunesCategories` TEXT, `itunesDescription` TEXT, `itunesExplicit` TEXT, `itunesImage` TEXT, `itunesKeywords` TEXT, `itunesNewFeedUrl` TEXT, `itunesOwnerName` TEXT, `itunesOwnerEmail` TEXT, `itunesSubtitle` TEXT, `itunesSummary` TEXT, `itunesType` TEXT, `itunesBlock` TEXT, `itunesComplete` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "link",
+            "columnName": "link",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "lastBuildDate",
+            "columnName": "lastBuildDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "updatePeriod",
+            "columnName": "updatePeriod",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesAuthor",
+            "columnName": "itunesAuthor",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesCategories",
+            "columnName": "itunesCategories",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesDescription",
+            "columnName": "itunesDescription",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesExplicit",
+            "columnName": "itunesExplicit",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesImage",
+            "columnName": "itunesImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesKeywords",
+            "columnName": "itunesKeywords",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesNewFeedUrl",
+            "columnName": "itunesNewFeedUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesOwnerName",
+            "columnName": "itunesOwnerName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesOwnerEmail",
+            "columnName": "itunesOwnerEmail",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesSubtitle",
+            "columnName": "itunesSubtitle",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesSummary",
+            "columnName": "itunesSummary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesType",
+            "columnName": "itunesType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesBlock",
+            "columnName": "itunesBlock",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesComplete",
+            "columnName": "itunesComplete",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "articulos",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `feedId` INTEGER NOT NULL, `guid` TEXT, `title` TEXT, `author` TEXT, `link` TEXT, `pubDate` TEXT, `description` TEXT, `content` TEXT, `image` TEXT, `audio` TEXT, `video` TEXT, `sourceName` TEXT, `sourceUrl` TEXT, `commentsUrl` TEXT, `categories` TEXT, `numFecha` INTEGER NOT NULL, `itunesAuthor` TEXT, `itunesDuration` TEXT, `itunesEpisode` TEXT, `itunesEpisodeType` TEXT, `itunesExplicit` TEXT, `itunesImage` TEXT, `itunesKeywords` TEXT, `itunesSubtitle` TEXT, `itunesSummary` TEXT, `itunesBlock` TEXT, `itunesSeason` TEXT, FOREIGN KEY(`feedId`) REFERENCES `fuentes`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "feedId",
+            "columnName": "feedId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "guid",
+            "columnName": "guid",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "author",
+            "columnName": "author",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "link",
+            "columnName": "link",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "pubDate",
+            "columnName": "pubDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "audio",
+            "columnName": "audio",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "video",
+            "columnName": "video",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "sourceName",
+            "columnName": "sourceName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "sourceUrl",
+            "columnName": "sourceUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "commentsUrl",
+            "columnName": "commentsUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "categories",
+            "columnName": "categories",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "numFecha",
+            "columnName": "numFecha",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itunesAuthor",
+            "columnName": "itunesAuthor",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesDuration",
+            "columnName": "itunesDuration",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesEpisode",
+            "columnName": "itunesEpisode",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesEpisodeType",
+            "columnName": "itunesEpisodeType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesExplicit",
+            "columnName": "itunesExplicit",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesImage",
+            "columnName": "itunesImage",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesKeywords",
+            "columnName": "itunesKeywords",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesSubtitle",
+            "columnName": "itunesSubtitle",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesSummary",
+            "columnName": "itunesSummary",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesBlock",
+            "columnName": "itunesBlock",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "itunesSeason",
+            "columnName": "itunesSeason",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_articulos_feedId",
+            "unique": false,
+            "columnNames": [
+              "feedId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_articulos_feedId` ON `${TABLE_NAME}` (`feedId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "fuentes",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "feedId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f554e9fe30391f630672dced0a37c119')"
+    ]
+  }
+}
