@@ -14,7 +14,7 @@
     <string name="auto">Авто</string>
     <string name="oscuro">Тёмная</string>
     <string name="claro">Светлая</string>
-    <string name="idioma_establecido">Установка языка:</string>
+    <string name="idioma_establecido">Установка языка: </string>
     <string name="idioma_aplicacion">Язык приложения</string>
     <string name="unlock_gn">Проверьте, не доступны ли Google News в вашей стране</string>
     <string name="titulo_seguir">Введите тему, на которую нужно подписаться, и ее источник</string>
@@ -22,7 +22,7 @@
     <string name="tema_seguir">Тема для подписки</string>
     <string name="seguir">Подписаться</string>
     <string name="url_clipboard">Ссылка скопирована в буфер обмена</string>
-    <string name="update_feed_failed">Произошла ошибка при получении элементов из канала. ||</string>
+    <string name="update_feed_failed">Произошла ошибка при получении элементов из канала. || </string>
     <string name="update_feed_success">Правильно обновленные статьи</string>
     <string name="first_start">Чтобы начать, добавьте каналы из меню слева</string>
     <string name="no_connection">Интернет-соединение недоступно</string>
@@ -30,16 +30,16 @@
     <string name="delete_feed_success">Канал удалён</string>
     <string name="edit">Изменить</string>
     <string name="delete">Удалить</string>
-    <string name="dialog_rss_list">Какое действие вы хотите предпринять</string>
+    <string name="dialog_rss_list">Какое действие вы хотите предпринять </string>
     <string name="title_dialog_rss_list">Изменить канал</string>
     <string name="fecha_lista_noticias">Дата</string>
     <string name="titulo_lista_noticias">Заголовок</string>
     <string name="nombre_canal_detalle">Имя канала</string>
-    <string name="url_detalle">Ссылка</string>
+    <string name="url_detail">Ссылка</string>
     <string name="enlaces_disponibles">Доступные ссылки</string>
     <string name="titulo_addfeed">Введите название и адрес RSS-канала</string>
-    <string name="name_feed">Имя:</string>
-    <string name="url_feed">Ссылка:</string>
+    <string name="name_feed">Имя: </string>
+    <string name="url_feed">Ссылка: </string>
     <string name="nombre_feed">Название источника новостей</string>
     <string name="mod_feed_success">Канал успешно изменён</string>
     <string name="add_feed_success">Канал успешно добавлен</string>
@@ -52,12 +52,11 @@
     <string name="tema_aplicacion">Тема приложения</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="version">Версия</string>
-    <string name="author"><br/><br/> Создано Juanro49 под лицензией Apache 2.0 <br/><br/></string>
+    <string name="author">&lt;br/&gt;&lt;br/&gt; Создано Juanro49 под лицензией Apache 2.0 &lt;br/&gt;&lt;br/&gt;</string>
     <string name="about">FeedTV - это приложение, которое позволяет вам любым способом читать новости через RSS, а также просматривать общедоступные телеканалы из любого места.</string>
     <string name="video">Видео</string>
     <string name="alert_positive">Закрыть</string>
-    <string name="alert_message">Не удалось получить данные.
-\nПроверьте ваше соединение.</string>
+    <string name="alert_message">Не удалось получить данные.\nПроверьте ваше соединение.</string>
     <string name="alert_title">Предупреждение!</string>
     <string name="channel_detail">Свойства канала</string>
     <string name="television">FeedTV Телевидение</string>
@@ -68,11 +67,16 @@
     <string name="search">Поиск</string>
     <string name="str_ru">Русский</string>
     <string name="str_hr">Хорватский</string>
-    <string name="recentNews">У вас нет добавленных лент, хотите ли вы добавить ленту последних новостей\?</string>
+    <string name="recentNews">У вас нет добавленных лент, хотите ли вы добавить ленту последних новостей?</string>
     <string name="title_recentNews">Добавить последние новости</string>
     <string name="notAdd">Не добавляйте</string>
-    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV стал возможен благодаря &lt;a href=\"http://github.com/prof18/RSS-Parser\"&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, и хранилищу каналов &lt;a href=\"https://github.com/LaQuay/TDTChannels\"&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV стал возможен благодаря &lt;a href=\"http://github.com/prof18/RSS-Parser\"&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, хранилищу каналов &lt;a href=\"https://github.com/LaQuay/TDTChannels\"&gt;TDTChannels&lt;/a&gt; и коллекции бесплатных радиостанций от &lt;a href=\'https://libertalia.world/@enjey/106982718007217691\'&gt;enjey&lt;/a&gt;.</string>
     <string name="url_ejemplo">https://www.ejemplo.com/feed</string>
     <string name="listen_radio">Смотреть бесплатно радио / ТВ</string>
     <string name="radio">Общественное радио и телевидение</string>
+    <string name="str_sv">Шведский</string>
+    <string name="str_ia">Интерлингва</string>
+    <string name="str_zh">Китайский</string>
+    <string name="custom_m3u">Загрузить пользовательский список M3U</string>
+    <string name="title_activity_custom_m3u">Пользовательский M3U</string>
 </resources>

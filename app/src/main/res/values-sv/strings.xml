@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">FeedTV</string>
+    <string name="search">Sök</string>
+    <string name="add_feed">Lägg till flöde</string>
+    <string name="watch_tv">Titta på TV</string>
+    <string name="settings">Inställningar</string>
+    <string name="action_about">Om</string>
+    <string name="television">FeedTV TV</string>
+    <string name="channel_detail">Kanaldetaljer</string>
+    <string name="alert_title">Varning!</string>
+    <string name="alert_message">Kunde inte hämta data.\nKontrollera din anslutning.</string>
+    <string name="alert_positive">Stäng</string>
+    <string name="video">Video</string>
+    <string name="url_detail">URL</string>
+    <string name="version">Version</string>
+    <string name="claro">Ljus</string>
+    <string name="oscuro">Mörk</string>
+    <string name="auto">Automatisk</string>
+    <string name="radio">Radiostationer och TV-kanaler</string>
+    <string name="custom_m3u">Ladda anpassad M3U-lista</string>
+</resources>

@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">FeedTV</string>
+    <string name="search">Hledat</string>
+    <string name="add_feed">Přidat kanál</string>
+    <string name="watch_tv">Sledovat TV</string>
+    <string name="listen_radio">Sledovat volné rádio/TV</string>
+    <string name="settings">Nastavení</string>
+    <string name="action_about">O aplikaci</string>
+    <string name="television">FeedTV Televize</string>
+    <string name="channel_detail">Podrobnosti kanálu</string>
+    <string name="alert_title">Pozor!</string>
+    <string name="alert_message">Nepodařilo se načíst data.\nZkontrolujte připojení.</string>
+    <string name="alert_positive">Zavřít</string>
+    <string name="video">Video</string>
+    <string name="url_detail">URL</string>
+    <string name="version">Verze</string>
+    <string name="claro">Světlý</string>
+    <string name="oscuro">Tmavý</string>
+    <string name="auto">Automaticky</string>
+    <string name="radio">Komunitní rádio a TV</string>
+    <string name="custom_m3u">Načíst vlastní seznam M3U</string>
+    <string name="title_activity_custom_m3u">Vlastní M3U</string>
+</resources>

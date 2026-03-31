@@ -11,7 +11,7 @@
     <string name="auto">Automatisch</string>
     <string name="oscuro">Donker</string>
     <string name="claro">Licht</string>
-    <string name="idioma_establecido">Taal instellen:</string>
+    <string name="idioma_establecido">Taal instellen: </string>
     <string name="idioma_aplicacion">App-taal</string>
     <string name="unlock_gn">Controleer of Google Nieuws beschikbaar is in jouw land</string>
     <string name="titulo_seguir">Voer de naam en bron in van het te volgen onderwerp</string>
@@ -19,7 +19,7 @@
     <string name="tema_seguir">Te volgen onderwerp</string>
     <string name="seguir">Volgen</string>
     <string name="url_clipboard">De url is gekopieerd naar het klembord</string>
-    <string name="update_feed_failed">Er is een fout opgetreden tijdens het ophalen van de artikelen. ||</string>
+    <string name="update_feed_failed">Er is een fout opgetreden tijdens het ophalen van de artikelen. || </string>
     <string name="update_feed_success">De artikelen zijn bijgewerkt</string>
     <string name="first_start">Open het linkernavigatiepaneel om feeds toe te voegen</string>
     <string name="no_feeds">Er zijn geen artikelen opgehaald</string>
@@ -27,16 +27,16 @@
     <string name="delete_feed_success">De feed is verwijderd</string>
     <string name="edit">Bewerken</string>
     <string name="delete">Verwijderen</string>
-    <string name="dialog_rss_list">Welke actie wil je uitvoeren op</string>
+    <string name="dialog_rss_list">Welke actie wil je uitvoeren op </string>
     <string name="title_dialog_rss_list">Feed bewerken</string>
     <string name="fecha_lista_noticias">Datum</string>
     <string name="titulo_lista_noticias">Titel</string>
     <string name="nombre_canal_detalle">Naam van kanaal</string>
-    <string name="url_detalle">URL</string>
+    <string name="url_detail">URL</string>
     <string name="enlaces_disponibles">Beschikbare links</string>
     <string name="titulo_addfeed">Voer de naam en het adres in van de RSS-feed</string>
-    <string name="name_feed">Naam:</string>
-    <string name="url_feed">URL:</string>
+    <string name="name_feed">Naam: </string>
+    <string name="url_feed">URL: </string>
     <string name="nombre_feed">Naam van de nieuwsbron</string>
     <string name="url_ejemplo">https://www.voorbeeld.nl/feed</string>
     <string name="mod_feed_success">De feed is aangepast</string>
@@ -51,12 +51,11 @@
     <string name="title_activity_settings">Instellingen</string>
     <string name="version">Versie</string>
     <string name="author">&lt;br /&gt;&lt;br /&gt; Gemaakt door Juanro49, uitgebracht onder de Apache 2.0-licentie &lt;br /&gt;&lt;br /&gt;</string>
-    <string name="about">FeedTV is een app waarmee je het laatste nieuws van elke bron kunt lezen via RSS. Ook kun je publieke tv-kanalen bekijken.</string>
-    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV wordt mogelijk gemaakt door &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, en de kanaalverzameling van &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt;.</string>
+    <string name="about">FeedTV is een app waarmee je het laatste news van elke bron kunt lezen via RSS. Ook kun je publieke tv-kanalen bekijken.</string>
+    <string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV wordt mogelijk gemaakt door &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, de kanaalverzameling van &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt; en de verzameling vrije radio\'s van &lt;a href=\'https://libertalia.world/@enjey/106982718007217691\'&gt;enjey&lt;/a&gt;.</string>
     <string name="video">Video</string>
     <string name="alert_positive">Sluiten</string>
-    <string name="alert_message">Kan gegevens niet ophalen.
-\nControleer je internetverbinding.</string>
+    <string name="alert_message">Kan gegevens niet ophalen.\nControleer je internetverbinding.</string>
     <string name="alert_title">Waarschuwing!</string>
     <string name="channel_detail">Kanaalinformatie</string>
     <string name="television">FeedTV TV</string>
@@ -70,9 +69,14 @@
     <string name="str_fr">Frans</string>
     <string name="str_ru">Russisch</string>
     <string name="str_hr">Kroatisch</string>
-    <string name="recentNews">Je hebt nog geen feeds toegevoegd. Wil je het laatste nieuws toevoegen\?</string>
+    <string name="str_sv">Zweeds</string>
+    <string name="str_ia">Interlingua</string>
+    <string name="str_zh">Chinees</string>
+    <string name="recentNews">Je hebt nog geen feeds toegevoegd. Wil je het laatste nieuws toevoegen?</string>
     <string name="title_recentNews">Laatste nieuws toevoegen</string>
     <string name="notAdd">Niet toevoegen</string>
-    <string name="radio">Radio- en tv-communicatie</string>
-    <string name="listen_radio">Radio luisteren/Vrije tv kijken</string>
+    <string name="radio">Vrije radio- en tv-zenders</string>
+    <string name="listen_radio">Radio luisteren / Vrije tv kijken</string>
+    <string name="custom_m3u">Aangepaste M3U-lijst laden</string>
+    <string name="title_activity_custom_m3u">Aangepaste M3U</string>
 </resources>

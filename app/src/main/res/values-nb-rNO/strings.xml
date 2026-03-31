@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FeedTV</string>
+    <string name="search">Søk</string>
     <string name="action_about">Om</string>
     <string name="alert_positive">Lukk</string>
     <string name="video">Video</string>
@@ -9,13 +10,12 @@
     <string name="url_ejemplo">https://www.eksempel.no/informasjonskanal</string>
     <string name="url_feed">Nettadresse:</string>
     <string name="name_feed">Navn:</string>
-    <string name="url_detalle">Nettadresse</string>
+    <string name="url_detail">Nettadresse</string>
     <string name="nombre_canal_detalle">Kanalnavn</string>
     <string name="titulo_lista_noticias">Tittel</string>
     <string name="fecha_lista_noticias">Dato</string>
     <string name="alert_title">Advarsel!</string>
-    <string name="alert_message">Umulig å få tak i data.
-\nSjekk tilkoblingen din.</string>
+    <string name="alert_message">Umulig å få tak i data.\nSjekk tilkoblingen din.</string>
     <string name="about">FeedTV er et program som lar deg lese nyheter fra alle medier via RSS i tillegg til å kunne se offentlige TV-kanaler hvor som helst.</string>
     <string name="title_activity_settings">Innstillinger</string>
     <string name="reproductor_externo_on">Du bruker en ekstern spiller for å spille av kanalene</string>

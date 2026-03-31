@@ -16,17 +16,17 @@
     <string name="title_recentNews">Adder novas recente</string>
     <string name="edit_feed">Modificar</string>
     <string name="nombre_feed">Nomine del fluxo de novas</string>
-    <string name="url_feed">URL:</string>
-    <string name="name_feed">Nomine:</string>
+    <string name="url_feed">URL: </string>
+    <string name="name_feed">Nomine: </string>
     <string name="titulo_addfeed">Insere le nomine e adresse del fluxo RSS</string>
     <string name="enlaces_disponibles">Ligamines disponibile</string>
-    <string name="url_detalle">URL</string>
+    <string name="url_detail">URL</string>
     <string name="nombre_canal_detalle">Nomine de canal</string>
     <string name="titulo_lista_noticias">Titulo</string>
     <string name="title_dialog_rss_list">Modificar le fluxo</string>
     <string name="delete">Deler</string>
     <string name="idioma_aplicacion">Lingua del application</string>
-    <string name="idioma_establecido">Lingua definite:</string>
+    <string name="idioma_establecido">Lingua definite: </string>
     <string name="claro">Clar</string>
     <string name="auto">Automatic</string>
     <string name="str_en">Anglese</string>
@@ -46,23 +46,22 @@
     <string name="unlock_gn">Verificar si Google News non es disponibile in tu pais</string>
     <string name="str_es">Espaniol</string>
     <string name="about">FeedTV es un application que te permitte de leger novas ab qualcunque medio a transverso de RSS e tamben de poter reguardar canales public de TV in qualcunque loco.</string>
-    <string name="agradecimientos"><br/><br/> FeedTV es possibile gratias a <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a>, <a href="https://github.com/BjoernPetersen/m3u-parser">M3U Parser</a> al repositorio de canales de <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a> e le compilation de radios libere de <a href="https://libertalia.world/@enjey/106982718007217691">enjey</a>.</string>
+    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV es possibile gratias a &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, al repositorio de canales de &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt; e le compilation de radios libere de &lt;a href=\'https://libertalia.world/@enjey/106982718007217691\'&gt;enjey&lt;/a&gt;.</string>
     <string name="tema_seguir">Topico a sequer</string>
     <string name="topic">Topico</string>
     <string name="titulo_seguir">Insere le topico a sequer e lor fonte</string>
     <string name="search">Cercar</string>
     <string name="television">Television FeedTV</string>
-    <string name="alert_message">Non poteva obtener le datos.
-\nVerifica tu connexion.</string>
+    <string name="alert_message">Non poteva obtener le datos.\nVerifica tu connexion.</string>
     <string name="recentNews">Tu non ha fluxos addite, desira tu adder le fluxo de novas recente?</string>
     <string name="add_feed_empty">Ambe campos es requirite</string>
     <string name="mod_feed_success">Fluxo modificate con successo</string>
     <string name="url_ejemplo">https://www.exemplo.com/feed</string>
-    <string name="dialog_rss_list">Que action tu vole facer con</string>
+    <string name="dialog_rss_list">Que action tu vole facer con </string>
     <string name="no_feeds">Non poteva obtener necun articulo</string>
     <string name="no_connection">Le connexion a Internet non es disponibile</string>
     <string name="update_feed_success">Articulos actualisate con successo</string>
-    <string name="update_feed_failed">Ocurreva un error al obtener elementos del fluxo. ||</string>
+    <string name="update_feed_failed">Ocurreva un error al obtener elementos del fluxo. || </string>
     <string name="seguir">Sequer</string>
     <string name="first_start">Adder fluxos ab le menu lateral sinistre pro comenciar</string>
     <string name="str_nb">Norvegian</string>
@@ -75,4 +74,9 @@
     <string name="str_ru">Russe</string>
     <string name="radio">Radios e TVs communitari</string>
     <string name="str_ext">Extremenio</string>
+    <string name="str_sv">Svedese</string>
+    <string name="str_ia">Interlingua</string>
+    <string name="str_zh">Chinese</string>
+    <string name="custom_m3u">Cargar lista M3U personalisate</string>
+    <string name="title_activity_custom_m3u">M3U Personalisate</string>
 </resources>

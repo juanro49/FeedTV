@@ -32,7 +32,7 @@
     <string name="fecha_lista_noticias">Date</string>
     <string name="titulo_lista_noticias">Titre</string>
     <string name="nombre_canal_detalle">Nom de la chaîne</string>
-    <string name="url_detalle">URL</string>
+    <string name="url_detail">URL</string>
     <string name="enlaces_disponibles">Liens disponibles</string>
     <string name="titulo_addfeed">Entrez le nom et l’adresse du flux RSS</string>
     <string name="name_feed">Nom :</string>

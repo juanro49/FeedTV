@@ -13,7 +13,7 @@
     <string name="auto">Automatski</string>
     <string name="oscuro">Tamna</string>
     <string name="claro">Svijetla</string>
-    <string name="idioma_establecido">Odabrani jezik:</string>
+    <string name="idioma_establecido">Odabrani jezik: </string>
     <string name="idioma_aplicacion">Jezik programa</string>
     <string name="unlock_gn">Provjeri, jesu li Google Vijesti dostupne u tvojoj zemlji</string>
     <string name="titulo_seguir">Upiši temu koju želiš pratiti i njen izvor</string>
@@ -24,11 +24,11 @@
     <string name="no_connection">Internetska veza nije dostupna</string>
     <string name="edit">Uredi</string>
     <string name="delete">Izbriši</string>
-    <string name="dialog_rss_list">Što želiš uraditi s</string>
+    <string name="dialog_rss_list">Što želiš uraditi s </string>
     <string name="fecha_lista_noticias">Datum</string>
     <string name="titulo_lista_noticias">Naslov</string>
     <string name="nombre_canal_detalle">Ime kanala</string>
-    <string name="url_detalle">URL</string>
+    <string name="url_detail">URL</string>
     <string name="enlaces_disponibles">Dostupne poveznice</string>
     <string name="add">Dodaj</string>
     <string name="reproductor_externo_off">Za reprodukciju kanala koristiš unutarnji player</string>
@@ -40,15 +40,14 @@
     <string name="author">&lt;br /&gt;&lt;br /&gt;Autor: Juanro49. Licenca Apache 2.0&lt;br /&gt;&lt;br /&gt;</string>
     <string name="video">Video</string>
     <string name="alert_positive">Zatvori</string>
-    <string name="alert_message">Nije moguće dobiti podatke.
-\nProvjeri vezu.</string>
+    <string name="alert_message">Nije moguće dobiti podatke.\nProvjeri vezu.</string>
     <string name="alert_title">Oprez!</string>
     <string name="channel_detail">Podaci kanala</string>
     <string name="action_about">Informacije</string>
     <string name="settings">Postavke</string>
     <string name="watch_tv">Gledaj televiziju</string>
     <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Pogledaj na Githubu&lt;/a&gt;</string>
-    <string name="update_feed_failed">Greška pri dohvaćanju vijesti. ||</string>
+    <string name="update_feed_failed">Greška pri dohvaćanju vijesti. || </string>
     <string name="update_feed_success">Članci uspješno aktualizirani</string>
     <string name="no_feeds">Nema članaka</string>
     <string name="titulo_addfeed">Upiši ime i adresu RSS vijesti</string>
@@ -64,13 +63,13 @@
     <string name="url_ejemplo">https://www.ejemplo.com/feed</string>
     <string name="add_feed_empty">Oba polja su obavezna</string>
     <string name="edit_feed">Promijeni</string>
-    <string name="agradecimientos"><br/><br/> FeedTV omogućuju <a href="http://github.com/prof18/RSS-Parser">RSS Parser</a>, <a href="https://github.com/BjoernPetersen/m3u-parser">M3U Parser</a> u repozitoriju kanala <a href="https://github.com/LaQuay/TDTChannels">TDTChannels</a> i zbirka besplatnih radija s <a href="https://libertalia.world/@enjey/106982718007217691">enjey</a>.</string>
+    <string name="agradecimientos">&lt;br/&gt;&lt;br/&gt; FeedTV omogućuju &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, repozitorij kanala &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt; i zbirka besplatnih radija s &lt;a href=\'https://libertalia.world/@enjey/106982718007217691\'&gt;enjey&lt;/a&gt;.</string>
     <string name="about">FeedTV je program koji omogućuje čitanje vijesti s bilo kojeg medija putem RSS-a, kao i mogućnost gledanja javnih TV kanala bilo gdje.</string>
     <string name="television">FeedTV televizija</string>
     <string name="search">Traži</string>
     <string name="str_ru">Ruski</string>
     <string name="str_hr">Hrvatski</string>
-    <string name="recentNews">Nema dodanih vijesti. Želiš li dodati nedavne vijesti\?</string>
+    <string name="recentNews">Nema dodanih vijesti. Želiš li dodati nedavne vijesti?</string>
     <string name="title_recentNews">Dodaj nedavne vijesti</string>
     <string name="notAdd">Nemoj dodati</string>
     <string name="radio">Javni radio i televizija</string>

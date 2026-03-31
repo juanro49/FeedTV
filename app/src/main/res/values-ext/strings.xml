@@ -51,7 +51,7 @@
 	<string name="name_feed">Nombri:</string>
 	<string name="titulo_addfeed">Entra el nombri i la seña del Feed RSS</string>
 	<string name="enlaces_disponibles">Atillus presenterus</string>
-	<string name="url_detalle">URL</string>
+	<string name="url_detail">URL</string>
 	<string name="nombre_canal_detalle">Nombri dela canal</string>
 	<string name="titulo_lista_noticias">Títulu</string>
 	<string name="fecha_lista_noticias">Fecha</string>
