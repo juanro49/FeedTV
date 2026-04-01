@@ -13,125 +13,97 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  *
- *
  */
 
 package org.juanro.feedtv;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.os.LocaleListCompat;
 import androidx.preference.PreferenceFragmentCompat;
-
-import org.juanro.feedtv.databinding.SettingsActivityBinding;
-
-import java.util.Locale;
+import androidx.preference.PreferenceManager;
 
 /**
  * Clase que representa la activity de ajustes
  */
-public class SettingsActivity extends AppCompatActivity
-{
-	private final Configuration config = new Configuration();
+public class SettingsActivity extends AppCompatActivity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		// Establecer tema de la aplicación
-		aplicarTema();
+    public SettingsActivity() {
+        super(R.layout.settings_activity);
+    }
 
-		super.onCreate(savedInstanceState);
-		SettingsActivityBinding binding = SettingsActivityBinding.inflate(getLayoutInflater());
-		setContentView(binding.getRoot());
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        aplicarTema();
+        super.onCreate(savedInstanceState);
 
-		if (savedInstanceState == null)
-		{
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.settings, new SettingsFragment())
-					.commit();
-		}
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.settings, new SettingsFragment())
+                    .commit();
+        }
 
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null)
-		{
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
-	}
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
 
-	@Override
-	public void onPause()
-	{
-		super.onPause();
-		aplicarTema();
-		aplicarIdioma();
-	}
+    @Override
+    public boolean onSupportNavigateUp() {
+        getOnBackPressedDispatcher().onBackPressed();
+        return true;
+    }
 
-	public static class SettingsFragment extends PreferenceFragmentCompat
-	{
-		@Override
-		public void onCreatePreferences(Bundle savedInstanceState, String rootKey)
-		{
-			setPreferencesFromResource(R.xml.root_preferences, rootKey);
-		}
-	}
+    public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        }
 
-	@Override
-	public boolean onOptionsItemSelected(@NonNull MenuItem item)
-	{
-		if (item.getItemId() == android.R.id.home)
-		{
-			getOnBackPressedDispatcher().onBackPressed();
-			return true;
-		}
+        @Override
+        public void onResume() {
+            super.onResume();
+            SharedPreferences sp = getPreferenceManager().getSharedPreferences();
+            if (sp != null) {
+                sp.registerOnSharedPreferenceChangeListener(this);
+            }
+        }
 
-		return super.onOptionsItemSelected(item);
-	}
+        @Override
+        public void onPause() {
+            super.onPause();
+            SharedPreferences sp = getPreferenceManager().getSharedPreferences();
+            if (sp != null) {
+                sp.unregisterOnSharedPreferenceChangeListener(this);
+            }
+        }
 
-	/**
-	 * Método que aplica el tema de la aplicación
-	 */
-	private void aplicarTema()
-	{
-		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key == null) return;
 
-		if(sharedPref.getString("tema", "Claro").equals("Claro"))
-		{
-			setTheme(R.style.TemaClaro);
-		}
-		else
-		{
-			setTheme(R.style.TemaOscuro);
-		}
-	}
+            switch (key) {
+                case "lang":
+                    String lang = sharedPreferences.getString("lang", "auto");
+                    AppCompatDelegate.setApplicationLocales(
+                            "auto".equals(lang) ? LocaleListCompat.getEmptyLocaleList() : LocaleListCompat.forLanguageTags(lang)
+                    );
+                    break;
+                case "tema":
+                    if (getActivity() != null) {
+                        getActivity().recreate();
+                    }
+                    break;
+            }
+        }
+    }
 
-	/**
-	 * Método que carga el idioma de la aplicación
-	 */
-	private void aplicarIdioma()
-	{
-		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
-		String lang = sharedPref.getString("lang", "auto");
-
-		if ("auto".equals(lang)) {
-			config.setToDefaults();
-			Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + lang);
-		} else {
-			Locale locale = new Locale(lang);
-			config.setLocale(locale);
-			Log.i(this.getLocalClassName(), this.getString(R.string.idioma_establecido) + config.getLocales().get(0).getLanguage());
-		}
-
-		getResources().updateConfiguration(config, null);
-		Intent refresh = new Intent(this, MainActivity.class);
-		refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(refresh);
-		finish();
-	}
+    private void aplicarTema() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        setTheme("Claro".equals(sharedPref.getString("tema", "Claro")) ? R.style.TemaClaro : R.style.TemaOscuro);
+    }
 }

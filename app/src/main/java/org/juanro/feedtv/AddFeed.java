@@ -29,13 +29,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.juanro.feedtv.BBDD.FeedDatabase;
-import org.juanro.feedtv.BBDD.RssList;
+import org.juanro.feedtv.BBDD.AppDatabase;
+import org.juanro.feedtv.BBDD.RssFeed;
 import org.juanro.feedtv.databinding.AddFeedBinding;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AddFeed extends AppCompatActivity
 {
 	private AddFeedBinding binding;
+	private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -104,42 +108,42 @@ public class AddFeed extends AppCompatActivity
 		else
 		{
 			Configuration config = getResources().getConfiguration();
-			String url;
+			final String url;
+			final String finalTopic;
 
-			try (RssList fuentes = new RssList(this))
+			if(binding.rbGoogle.isChecked())
 			{
-				if (binding.rbGoogle.isChecked())
+				if(binding.cbGN.isChecked())
 				{
-					if (binding.cbGN.isChecked())
-					{
-						url = "https://news.google.com/rss/search?q=" + topic + "&hl=es-419&gl=CU&ceid=CU:es-419";
-					}
-					else
-					{
-						url = "https://news.google.com/rss/search?q=" + topic + "&hl=" + config.getLocales().get(0).getLanguage();
-					}
-
-					topic = topic.replaceAll("[+| -]", "") + "GN";
-					fuentes.insertarEntrada(topic, url);
-					FeedDatabase.getInstance(getApplicationContext()).crearTabla(topic + "_");
+					url = "https://news.google.com/rss/search?q=" + topic + "&hl=es-419&gl=CU&ceid=CU:es-419";
 				}
-				else if (binding.rbBing.isChecked())
+				else
 				{
-					url = "https://www.bing.com/news/search?q=" + topic + "&format=rss";
-					topic = topic.replaceAll("[+| -]", "") + "BN";
-					fuentes.insertarEntrada(topic, url);
-					FeedDatabase.getInstance(getApplicationContext()).crearTabla(topic + "_");
+					url = "https://news.google.com/rss/search?q=" + topic + "&hl=" + config.getLocales().get(0).getLanguage();
 				}
+				finalTopic = topic.replaceAll("[+| -]", "") + "GN";
+			}
+			else
+			{
+				url = "https://www.bing.com/news/search?q=" + topic + "&format=rss";
+				finalTopic = topic.replaceAll("[+| -]", "") + "BN";
 			}
 
-			Toast.makeText(this, this.getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
+			executor.execute(() -> {
+				AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+				db.feedDao().insert(new RssFeed(finalTopic, url));
+				runOnUiThread(() -> {
+					Toast.makeText(AddFeed.this, getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
+					finish();
+				});
+			});
 		}
 	}
 
 	public void addFeed()
 	{
-		String titulo = binding.etNombre.getText().toString();
-		String urlStr = binding.etUrl.getText().toString();
+		final String titulo = binding.etNombre.getText().toString();
+		final String urlStr = binding.etUrl.getText().toString();
 
 		if(titulo.isEmpty() || urlStr.isEmpty())
 		{
@@ -147,21 +151,22 @@ public class AddFeed extends AppCompatActivity
 		}
 		else
 		{
-			try (RssList fuentes = new RssList(this))
-			{
-				titulo = titulo.replaceAll("[+| -]", "");
-				fuentes.insertarEntrada(titulo, urlStr);
-
-				FeedDatabase.getInstance(getApplicationContext()).crearTabla(titulo + "_");
-			}
-			Toast.makeText(this, this.getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
+			executor.execute(() -> {
+				AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+				String cleanTitulo = titulo.replaceAll("[+| -]", "");
+				db.feedDao().insert(new RssFeed(cleanTitulo, urlStr));
+				runOnUiThread(() -> {
+					Toast.makeText(AddFeed.this, getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
+					finish();
+				});
+			});
 		}
 	}
 
 	public void modFeed()
 	{
-		String titulo = binding.etNombre.getText().toString();
-		String urlStr = binding.etUrl.getText().toString();
+		final String titulo = binding.etNombre.getText().toString();
+		final String urlStr = binding.etUrl.getText().toString();
 
 		if(titulo.isEmpty() || urlStr.isEmpty())
 		{
@@ -169,12 +174,18 @@ public class AddFeed extends AppCompatActivity
 		}
 		else
 		{
-			try (RssList fuentes = new RssList(this))
-			{
-				fuentes.editarEntrada(titulo, urlStr);
-			}
-
-			Toast.makeText(this, this.getString(R.string.mod_feed_success), Toast.LENGTH_LONG).show();
+			executor.execute(() -> {
+				AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+				RssFeed existingFeed = db.feedDao().findByTitle(titulo);
+				if (existingFeed != null) {
+					existingFeed.setUrl(urlStr);
+					db.feedDao().update(existingFeed);
+					runOnUiThread(() -> {
+						Toast.makeText(AddFeed.this, getString(R.string.mod_feed_success), Toast.LENGTH_LONG).show();
+						finish();
+					});
+				}
+			});
 		}
 	}
 
@@ -193,5 +204,11 @@ public class AddFeed extends AppCompatActivity
 		{
 			setTheme(R.style.TemaOscuro);
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		executor.shutdown();
 	}
 }

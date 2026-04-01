@@ -29,8 +29,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.prof18.rssparser.model.RssItem;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,6 +42,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import coil.Coil;
 import coil.request.ImageRequest;
 
+import org.juanro.feedtv.BBDD.Article;
 import org.juanro.feedtv.R;
 import org.juanro.feedtv.databinding.ItemListNoticiasBinding;
 
@@ -53,12 +52,12 @@ import org.juanro.feedtv.databinding.ItemListNoticiasBinding;
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder>
 {
     private static final String TAG = "ArticleAdapter";
-    // Lista que contendrá los artículos
-    private final List<RssItem> articles;
+    // Lista que contendrá los artículos (Entidad de Room)
+    private final List<Article> articles;
     // Contexto
     private final Context mContext;
 
-    public ArticleAdapter(List<RssItem> list, Context context)
+    public ArticleAdapter(List<Article> list, Context context)
     {
         this.articles = list;
         this.mContext = context;
@@ -69,8 +68,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
      *
      * @return la lista de artículos
      */
-    @SuppressWarnings("unused")
-    public List<RssItem> getArticleList()
+    public List<Article> getArticleList()
     {
         return articles;
     }
@@ -100,41 +98,45 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int position)
     {
         // Obtener artículo de la posición actual
-        RssItem currentArticle = articles.get(position);
+        Article currentArticle = articles.get(position);
 
         String pubDateString;
         String title;
 
         try
         {
-            String sourceDateString = String.valueOf(currentArticle.getPubDate());
+            String sourceDateString = currentArticle.getPubDate();
 
-            SimpleDateFormat sourceRSS = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-            SimpleDateFormat sourceAtom = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
-            Date date;
+            if (sourceDateString != null) {
+                SimpleDateFormat sourceRSS = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+                SimpleDateFormat sourceAtom = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
+                Date date;
 
-            // La fecha viene en diferentes formatos para feeds de Atom y RSS
-            if(sourceDateString.startsWith("2"))
-            {
-                sourceDateString = sourceDateString.substring(0, 19);
-                date = sourceAtom.parse(sourceDateString);
+                // La fecha viene en diferentes formatos para feeds de Atom y RSS
+                if (sourceDateString.startsWith("2")) {
+                    if (sourceDateString.length() > 19) {
+                        sourceDateString = sourceDateString.substring(0, 19);
+                    }
+                    date = sourceAtom.parse(sourceDateString);
+                } else {
+                    date = sourceRSS.parse(sourceDateString);
+                }
+
+                // Usar el local configurado en la app para el formato de salida
+                Locale currentLocale = mContext.getResources().getConfiguration().getLocales().get(0);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm", currentLocale);
+                pubDateString = date != null ? sdf.format(date) : sourceDateString;
+            } else {
+                pubDateString = "";
             }
-            else
-            {
-                date = sourceRSS.parse(sourceDateString);
-            }
-
-            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm", Locale.getDefault());
-            pubDateString = date != null ? sdf.format(date) : String.valueOf(currentArticle.getPubDate());
         }
         catch (ParseException e)
         {
             Log.e(TAG, "Error al parsear la fecha", e);
-            pubDateString = String.valueOf(currentArticle.getPubDate());
+            pubDateString = currentArticle.getPubDate();
         }
 
         // Setear el título
-        //Comprobamos si el titulo tiene CDATA para eliminarlo
         title = currentArticle.getTitle();
 
         if(title != null && title.contains("<![CDATA["))
@@ -163,7 +165,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         {
             // Copiar url
             ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("url", articles.get(viewHolder.getAbsoluteAdapterPosition()).getLink());
+            ClipData clip = ClipData.newPlainText("url", articles.get(viewHolder.getBindingAdapterPosition()).getLink());
             clipboard.setPrimaryClip(clip);
 
             Toast.makeText(mContext, mContext.getString(R.string.url_clipboard), Toast.LENGTH_LONG).show();
@@ -175,7 +177,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         viewHolder.itemView.setOnClickListener(view ->
         {
             // Obtener url del artículo
-            String url = articles.get(viewHolder.getAbsoluteAdapterPosition()).getLink();
+            String url = articles.get(viewHolder.getBindingAdapterPosition()).getLink();
 
             if (url != null) {
                 // Abrir url en formato Custom Tab

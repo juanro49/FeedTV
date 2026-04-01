@@ -20,7 +20,6 @@
 package org.juanro.feedtv;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.util.Log;
 
 import com.prof18.rssparser.model.RssItem;
@@ -40,7 +39,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import org.jetbrains.annotations.NotNull;
-import org.juanro.feedtv.BBDD.FeedDatabase;
+import org.juanro.feedtv.BBDD.AppDatabase;
+import org.juanro.feedtv.BBDD.Article;
+import org.juanro.feedtv.BBDD.RssFeed;
 
 import kotlin.coroutines.Continuation;
 import kotlin.coroutines.CoroutineContext;
@@ -52,12 +53,13 @@ import kotlinx.coroutines.Dispatchers;
 public class MainViewModel extends ViewModel
 {
 	private static final String TAG = "MainViewModel";
-	private final MutableLiveData<List<RssItem>> articleListLive = new MutableLiveData<>(new ArrayList<>());
+	private final MutableLiveData<List<Article>> articleListLive = new MutableLiveData<>(new ArrayList<>());
 	private String urlString = "";
+	private String feedName = "";
 	private final MutableLiveData<String> snackbar = new MutableLiveData<>();
 	private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-	public LiveData<List<RssItem>> getArticleList()
+	public LiveData<List<Article>> getArticleList()
 	{
 		return articleListLive;
 	}
@@ -65,6 +67,11 @@ public class MainViewModel extends ViewModel
 	public void setUrl(String url)
 	{
 		this.urlString = url;
+	}
+
+	public void setFeedName(String name)
+	{
+		this.feedName = name;
 	}
 
 	public LiveData<String> getSnackbar()
@@ -77,14 +84,27 @@ public class MainViewModel extends ViewModel
 		snackbar.setValue(null);
 	}
 
+	/**
+	 * Obtiene los 20 artículos más recientes de todas las fuentes
+	 */
+	public void fetchGlobalRecentArticles(final Context context) {
+		executor.execute(() -> {
+			AppDatabase db = AppDatabase.getInstance(context);
+			List<Article> recentArticles = db.articleDao().getGlobalRecentArticles();
+			articleListLive.postValue(recentArticles);
+		});
+	}
+
 	public void fetchFeed(final Context context)
 	{
-		if (urlString == null || urlString.isEmpty()) return;
+		if (urlString == null || urlString.isEmpty()) {
+			snackbar.postValue(context.getString(R.string.first_start));
+			return;
+		}
 
 		RssParser parser = new RssParserBuilder().build();
 		CompletableFuture<RssChannel> future = new CompletableFuture<>();
 		
-		// Iniciar petición asíncrona de RSS
 		parser.getRssChannel(urlString, new CustomContinuation<>(future));
 
 		future.thenAcceptAsync(channel -> {
@@ -92,30 +112,50 @@ public class MainViewModel extends ViewModel
 				if (channel == null) throw new Exception("Channel is null");
 
 				List<RssItem> items = channel.getItems();
-				FeedDatabase db = FeedDatabase.getInstance(context);
+				AppDatabase db = AppDatabase.getInstance(context);
 
-				// Sincronizar con DB en segundo plano
-				db.sincronizarEntradas(items);
-
-				// Obtener entradas finales de la DB
-				try (Cursor c = db.obtenerEntradas()) {
-					List<RssItem> listFromDb = new ArrayList<>();
-
-					if (c.moveToFirst()) {
-						final int colTitulo = 1, colFec = 2, colUrl = 3, colImg = 4;
-						do {
-							String image = c.getString(colImg);
-							if (image == null && channel.getImage() != null) {
-								image = channel.getImage().getUrl();
-							}
-
-							listFromDb.add(new RssItem("", c.getString(colTitulo), "", c.getString(colUrl), 
-									c.getString(colFec), "", "", image, "", "", "", "", 
-									new ArrayList<>(), null, "", null, null, null));
-						} while (c.moveToNext());
-					}
-					articleListLive.postValue(listFromDb);
+				RssFeed feed = db.feedDao().findByTitle(feedName);
+				if (feed == null) {
+					feed = new RssFeed(feedName, urlString);
+					db.feedDao().insert(feed);
+					feed = db.feedDao().findByTitle(feedName);
 				}
+				final int feedId = feed.getId();
+
+				List<Article> articlesToSave = new ArrayList<>();
+				for (RssItem item : items) {
+					long numFecha = parsePubDate(item.getPubDate());
+					
+					String image = item.getImage();
+					if (image == null && channel.getImage() != null) {
+						image = channel.getImage().getUrl();
+					}
+					
+					articlesToSave.add(new Article(
+							feedId,
+							item.getGuid(),
+							item.getTitle(),
+							item.getAuthor(),
+							item.getLink(),
+							item.getPubDate(),
+							item.getDescription(),
+							item.getContent(),
+							image,
+							item.getAudio(),
+							item.getVideo(),
+							item.getSourceName(),
+							item.getSourceUrl(),
+							item.getCommentsUrl(),
+							item.getCategories(),
+							numFecha
+					));
+				}
+				
+				db.articleDao().insertAll(articlesToSave);
+				db.articleDao().deleteOldArticles(feedId);
+
+				List<Article> listFromDb = db.articleDao().getArticlesByFeed(feedId);
+				articleListLive.postValue(listFromDb);
 				
 				snackbar.postValue(context.getString(R.string.update_feed_success));
 
@@ -132,6 +172,28 @@ public class MainViewModel extends ViewModel
 		Log.e(TAG, "Error fetching feed", e);
 		articleListLive.postValue(new ArrayList<>());
 		snackbar.postValue(context.getString(R.string.update_feed_failed) + e.getMessage());
+	}
+
+	private long parsePubDate(String pubDate) {
+		if (pubDate == null) return 0;
+		try {
+			java.text.SimpleDateFormat sourceRSS = new java.text.SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", java.util.Locale.ENGLISH);
+			java.text.SimpleDateFormat sourceAtom = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.ENGLISH);
+			java.util.Date date;
+			if (pubDate.startsWith("2")) {
+				if (pubDate.length() > 19) pubDate = pubDate.substring(0, 19);
+				date = sourceAtom.parse(pubDate);
+			} else {
+				date = sourceRSS.parse(pubDate);
+			}
+			if (date != null) {
+				java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMddHHmm", java.util.Locale.getDefault());
+				return Long.parseLong(sdf.format(date));
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "Error parsing date", e);
+		}
+		return 0;
 	}
 
 	@Override
