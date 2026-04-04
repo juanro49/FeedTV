@@ -41,6 +41,8 @@ android {
                 'META-INF/LGPL2.1'
             ]
         }
+        // Asegura que las librerías nativas se empaqueten de forma determinista para F-Droid
+        jniLibs.useLegacyPackaging = true
     }
 
     buildTypes {
