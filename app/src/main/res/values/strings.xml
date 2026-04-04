@@ -116,4 +116,13 @@
 	<string name="url_error">ERROR: </string>
 	<string name="error">Error: </string>
 	<string name="enter_url">Introduce una URL</string>
+
+	<!-- Red -->
+	<string name="red_configuracion">Configuración de Red</string>
+	<string name="doh_title">DNS over HTTPS (DoH)</string>
+	<string name="doh_summary">Cifrar las consultas DNS para mejorar la privacidad y evitar bloqueos</string>
+	<string name="doh_url_title">URL del servidor DoH</string>
+	<string name="doh_url_summary">URL del servidor DNS over HTTPS (Por defecto: RockDNS)</string>
+	<string name="doh_default_url" translatable="false">https://dns.rocksdns.ovh/dns-query</string>
+	<string name="doh_system_active">El sistema ya usa DNS Privado. La configuración de la app se ha desactivado para evitar conflictos.</string>
 </resources>

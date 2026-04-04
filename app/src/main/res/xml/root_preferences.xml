@@ -45,4 +45,24 @@
 		app:key="lang"
 		app:title="@string/idioma_aplicacion"
 		app:useSimpleSummaryProvider="true" />
+
+	<PreferenceCategory
+		app:title="Red y Privacidad">
+
+		<SwitchPreferenceCompat
+			app:defaultValue="true"
+			app:key="doh_enabled"
+			app:summary="@string/doh_summary"
+			app:title="@string/doh_title" />
+
+		<EditTextPreference
+			app:dependency="doh_enabled"
+			app:dialogTitle="@string/doh_url_title"
+			app:key="doh_url"
+			app:summary="@string/doh_url_summary"
+			app:title="@string/doh_url_title"
+			app:useSimpleSummaryProvider="true" />
+
+	</PreferenceCategory>
+
 </androidx.preference.PreferenceScreen>

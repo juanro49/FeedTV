@@ -18,13 +18,20 @@
 package org.juanro.feedtv;
 
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.LinkProperties;
+import android.net.Network;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
+import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreferenceCompat;
 
 /**
  * Clase que representa la activity de ajustes
@@ -59,6 +66,36 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            checkSystemPrivateDns();
+
+            EditTextPreference dohUrlPreference = findPreference("doh_url");
+            if (dohUrlPreference != null) {
+                dohUrlPreference.setOnBindEditTextListener(editText -> {
+                    editText.setHint(R.string.doh_default_url);
+                });
+            }
+        }
+
+        private void checkSystemPrivateDns() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && getContext() != null) {
+                ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(AppCompatActivity.CONNECTIVITY_SERVICE);
+                if (cm != null) {
+                    Network activeNetwork = cm.getActiveNetwork();
+                    LinkProperties lp = cm.getLinkProperties(activeNetwork);
+                    if (lp != null && lp.getPrivateDnsServerName() != null) {
+                        // El sistema ya usa DNS Privado
+                        SwitchPreferenceCompat dohSwitch = findPreference("doh_enabled");
+                        Preference dohUrl = findPreference("doh_url");
+                        if (dohSwitch != null) {
+                            dohSwitch.setEnabled(false);
+                            dohSwitch.setSummary(getString(R.string.doh_system_active));
+                        }
+                        if (dohUrl != null) {
+                            dohUrl.setEnabled(false);
+                        }
+                    }
+                }
+            }
         }
 
         @Override

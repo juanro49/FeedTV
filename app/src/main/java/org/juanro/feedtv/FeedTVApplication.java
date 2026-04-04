@@ -22,12 +22,17 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.color.DynamicColorsOptions;
+import org.juanro.feedtv.Http.HttpClient;
 
 public class FeedTVApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
+        
+        // Inicializar el cliente HTTP optimizado (OkHttp + Conscrypt + Cache)
+        HttpClient.init(this);
+
         aplicarConfiguracionTema();
     }
 
