@@ -18,37 +18,58 @@
 ~
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	tools:context="org.juanro.feedtv.MainActivity">
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<item
-		android:id="@+id/addFeed"
-		android:title="@string/add_feed"
-		app:showAsAction="never" />
+	<group android:id="@+id/group_main" android:checkableBehavior="single">
+		<item
+			android:id="@+id/nav_home"
+			android:icon="@android:drawable/ic_menu_today"
+			android:title="@string/title_recentNews" />
 
-	<item
-		android:id="@+id/tv"
-		android:title="@string/watch_tv"
-		app:showAsAction="never" />
+		<item
+			android:id="@+id/tv"
+			android:icon="@android:drawable/ic_menu_view"
+			android:title="@string/watch_tv" />
 
-	<item
-		android:id="@+id/radio"
-		android:title="@string/listen_radio"
-		app:showAsAction="never" />
+		<item
+			android:id="@+id/radio"
+			android:icon="@android:drawable/ic_lock_silent_mode_off"
+			android:title="@string/listen_radio" />
 
-	<item
-		android:id="@+id/custom_m3u"
-		android:title="@string/custom_m3u"
-		app:showAsAction="never" />
+		<item
+			android:id="@+id/custom_m3u"
+			android:icon="@android:drawable/ic_menu_manage"
+			android:title="@string/custom_m3u" />
+	</group>
 
-	<item
-		android:id="@+id/ajustes"
-		android:title="@string/settings"
-		app:showAsAction="never" />
+	<item android:id="@+id/menu_feeds_root" android:title="Fuentes RSS">
+		<menu>
+			<!-- El submenú para los Feeds RSS se poblará dinámicamente -->
+			<group android:id="@+id/group_feeds" android:checkableBehavior="single" />
 
-	<item
-		android:id="@+id/about"
-		android:title="@string/action_about"
-		app:showAsAction="never" />
+			<item
+				android:id="@+id/addFeed"
+				android:icon="@android:drawable/ic_menu_add"
+				android:title="@string/add_feed" />
+
+			<item
+				android:id="@+id/manage_feeds"
+				android:icon="@android:drawable/ic_menu_edit"
+				android:title="@string/title_dialog_rss_list" />
+		</menu>
+	</item>
+
+	<item android:id="@+id/menu_settings_root" android:title="@string/settings">
+		<menu>
+			<item
+				android:id="@+id/ajustes"
+				android:icon="@android:drawable/ic_menu_preferences"
+				android:title="@string/settings" />
+
+			<item
+				android:id="@+id/about"
+				android:icon="@android:drawable/ic_menu_info_details"
+				android:title="@string/action_about" />
+		</menu>
+	</item>
 </menu>

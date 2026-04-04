@@ -19,16 +19,13 @@
 
 package org.juanro.feedtv;
 
-import androidx.appcompat.app.ActionBar;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import org.juanro.feedtv.Adapters.AmbitsAdapter;
@@ -49,10 +46,11 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		// Establecer tema de la aplicación
-		aplicarTema();
-
 		super.onCreate(savedInstanceState);
+
+		// Habilitar Edge-to-Edge (Material 3 Expressive)
+		WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
 		binding = ActivityTvBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
@@ -60,12 +58,29 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 		binding.lista.setItemAnimator(new DefaultItemAnimator());
 		binding.lista.setHasFixedSize(true);
 
-		// Establecer botón de atrás en action bar
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null)
-		{
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
+		// Configurar SearchBar y SearchView (Material 3 Expressive)
+		binding.searchBar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+
+		binding.searchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
+			binding.searchBar.setText(binding.searchView.getText());
+			binding.searchView.hide();
+			return false;
+		});
+
+		binding.searchView.getEditText().addTextChangedListener(new android.text.TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if (mAdapter != null) {
+					mAdapter.getFilter().filter(s);
+				}
+			}
+
+			@Override
+			public void afterTextChanged(android.text.Editable s) {}
+		});
 
 		// Recargar elementos con swipe
 		binding.swiperefresh.setOnRefreshListener(() -> new Thread(cargarDatos).start());
@@ -98,82 +113,16 @@ public class TvActivity extends AppCompatActivity implements JSONParser.Response
 	}
 
 	/**
-	 * Crear menu
-	 *
-	 * @param menu menu a crear
-	 * @return true si se crea correctamente
-	 */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		getMenuInflater().inflate(R.menu.menu, menu);
-		MenuItem searchItem = menu.findItem(R.id.action_search);
-
-		if (searchItem != null)
-		{
-			// Cambiar color botón de búsqueda de forma más directa
-			if (searchItem.getIcon() != null)
-			{
-				searchItem.getIcon().setTint(ContextCompat.getColor(this, android.R.color.white));
-			}
-
-			// Configurar el buscador una sola vez
-			SearchView searchView = (SearchView) searchItem.getActionView();
-			if (searchView != null)
-			{
-				searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
-				{
-					@Override
-					public boolean onQueryTextSubmit(String texto) { return false; }
-
-					@Override
-					public boolean onQueryTextChange(String texto)
-					{
-						if (mAdapter != null)
-						{
-							mAdapter.getFilter().filter(texto);
-						}
-						return true;
-					}
-				});
-			}
-		}
-
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	/**
 	 * Acciones botones menú
 	 *
 	 * @param item item pulsado
 	 * @return true si se maneja la pulsación
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
+	public boolean onOptionsItemSelected(@NonNull MenuItem item)
 	{
-		if (item.getItemId() == android.R.id.home)
-		{
-			getOnBackPressedDispatcher().onBackPressed();
-			return true;
-		}
-
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * Método que aplica el tema de la aplicación
-	 */
-	private void aplicarTema()
-	{
-		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
-		if(sharedPref.getString("tema", "Claro").equals("Claro"))
-		{
-			setTheme(R.style.TemaClaro);
-		}
-		else
-		{
-			setTheme(R.style.TemaOscuro);
-		}
-	}
 }

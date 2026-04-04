@@ -19,12 +19,18 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<ListPreference
-		app:defaultValue="@string/claro"
+		app:defaultValue="default"
 		app:entries="@array/temas"
 		app:entryValues="@array/tema"
 		app:key="tema"
 		app:title="@string/tema_aplicacion"
 		app:useSimpleSummaryProvider="true" />
+
+	<SwitchPreferenceCompat
+		app:defaultValue="true"
+		app:key="dynamic_color"
+		app:summary="@string/summary_dynamic_color"
+		app:title="@string/title_dynamic_color" />
 
 	<SwitchPreferenceCompat
 		app:key="reproductor"

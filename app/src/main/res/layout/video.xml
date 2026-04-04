@@ -17,23 +17,43 @@
 ~
 ~
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/video_root"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="#000000"
-	android:fitsSystemWindows="true">
+	android:background="@android:color/black">
 
 	<androidx.media3.ui.PlayerView
 		android:id="@+id/videoPlayerView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_gravity="center"
 		android:keepScreenOn="true"
 		app:use_artwork="true"
 		app:show_buffering="always"
 		app:default_artwork="@mipmap/ic_launcher"
+		app:resize_mode="fit"
+		app:surface_type="surface_view"
 		tools:context=".Videoview" />
 
-</FrameLayout>
+	<com.google.android.material.appbar.AppBarLayout
+		android:id="@+id/appbar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:color/transparent"
+		app:elevation="@dimen/elevation_none">
+
+		<com.google.android.material.appbar.MaterialToolbar
+			android:id="@+id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge"
+			app:titleCentered="true"
+			app:titleTextColor="@android:color/white"
+			app:navigationIconTint="@android:color/white" />
+
+	</com.google.android.material.appbar.AppBarLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -10,11 +10,12 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 	<application
+		android:name=".FeedTVApplication"
 		android:allowBackup="true"
 		android:icon="@mipmap/ic_launcher"
 		android:label="@string/app_name"
 		android:supportsRtl="true"
-		android:theme="@style/TemaClaro"
+		android:theme="@style/AppTheme"
 		android:networkSecurityConfig="@xml/network_security_config"
 		android:usesCleartextTraffic="true"
 		android:appCategory="news"
@@ -24,17 +25,19 @@
 
 		<activity
 			android:name=".SettingsActivity"
-			android:label="@string/title_activity_settings" />
+			android:label="@string/title_activity_settings"
+			android:theme="@style/AppTheme.NoActionBar" />
 
 		<activity
 			android:name=".AddFeed"
 			android:label="@string/add_feed"
+			android:theme="@style/AppTheme.NoActionBar"
 			android:windowSoftInputMode="adjustResize"/>
 
 		<activity
 			android:name=".MainActivity"
 			android:label="@string/app_name"
-			android:theme="@style/TemaClaro.NoActionBar"
+			android:theme="@style/AppTheme.NoActionBar"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -44,16 +47,19 @@
 
         <activity
             android:name=".ChannelDetail"
-            android:label="@string/channel_detail" />
+            android:label="@string/channel_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
 
 		<activity
             android:name=".TvActivity"
-            android:label="@string/television">
+            android:label="@string/television"
+            android:theme="@style/AppTheme.NoActionBar">
 		</activity>
 
 		<activity
 			android:name=".ChannelsActivity"
-			android:label="@string/television">
+			android:label="@string/television"
+			android:theme="@style/AppTheme.NoActionBar">
 		</activity>
 
 		<activity
@@ -63,12 +69,14 @@
 
 		<activity
 			android:name=".RadioActivity"
-			android:label="@string/radio">
+			android:label="@string/radio"
+			android:theme="@style/AppTheme.NoActionBar">
 		</activity>
 
 		<activity
 			android:name=".CustomM3uActivity"
-			android:label="@string/title_activity_custom_m3u">
+			android:label="@string/title_activity_custom_m3u"
+			android:theme="@style/AppTheme.NoActionBar">
 		</activity>
 
 		<uses-library

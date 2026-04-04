@@ -25,21 +25,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 
 /**
  * Clase que representa la activity de ajustes
  */
 public class SettingsActivity extends AppCompatActivity {
 
-    public SettingsActivity() {
-        super(R.layout.settings_activity);
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        aplicarTema();
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.settings_activity);
+
+        setSupportActionBar(findViewById(R.id.toolbar));
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -94,6 +91,22 @@ public class SettingsActivity extends AppCompatActivity {
                     );
                     break;
                 case "tema":
+                    String theme = sharedPreferences.getString("tema", "default");
+                    switch (theme) {
+                        case "light":
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            break;
+                        case "dark":
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            break;
+                        case "default":
+                        default:
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                            break;
+                    }
+                    break;
+                case "dynamic_color":
+                    // Para Dynamic Color, recrear la actividad es suficiente si el Precondition está en Application
                     if (getActivity() != null) {
                         getActivity().recreate();
                     }
@@ -102,8 +115,5 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void aplicarTema() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme("Claro".equals(sharedPref.getString("tema", "Claro")) ? R.style.TemaClaro : R.style.TemaOscuro);
-    }
+
 }

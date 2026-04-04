@@ -23,6 +23,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.juanro.feedtv.R;
+
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 
@@ -108,18 +110,18 @@ public class JSONParser
 					}
 					catch (JSONException e)
 					{
-						Toast.makeText(appContext, "ERROR: " + e.getMessage(), Toast.LENGTH_LONG).show();
+						Toast.makeText(appContext, appContext.getString(R.string.url_error) + e.getMessage(), Toast.LENGTH_LONG).show();
 						Log.e(TAG, "ERROR al parsear el JSON: " + e.getMessage());
 					}
 					callback.onChannelsLoadServer(ambitos);
 				},
 				error -> {
-					String errorMessage = "Error de red";
+					String errorMessage = appContext.getString(R.string.no_connection);
 					if (error.networkResponse != null && error.networkResponse.data != null) {
 						errorMessage = new String(error.networkResponse.data);
 					}
 					Log.e(TAG, "Error al acceder a la URL " + TV_URL);
-					Toast.makeText(appContext, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+					Toast.makeText(appContext, appContext.getString(R.string.error) + errorMessage, Toast.LENGTH_LONG).show();
 					callback.onChannelsLoadServer(ambitos);
 				}
 		);

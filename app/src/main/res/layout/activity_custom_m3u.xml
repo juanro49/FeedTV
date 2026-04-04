@@ -17,7 +17,7 @@
 ~
 ~
 -->
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
@@ -25,43 +25,84 @@
 	android:layout_height="match_parent"
 	android:fitsSystemWindows="true">
 
-	<EditText
-		android:id="@+id/et_url"
-		android:layout_width="0dp"
-		android:layout_height="wrap_content"
-		android:layout_margin="8dp"
-		android:hint="URL M3U/M3U8"
-		android:inputType="textUri"
-		android:importantForAutofill="no"
-		app:layout_constraintEnd_toStartOf="@+id/btn_load"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
-
-	<Button
-		android:id="@+id/btn_load"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginEnd="8dp"
-		android:text="Cargar"
-		app:layout_constraintBottom_toBottomOf="@+id/et_url"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintTop_toTopOf="@+id/et_url" />
-
-	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-		android:id="@+id/swiperefresh"
+	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_marginTop="8dp"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/et_url">
+		android:layout_height="wrap_content"
+		app:liftOnScroll="true"
+		android:background="?attr/colorSurface">
 
-		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/lista"
+		<com.google.android.material.search.SearchBar
+			android:id="@+id/search_bar"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:scrollbars="vertical"
-			tools:listitem="@layout/item_list_noticias" />
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="@dimen/searchbar_margin_horizontal"
+			android:layout_marginVertical="@dimen/searchbar_margin_vertical"
+			android:hint="@string/action_search"
+			app:navigationIcon="@android:drawable/ic_menu_sort_by_size" />
 
-	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+	</com.google.android.material.appbar.AppBarLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+	<com.google.android.material.search.SearchView
+		android:id="@+id/search_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:hint="@string/action_search"
+		app:layout_anchor="@id/search_bar" />
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"
+		android:padding="@dimen/spacing_medium">
+
+		<com.google.android.material.textfield.TextInputLayout
+			android:id="@+id/til_url"
+			style="?attr/textInputLayoutOutlinedStyle"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:hint="@string/hint_url_m3u"
+			app:shapeAppearanceOverlay="@style/ShapeAppearance.App.MediumComponent"
+			app:endIconMode="clear_text"
+			android:layout_marginEnd="@dimen/spacing_small"
+			app:layout_constraintEnd_toStartOf="@+id/btn_load"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/et_url"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:inputType="textUri"
+				android:importantForAutofill="no" />
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/btn_load"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/btn_cargar"
+			app:cornerRadius="@dimen/corner_large"
+			app:layout_constraintBottom_toBottomOf="@+id/til_url"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="@+id/til_url" />
+
+		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+			android:id="@+id/swiperefresh"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_marginTop="@dimen/spacing_medium"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/til_url">
+
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/lista"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:scrollbars="vertical"
+				tools:listitem="@layout/item_list_noticias" />
+
+		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

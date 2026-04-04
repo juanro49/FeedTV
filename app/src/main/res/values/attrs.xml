@@ -1,12 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<!-- Atributos de Material 3 para asegurar compatibilidad durante el enlazado -->
+	<attr format="color" name="onPrimary"/>
+	<attr format="color" name="primaryContainer"/>
+	<attr format="color" name="onPrimaryContainer"/>
+	<attr format="color" name="onSecondary"/>
+	<attr format="color" name="secondaryContainer"/>
+	<attr format="color" name="onSecondaryContainer"/>
+	<attr format="color" name="onTertiary"/>
+	<attr format="color" name="tertiaryContainer"/>
+	<attr format="color" name="onTertiaryContainer"/>
+	<attr format="color" name="onSurface"/>
+	<attr format="color" name="onSurfaceVariant"/>
+	<attr format="color" name="outline"/>
+	<attr format="color" name="outlineVariant"/>
+	<attr format="color" name="onBackground"/>
 
-	<!-- Declare custom theme attributes that allow changing which styles are
-         used for button bars depending on the API level.
-         ?android:attr/buttonBarStyle is new as of API 11 so this is
-         necessary to support previous API levels. -->
-	<!-- <declare-styleable name="ButtonBarContainerTheme">
-		<attr name="metaButtonBarStyle" formato="reference" />
-		<attr name="metaButtonBarButtonStyle" formato="reference" />
-	</declare-styleable> -->
-
+	<!-- Atributos de estilo para componentes de Material Components -->
+	<attr format="reference" name="textInputLayoutOutlinedStyle"/>
+	<attr format="reference" name="materialButtonOutlinedStyle"/>
 </resources>

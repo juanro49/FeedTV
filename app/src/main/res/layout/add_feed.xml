@@ -17,149 +17,161 @@
 ~
 ~
 -->
-<androidx.core.widget.NestedScrollView
+<androidx.coordinatorlayout.widget.CoordinatorLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:fitsSystemWindows="true"
-	android:scrollbars="vertical"
-	android:fillViewport="true"
-	tools:context=".AddFeed">
+	android:fitsSystemWindows="true">
 
-	<RelativeLayout
+	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:paddingBottom="16dp">
+		app:liftOnScroll="true"
+		android:background="?attr/colorSurface">
 
-		<TextView
-			android:id="@+id/tvTitulo"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
-			android:layout_marginTop="20dp"
-			android:textStyle="bold"
-			android:textSize="17sp"
-			android:text="@string/titulo_addfeed" />
+		<com.google.android.material.appbar.MaterialToolbar
+			android:id="@+id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge"
+			app:titleCentered="true" />
 
-		<TextView
-			android:id="@+id/tvNombre"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/tvTitulo"
-			android:layout_marginTop="30dp"
-			android:layout_alignStart="@+id/tvTitulo"
-			android:text="@string/name_feed" />
+	</com.google.android.material.appbar.AppBarLayout>
 
-		<TextView
-			android:id="@+id/tvUrl"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignEnd="@+id/tvNombre"
-			android:layout_below="@+id/tvNombre"
-			android:layout_marginTop="15dp"
-			android:text="@string/url_feed" />
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scrollbars="vertical"
+		android:fillViewport="true"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"
+		tools:context=".AddFeed">
 
-		<EditText
-			android:id="@+id/etNombre"
+		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:hint="@string/nombre_feed"
-			android:layout_toEndOf="@+id/tvNombre"
-			android:layout_alignBaseline="@+id/tvNombre"
-			android:layout_marginStart="20dp"
-			android:layout_marginEnd="16dp"
-			android:inputType="textCapWords" />
+			android:orientation="vertical"
+			android:padding="@dimen/screen_padding">
 
-		<EditText
-			android:id="@+id/etUrl"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignBaseline="@+id/tvUrl"
-			android:layout_marginStart="20dp"
-			android:layout_marginEnd="16dp"
-			android:layout_toEndOf="@+id/tvUrl"
-			android:hint="@string/url_ejemplo"
-			android:inputType="textUri" />
-
-		<Button
-			android:id="@+id/button"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/etUrl"
-			android:layout_centerHorizontal="true"
-			android:layout_marginTop="20dp"
-			android:text="@string/add" />
-
-		<TextView
-			android:id="@+id/tvTituloTema"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
-			android:layout_below="@+id/button"
-			android:layout_marginTop="50dp"
-			android:textStyle="bold"
-			android:textSize="17sp"
-			android:text="@string/titulo_seguir" />
-
-		<RadioGroup
-			android:id="@+id/rbGroup"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/tvTituloTema"
-			android:layout_marginTop="15dp"
-			android:layout_centerHorizontal="true">
-
-			<RadioButton
-				android:id="@+id/rbGoogle"
+			<TextView
+				android:id="@+id/tvTitulo"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Google News" />
+				android:textAppearance="?attr/textAppearanceHeadlineSmall"
+				android:textStyle="bold"
+				android:layout_marginBottom="@dimen/screen_padding"
+				android:text="@string/titulo_addfeed" />
 
-			<RadioButton
-				android:id="@+id/rbBing"
+			<com.google.android.material.textfield.TextInputLayout
+				style="?attr/textInputLayoutOutlinedStyle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="@string/name_feed"
+				app:shapeAppearanceOverlay="@style/ShapeAppearance.App.MediumComponent"
+				android:layout_marginBottom="@dimen/spacing_medium">
+
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/etNombre"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="textCapWords" />
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<com.google.android.material.textfield.TextInputLayout
+				style="?attr/textInputLayoutOutlinedStyle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="@string/url_feed"
+				app:shapeAppearanceOverlay="@style/ShapeAppearance.App.MediumComponent"
+				android:layout_marginBottom="@dimen/screen_padding">
+
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/etUrl"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="textUri" />
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/button"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/add"
+				android:padding="@dimen/spacing_medium"
+				app:cornerRadius="@dimen/corner_large" />
+
+			<com.google.android.material.divider.MaterialDivider
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginVertical="@dimen/spacing_large" />
+
+			<TextView
+				android:id="@+id/tvTituloTema"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Bing News" />
-		</RadioGroup>
+				android:textAppearance="?attr/textAppearanceTitleMedium"
+				android:textStyle="bold"
+				android:layout_marginBottom="@dimen/spacing_medium"
+				android:text="@string/titulo_seguir" />
 
-		<TextView
-			android:id="@+id/tvTema"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignEnd="@+id/tvNombre"
-			android:layout_below="@+id/rbGroup"
-			android:layout_marginTop="20dp"
-			android:text="@string/topic" />
+			<com.google.android.material.button.MaterialButtonToggleGroup
+				android:id="@+id/toggleGroup"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:singleSelection="true"
+				app:selectionRequired="true"
+				app:checkedButton="@+id/btnGoogle"
+				android:layout_marginBottom="@dimen/spacing_medium">
 
-		<EditText
-			android:id="@+id/etTema"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignBaseline="@+id/tvTema"
-			android:layout_marginStart="20dp"
-			android:layout_marginEnd="16dp"
-			android:layout_toEndOf="@+id/tvTema"
-			android:hint="@string/tema_seguir"
-			android:inputType="text" />
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/btnGoogle"
+					style="?attr/materialButtonOutlinedStyle"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/google_news" />
 
-		<CheckBox
-			android:id="@+id/cbGN"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/unlock_gn"
-			android:layout_below="@+id/etTema"
-			android:layout_alignStart="@+id/tvTema"
-			android:layout_marginTop="15dp"
-			android:layout_marginEnd="20dp" />
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/btnBing"
+					style="?attr/materialButtonOutlinedStyle"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/bing_news" />
+			</com.google.android.material.button.MaterialButtonToggleGroup>
 
-		<Button
-			android:id="@+id/btnSeguir"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@+id/cbGN"
-			android:layout_centerHorizontal="true"
-			android:layout_marginTop="20dp"
-			android:text="@string/seguir" />
-	</RelativeLayout>
-</androidx.core.widget.NestedScrollView>
+			<com.google.android.material.textfield.TextInputLayout
+				style="?attr/textInputLayoutOutlinedStyle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="@string/topic"
+				app:shapeAppearanceOverlay="@style/ShapeAppearance.App.MediumComponent"
+				android:layout_marginBottom="@dimen/spacing_medium">
+
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/etTema"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="text" />
+			</com.google.android.material.textfield.TextInputLayout>
+
+			<com.google.android.material.checkbox.MaterialCheckBox
+				android:id="@+id/cbGN"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/unlock_gn"
+				android:layout_marginBottom="@dimen/screen_padding" />
+
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/btnSeguir"
+				style="?attr/materialButtonOutlinedStyle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/spacing_medium"
+				app:cornerRadius="@dimen/corner_large"
+				android:text="@string/seguir" />
+		</LinearLayout>
+	</androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

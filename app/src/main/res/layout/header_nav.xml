@@ -17,10 +17,30 @@
 ~
 ~
 -->
-<ImageView
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="180dp"
-	android:src="@drawable/side_nav_bar"
-	android:scaleType="centerCrop"
-	android:fitsSystemWindows="true" />
+	android:layout_height="@dimen/nav_header_height"
+	android:background="?attr/colorPrimaryContainer"
+	android:padding="@dimen/screen_padding"
+	android:gravity="bottom"
+	android:orientation="vertical"
+	android:fitsSystemWindows="true">
+
+	<com.google.android.material.imageview.ShapeableImageView
+		android:layout_width="@dimen/nav_header_image_size"
+		android:layout_height="@dimen/nav_header_image_size"
+		android:src="@mipmap/ic_launcher"
+		app:shapeAppearanceOverlay="@style/ShapeAppearance.App.MediumComponent" />
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/spacing_medium"
+		android:text="@string/app_name"
+		android:textAppearance="?attr/textAppearanceTitleLarge"
+		android:textColor="?attr/onPrimaryContainer"
+		android:textStyle="bold" />
+
+</LinearLayout>

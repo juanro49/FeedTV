@@ -19,20 +19,21 @@
 
 package org.juanro.feedtv;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.SubMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -44,6 +45,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -59,46 +63,35 @@ public class MainActivity extends AppCompatActivity
 	private ActivityMainBinding binding;
 	private ArticleAdapter mAdapter;
 	private MainViewModel viewModel;
-	private ArrayAdapter<String> adapter;
-	private String elemento;
 	private final ExecutorService executor = Executors.newSingleThreadExecutor();
+	private final List<RssFeed> currentFeeds = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		// Establecer tema de la aplicación
-		aplicarTema();
-
 		super.onCreate(savedInstanceState);
+		
+		// Habilitar Edge-to-Edge (Material 3 Expressive)
+		WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+		
 		binding = ActivityMainBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
-		setSupportActionBar(binding.toolbar);
+
+		// Ajustar insets solo para el menú lateral (evitar solapamiento con la barra de navegación)
+		ViewCompat.setOnApplyWindowInsetsListener(binding.navview, (v, windowInsets) -> {
+			androidx.core.graphics.Insets systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+			v.setPadding(0, 0, 0, systemBars.bottom);
+			return windowInsets;
+		});
 
 		// Boton para abrir barra lateral
-		if (getSupportActionBar() != null) {
-			getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_action_menu);
-			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		}
-
-		// Inicializar adaptador de la lista de feeds (vacío inicialmente)
-		adapter = new ArrayAdapter<>(this, R.layout.simple_list_item_white, new ArrayList<>());
-		binding.listaFeeds.setAdapter(adapter);
+		binding.toolbar.setNavigationOnClickListener(v -> binding.drawerlayout.openDrawer(GravityCompat.START));
 
 		// Obtener objeto que contiene el Feed
 		viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
 		// Cargar Fuentes desde Room y poblar artículos iniciales
 		refreshFeeds();
-
-		// Obtener pulsación lista fuentes
-		binding.listaFeeds.setOnItemClickListener((parent, view, pos, id) -> onFeedsItemClick(parent, pos));
-
-		// Acciones pulsación larga lista de fuentes
-		binding.listaFeeds.setOnItemLongClickListener((parent, view, pos, id) ->
-		{
-			onFeedsItemLongClick(parent, pos);
-			return true;
-		});
 
 		// Setear la lista en la que se mostrarán los artículos
 		binding.contentMain.listaNoticias.setLayoutManager(new LinearLayoutManager(this));
@@ -108,28 +101,23 @@ public class MainActivity extends AppCompatActivity
 		// Obtener pulsación barra lateral
 		binding.navview.setNavigationItemSelectedListener(menuItem ->
 		{
-			onItemSelected(menuItem.getItemId());
+			onItemSelected(menuItem);
 			return true;
 		});
 
 		// Obtener artículos y mostrarlos
 		viewModel.getArticleList().observe(this, articles ->
 		{
-			if (articles != null && !articles.isEmpty())
+			if (articles != null)
 			{
 				// Asociar adapter con RecyclerView
 				mAdapter = new ArticleAdapter(articles, MainActivity.this);
 				binding.contentMain.listaNoticias.setAdapter(mAdapter);
 			}
-			else if (articles != null)
-			{
-				// Si la lista está vacía pero no es nula, es el estado inicial o tras borrar todo
-				mAdapter = new ArticleAdapter(new ArrayList<>(), MainActivity.this);
-				binding.contentMain.listaNoticias.setAdapter(mAdapter);
-			}
-
-			binding.contentMain.swipeLayout.setRefreshing(false);
 		});
+
+		// Observar estado de carga (Material 3 Expressive feedback)
+		viewModel.getIsLoading().observe(this, loading -> binding.contentMain.swipeLayout.setRefreshing(loading));
 
 		// Obtener mensajes de la snackbar
 		viewModel.getSnackbar().observe(this, s ->
@@ -138,18 +126,16 @@ public class MainActivity extends AppCompatActivity
 			{
 				Snackbar.make(binding.getRoot(), s, Snackbar.LENGTH_LONG).show();
 				viewModel.onSnackbarShowed();
-				binding.contentMain.swipeLayout.setRefreshing(false);
 			}
 		});
 
 		// Setear Swipe Layout
-		binding.contentMain.swipeLayout.setColorSchemeResources(R.color.colorHeader, R.color.colorAccent);
 		binding.contentMain.swipeLayout.setOnRefreshListener(() ->
 		{
 			if(isNetworkAvailable())
 			{
 				// Intentar obtener Feed (El ViewModel manejará si no hay URL seleccionada)
-				viewModel.fetchFeed(getApplicationContext());
+				viewModel.fetchFeed();
 			}
 			else
 			{
@@ -167,28 +153,42 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	/**
-	 * Actualiza la lista de feeds desde la base de datos Room
+	 * Actualiza la lista de feeds desde la base de datos Room y los añade al NavigationView
 	 */
+	@SuppressLint("RestrictedApi")
 	private void refreshFeeds()
 	{
 		executor.execute(() -> {
 			AppDatabase db = AppDatabase.getInstance(MainActivity.this);
 			List<RssFeed> feeds = db.feedDao().getAll();
-			List<String> titles = new ArrayList<>();
-			for (RssFeed f : feeds) {
-				titles.add(f.getTitle());
-			}
 
 			runOnUiThread(() -> {
-				adapter.clear();
-				adapter.addAll(titles);
-				adapter.notifyDataSetChanged();
+				currentFeeds.clear();
+				currentFeeds.addAll(feeds);
 
-				// Cargar los 20 artículos más recientes globales al inicio
-				viewModel.fetchGlobalRecentArticles(getApplicationContext());
+				Menu menu = binding.navview.getMenu();
+				MenuItem feedsRoot = menu.findItem(R.id.menu_feeds_root);
+				if (feedsRoot != null && feedsRoot.hasSubMenu()) {
+					SubMenu subMenu = feedsRoot.getSubMenu();
+					// Limpiar solo los feeds dinámicos (asumimos que están en el grupo específico)
+					if (subMenu != null) {
+						subMenu.removeGroup(R.id.group_feeds);
+
+						for (int i = 0; i < feeds.size(); i++) {
+							RssFeed f = feeds.get(i);
+							MenuItem item = subMenu.add(R.id.group_feeds, Menu.NONE, i, f.getTitle());
+							item.setIcon(R.drawable.ic_rss_feed);
+						}
+					}
+				}
+
+				// Cargar los 20 artículos más recientes globales al inicio si no hay nada seleccionado
+				if (viewModel.getArticleList().getValue() == null || viewModel.getArticleList().getValue().isEmpty()) {
+					viewModel.fetchGlobalRecentArticles();
+				}
 
 				// Si está vacía, ofrecer añadir feed por defecto
-				if (titles.isEmpty() && isNetworkAvailable()) {
+				if (feeds.isEmpty() && isNetworkAvailable()) {
 					showDefaultFeedDialog();
 				}
 			});
@@ -197,113 +197,129 @@ public class MainActivity extends AppCompatActivity
 
 	private void showDefaultFeedDialog()
 	{
-		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		builder.setMessage(getString(R.string.recentNews));
-		builder.setTitle(getString(R.string.title_recentNews));
-		builder.setCancelable(true);
-		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		new MaterialAlertDialogBuilder(MainActivity.this)
+				.setMessage(getString(R.string.recentNews))
+				.setTitle(getString(R.string.title_recentNews))
+				.setCancelable(true)
+				.setIcon(R.drawable.ic_alert_m3)
+				.setPositiveButton(getString(R.string.add), (dialog, id) -> {
+					executor.execute(() -> {
+						AppDatabase db = AppDatabase.getInstance(MainActivity.this);
+						db.feedDao().insert(new RssFeed("News", "https://www.meneame.net/rss?status=all"));
+						refreshFeeds();
+					});
+					Toast.makeText(this, getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
+				})
+				.setNegativeButton(getString(R.string.notAdd), (dialog, id) -> {
+					Toast.makeText(this, getString(R.string.first_start), Toast.LENGTH_LONG).show();
+					binding.drawerlayout.openDrawer(GravityCompat.START);
+				})
+				.show();
+	}
 
-		builder.setPositiveButton(getString(R.string.add), (dialog, id) -> {
+	private void onItemSelected(MenuItem menuItem)
+	{
+		int id = menuItem.getItemId();
+
+		if (menuItem.getGroupId() == R.id.group_feeds) {
+			// Es un feed dinámico
+			final String title = menuItem.getTitle() != null ? menuItem.getTitle().toString() : "";
+
 			executor.execute(() -> {
-				AppDatabase db = AppDatabase.getInstance(MainActivity.this);
-				db.feedDao().insert(new RssFeed("News", "https://www.meneame.net/rss?status=all"));
-				refreshFeeds();
+				AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+				RssFeed feed = db.feedDao().findByTitle(title);
+				if (feed != null) {
+					viewModel.setUrl(feed.getUrl());
+					viewModel.setFeedName(feed.getTitle());
+					viewModel.fetchFeed();
+				}
 			});
-			Toast.makeText(this, getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
-		});
-
-		builder.setNegativeButton(getString(R.string.notAdd), (dialog, id) -> {
-			Toast.makeText(this, getString(R.string.first_start), Toast.LENGTH_LONG).show();
-			binding.drawerlayout.openDrawer(GravityCompat.START);
-		});
-
-		builder.create().show();
-	}
-
-	/**
-	 * Selecciona el feed correspondiente pulsado en la lista de feeds de la barra lateral
-	 */
-	private void onFeedsItemClick(AdapterView<?> parent, int pos)
-	{
-		binding.contentMain.swipeLayout.setRefreshing(true);
-		String fuente = parent.getItemAtPosition(pos).toString();
-
-		executor.execute(() -> {
-			AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-			RssFeed feed = db.feedDao().findByTitle(fuente);
-			if (feed != null) {
-				viewModel.setUrl(feed.getUrl());
-				viewModel.setFeedName(feed.getTitle());
-				viewModel.fetchFeed(getApplicationContext());
+		} else if (id == R.id.nav_home) {
+			if (currentFeeds.isEmpty()) {
+				showDefaultFeedDialog();
+			} else {
+				viewModel.fetchGlobalRecentArticles();
 			}
-		});
-
-		binding.drawerlayout.closeDrawers();
-	}
-
-	/**
-	 * Acciones al pulsar de forma prolongada un feed
-	 */
-	public void onFeedsItemLongClick(AdapterView<?> parent, int pos)
-	{
-		elemento = parent.getItemAtPosition(pos).toString();
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-		builder.setMessage(getString(R.string.dialog_rss_list) + " " + elemento + "?");
-		builder.setTitle(getString(R.string.title_dialog_rss_list));
-		builder.setCancelable(true);
-		builder.setIcon(android.R.drawable.ic_dialog_alert);
-
-		// Eliminar
-		builder.setPositiveButton(getString(R.string.delete), (dialog, id) -> {
-			executor.execute(() -> {
-				AppDatabase db = AppDatabase.getInstance(MainActivity.this);
-				db.feedDao().deleteByTitle(elemento);
-				refreshFeeds();
-			});
-			Toast.makeText(MainActivity.this, getString(R.string.delete_feed_success), Toast.LENGTH_LONG).show();
-		});
-
-		// Editar
-		builder.setNegativeButton(getString(R.string.edit), (dialog, id) -> executor.execute(() -> {
-			AppDatabase db = AppDatabase.getInstance(MainActivity.this);
-			RssFeed feed = db.feedDao().findByTitle(elemento);
-			if (feed != null) {
-				runOnUiThread(() -> {
-					Intent i = new Intent(MainActivity.this, AddFeed.class);
-					i.putExtra("titulo", feed.getTitle());
-					i.putExtra("url", feed.getUrl());
-					startActivity(i);
-				});
-			}
-		}));
-
-		builder.create().show();
-	}
-
-	private void onItemSelected(int item)
-	{
-		if (item == R.id.about)
-		{
+		} else if (id == R.id.about) {
 			showAboutDialog();
-		}
-		else
-		{
+		} else if (id == R.id.manage_feeds) {
+			showManageFeedsDialog();
+		} else {
 			Class<?> activityClass = null;
 
-			if (item == R.id.addFeed) activityClass = AddFeed.class;
-			else if (item == R.id.tv) activityClass = TvActivity.class;
-			else if (item == R.id.radio) activityClass = RadioActivity.class;
-			else if (item == R.id.custom_m3u) activityClass = CustomM3uActivity.class;
-			else if (item == R.id.ajustes) activityClass = SettingsActivity.class;
+			if (id == R.id.addFeed) activityClass = AddFeed.class;
+			else if (id == R.id.tv) activityClass = TvActivity.class;
+			else if (id == R.id.radio) activityClass = RadioActivity.class;
+			else if (id == R.id.custom_m3u) activityClass = CustomM3uActivity.class;
+			else if (id == R.id.ajustes) activityClass = SettingsActivity.class;
 
-			if (activityClass != null)
-			{
+			if (activityClass != null) {
 				startActivity(new Intent(this, activityClass));
 			}
 		}
 
 		binding.drawerlayout.closeDrawers();
+	}
+
+	private void showManageFeedsDialog() {
+		if (currentFeeds.isEmpty()) {
+			Toast.makeText(this, R.string.no_feeds, Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		String[] titles = new String[currentFeeds.size()];
+		for (int i = 0; i < currentFeeds.size(); i++) {
+			titles[i] = currentFeeds.get(i).getTitle();
+		}
+
+		new MaterialAlertDialogBuilder(this)
+				.setTitle(R.string.title_dialog_rss_list)
+				.setItems(titles, (dialog, which) -> {
+					String selectedTitle = titles[which];
+					showEditDeleteOptions(selectedTitle);
+				})
+				.show();
+	}
+
+	private void showEditDeleteOptions(String title) {
+		String[] options = {getString(R.string.edit), getString(R.string.delete)};
+		new MaterialAlertDialogBuilder(this)
+				.setTitle(title)
+				.setItems(options, (dialog, which) -> {
+					if (which == 0) {
+						// Editar
+						executor.execute(() -> {
+							AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+							RssFeed feed = db.feedDao().findByTitle(title);
+							if (feed != null) {
+								Intent intent = new Intent(MainActivity.this, AddFeed.class);
+								intent.putExtra("titulo", feed.getTitle());
+								intent.putExtra("url", feed.getUrl());
+								startActivity(intent);
+							}
+						});
+					} else if (which == 1) {
+						// Eliminar
+						showDeleteFeedDialog(title);
+					}
+				})
+				.show();
+	}
+
+	private void showDeleteFeedDialog(String title) {
+		new MaterialAlertDialogBuilder(this)
+				.setTitle(R.string.delete)
+				.setMessage(getString(R.string.delete) + ": " + title + "?")
+				.setPositiveButton(R.string.delete, (dialog, which) -> {
+					executor.execute(() -> {
+						AppDatabase db = AppDatabase.getInstance(getApplicationContext());
+						db.feedDao().deleteByTitle(title);
+						refreshFeeds();
+					});
+					Toast.makeText(this, R.string.delete_feed_success, Toast.LENGTH_SHORT).show();
+				})
+				.setNegativeButton(android.R.string.cancel, null)
+				.show();
 	}
 
 	private void showAboutDialog()
@@ -314,7 +330,7 @@ public class MainActivity extends AppCompatActivity
 				getString(R.string.version) + " " + BuildConfig.VERSION_NAME +
 				"<br/><br/>" + getString(R.string.github);
 
-		AlertDialog alertDialog = new AlertDialog.Builder(this)
+		AlertDialog alertDialog = new MaterialAlertDialogBuilder(this)
 				.setTitle(R.string.action_about)
 				.setIcon(R.mipmap.ic_launcher)
 				.setMessage(Html.fromHtml(aboutMessage, Html.FROM_HTML_MODE_LEGACY))
@@ -346,27 +362,8 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item)
 	{
-		if (item.getItemId() == android.R.id.home)
-		{
-			binding.drawerlayout.openDrawer(GravityCompat.START);
-			return true;
-		}
-
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void aplicarTema()
-	{
-		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
-		if("Claro".equals(sharedPref.getString("tema", "Claro")))
-		{
-			setTheme(R.style.TemaClaro_NoActionBar);
-		}
-		else
-		{
-			setTheme(R.style.TemaOscuro_NoActionBar);
-		}
-	}
 }
-

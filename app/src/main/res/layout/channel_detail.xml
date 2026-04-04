@@ -18,75 +18,113 @@
 ~   Layout basado en el creado por LaQuay
 ~
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:id="@+id/detalle"
-	android:padding="16dp"
-	android:orientation="vertical"
-	android:fitsSystemWindows="true"
-	tools:context=".ChannelDetail">
+	android:fitsSystemWindows="true">
 
-	<LinearLayout
+	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:gravity="center_vertical">
+		app:liftOnScroll="true"
+		android:background="?attr/colorSurface">
 
-		<ImageView
-			android:id="@+id/channelImage"
-			android:layout_width="96dp"
-			android:layout_height="96dp"
-			android:adjustViewBounds="true"
-			android:contentDescription="@string/nombre_canal_detalle"
-			tools:src="@drawable/placeholder" />
+		<com.google.android.material.appbar.MaterialToolbar
+			android:id="@+id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge"
+			app:titleCentered="true" />
+
+	</com.google.android.material.appbar.AppBarLayout>
+
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fillViewport="true"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 		<LinearLayout
+			android:id="@+id/detalle"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
-			android:paddingStart="16dp"
-			android:paddingEnd="0dp">
+			android:padding="@dimen/screen_padding">
+
+			<com.google.android.material.card.MaterialCardView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:cardCornerRadius="@dimen/corner_large"
+				app:cardElevation="@dimen/elevation_none"
+				app:strokeWidth="@dimen/stroke_thin"
+				app:strokeColor="?attr/outline"
+				style="?attr/materialCardViewFilledStyle">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:padding="@dimen/card_padding"
+					android:gravity="center_vertical">
+
+					<com.google.android.material.imageview.ShapeableImageView
+						android:id="@+id/channelImage"
+						android:layout_width="@dimen/detail_image_size"
+						android:layout_height="@dimen/detail_image_size"
+						android:adjustViewBounds="true"
+						android:contentDescription="@string/nombre_canal_detalle"
+						app:shapeAppearanceOverlay="@style/ShapeAppearance.App.MediumComponent"
+						tools:src="@drawable/placeholder" />
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:orientation="vertical"
+						android:paddingStart="@dimen/spacing_medium"
+						android:paddingEnd="0dp">
+
+						<TextView
+							android:id="@+id/channelName"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textAppearance="?attr/textAppearanceTitleLarge"
+							android:textStyle="bold"
+							tools:text="Nombre del Canal" />
+
+						<TextView
+							android:id="@+id/channelUrl"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:autoLink="web"
+							android:textAppearance="?attr/textAppearanceBodyMedium"
+							android:textColor="?attr/colorSecondary"
+							android:paddingTop="@dimen/spacing_small"
+							tools:text="https://www.ejemplo.com" />
+					</LinearLayout>
+				</LinearLayout>
+			</com.google.android.material.card.MaterialCardView>
 
 			<TextView
-				android:id="@+id/channelName"
-				android:layout_width="wrap_content"
+				android:id="@+id/channelElements"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:fontFamily="sans-serif-medium"
-				android:text="@string/nombre_canal_detalle"
-				android:textSize="20sp" />
+				android:textAppearance="?attr/textAppearanceTitleMedium"
+				android:textStyle="bold"
+				android:paddingTop="@dimen/spacing_large"
+				android:paddingBottom="@dimen/item_spacing_vertical"
+				android:text="@string/enlaces_disponibles" />
 
-			<TextView
-				android:id="@+id/channelUrl"
-				android:layout_width="wrap_content"
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/channelSources"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:autoLink="web"
-				android:fontFamily="sans-serif-light"
-				android:paddingTop="8dp"
-				android:text="@string/url_detail"
-				android:textSize="16sp" />
+				android:nestedScrollingEnabled="false"
+				tools:listitem="@android:layout/simple_list_item_1" />
+
 		</LinearLayout>
-	</LinearLayout>
+	</androidx.core.widget.NestedScrollView>
 
-	<TextView
-		android:id="@+id/channelElements"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:fontFamily="sans-serif-light"
-		android:paddingTop="24dp"
-		android:paddingBottom="8dp"
-		android:text="@string/enlaces_disponibles"
-		android:textSize="16sp"
-		android:textStyle="bold" />
-
-	<ListView
-		android:id="@+id/channelSources"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1"
-		android:divider="@android:color/transparent"
-		android:dividerHeight="4dp"
-		android:fontFamily="sans-serif-light" />
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -27,13 +27,14 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.IntentCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import coil.Coil;
 import coil.request.ImageRequest;
@@ -55,12 +56,10 @@ public class ChannelDetail extends AppCompatActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		// Establecer tema de la aplicación
-		aplicarTema();
-
 		super.onCreate(savedInstanceState);
 		ChannelDetailBinding binding = ChannelDetailBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
+		setSupportActionBar(binding.toolbar);
 
 		// Establecer botón de atrás en action bar
 		ActionBar actionBar = getSupportActionBar();
@@ -91,53 +90,61 @@ public class ChannelDetail extends AppCompatActivity
 
 			if (!canal.opciones().isEmpty())
 			{
-				// Crear lista con enlaces del canal
+				// Configurar RecyclerView
+				binding.channelSources.setLayoutManager(new LinearLayoutManager(this));
+				
+				// Crear adapter sencillo para RecyclerView
 				List<String> sources = new ArrayList<>();
-
 				for (Opciones opcion : canal.opciones())
 				{
 					sources.add(opcion.url());
 				}
 
-				// Crear adapter y asignarlo a la lista de fuentes
-				ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, sources);
-				binding.channelSources.setAdapter(adapter);
-
-				// Obtener pulsaciones sobre la lista
-				binding.channelSources.setOnItemClickListener((parent, view, position, id) ->
-				{
-					String source = parent.getItemAtPosition(position).toString();
-
-					// Iniciar reproductor
-					if(sharedPref.getBoolean("reproductor", false))
-					{
-						// Reproductor externo
-						Uri uri = Uri.parse(source);
-						Intent externalIntent = new Intent(Intent.ACTION_VIEW, uri);
-						startActivity(externalIntent);
+				// Usaremos un adaptador simple para el ejemplo, pero en Material 3 lo ideal es uno personalizado
+				binding.channelSources.setAdapter(new RecyclerView.Adapter<>() {
+					@NonNull
+					@Override
+					public RecyclerView.ViewHolder onCreateViewHolder(@NonNull android.view.ViewGroup parent, int viewType) {
+						android.view.View view = android.view.LayoutInflater.from(parent.getContext())
+								.inflate(android.R.layout.simple_list_item_1, parent, false);
+						return new RecyclerView.ViewHolder(view) {};
 					}
-					else
-					{
-						// Reproductor interno
-						Intent i = new Intent(this, Videoview.class);
-						Bundle extras = new Bundle();
-						extras.putString("url", source);
-						i.putExtras(extras);
-						startActivity(i);
+
+					@Override
+					public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+						String source = sources.get(position);
+						android.widget.TextView textView = holder.itemView.findViewById(android.R.id.text1);
+						textView.setText(source);
+						
+						// Estilo M3: Padding y tipografía
+						textView.setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_BodyLarge);
+
+						holder.itemView.setOnClickListener(v -> {
+							// Iniciar reproductor
+							if(sharedPref.getBoolean("reproductor", false)) {
+								Uri uri = Uri.parse(source);
+								Intent externalIntent = new Intent(Intent.ACTION_VIEW, uri);
+								startActivity(externalIntent);
+							} else {
+								Intent i = new Intent(ChannelDetail.this, Videoview.class);
+								i.putExtra("url", source);
+								startActivity(i);
+							}
+						});
+
+						holder.itemView.setOnLongClickListener(v -> {
+							ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+							ClipData clip = ClipData.newPlainText("url", source);
+							clipboard.setPrimaryClip(clip);
+							Toast.makeText(ChannelDetail.this, getString(R.string.url_clipboard), Toast.LENGTH_LONG).show();
+							return true;
+						});
 					}
-				});
 
-				// Accion pulsación larga
-				binding.channelSources.setOnItemLongClickListener((parent, view, position, id) ->
-				{
-					// Copiar url
-					ClipboardManager clipboard = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
-					ClipData clip = ClipData.newPlainText("url", parent.getItemAtPosition(position).toString());
-					clipboard.setPrimaryClip(clip);
-
-					Toast.makeText(this, this.getString(R.string.url_clipboard), Toast.LENGTH_LONG).show();
-
-					return true;
+					@Override
+					public int getItemCount() {
+						return sources.size();
+					}
 				});
 			}
 		}
@@ -161,20 +168,5 @@ public class ChannelDetail extends AppCompatActivity
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * Método que aplica el tema de la aplicación
-	 */
-	private void aplicarTema()
-	{
-		sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
-		if("Claro".equals(sharedPref.getString("tema", "Claro")))
-		{
-			setTheme(R.style.TemaClaro);
-		}
-		else
-		{
-			setTheme(R.style.TemaOscuro);
-		}
-	}
 }

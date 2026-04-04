@@ -18,75 +18,85 @@
 ~   Basado en el layout original creado por Hermosa Programación
 ~
 -->
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	app:cardCornerRadius="20dp"
-	app:cardElevation="0dp"
-	app:cardUseCompatPadding="true"
-	style="?attr/cardStyle"
-	android:background="?android:attr/selectableItemBackground"
-	android:focusable="true"
-	android:clickable="true">
+	app:cardCornerRadius="@dimen/corner_large"
+	app:cardElevation="@dimen/elevation_none"
+	app:strokeWidth="@dimen/stroke_thin"
+	app:strokeColor="?attr/outlineVariant"
+	style="?attr/materialCardViewFilledStyle"
+	android:layout_marginHorizontal="@dimen/list_item_margin_horizontal"
+	android:layout_marginVertical="@dimen/list_item_margin_vertical"
+	android:clickable="true"
+	android:focusable="true">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="16dp">
+		android:padding="@dimen/list_item_padding">
 
 		<!-- MINIATURA -->
-		<ImageView
+		<com.google.android.material.imageview.ShapeableImageView
 			android:id="@+id/imagen"
-			android:layout_width="120dp"
-			android:layout_height="120dp"
+			android:layout_width="@dimen/list_item_image_size"
+			android:layout_height="@dimen/list_item_image_size"
 			android:scaleType="centerCrop"
 			android:contentDescription="@string/titulo_lista_noticias"
+			app:shapeAppearanceOverlay="@style/ShapeAppearance.App.MediumComponent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"
-			tools:src="@color/colorAccent" />
+			tools:src="@color/primary_light" />
 
 		<!-- TITULO -->
 		<TextView
 			android:id="@+id/titulo"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textAppearance="?attr/textAppearanceTitleMedium"
 			android:textStyle="bold"
-			android:textSize="15sp"
-			android:layout_marginStart="16dp"
+			android:textColor="?attr/onSurface"
+			android:layout_marginStart="@dimen/list_item_spacing_medium"
+			android:maxLines="2"
+			android:ellipsize="end"
 			app:layout_constraintStart_toEndOf="@+id/imagen"
-			app:layout_constraintTop_toTopOf="@+id/imagen"
+			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			tools:text="Título de la noticia" />
+			tools:text="Título de la noticia que puede ser largo y ocupar varias líneas" />
 
 		<!-- FECHA -->
 		<TextView
 			android:id="@+id/fecha"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceSmall"
-			android:layout_marginStart="16dp"
-			android:layout_marginTop="8dp"
+			android:textAppearance="?attr/textAppearanceBodySmall"
+			android:textColor="?attr/onSurfaceVariant"
+			android:layout_marginStart="@dimen/list_item_spacing_medium"
+			android:layout_marginTop="@dimen/list_item_spacing_tiny"
 			app:layout_constraintTop_toBottomOf="@+id/titulo"
 			app:layout_constraintStart_toEndOf="@+id/imagen"
 			app:layout_constraintEnd_toEndOf="parent"
-			tools:text="Fecha de publicación" />
+			tools:text="Hace 2 horas" />
 
 		<!-- CATEGORIAS -->
 		<TextView
 			android:id="@+id/categorias"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
-			android:layout_marginStart="16dp"
-			android:layout_marginTop="8dp"
+			android:textAppearance="?attr/textAppearanceLabelSmall"
+			android:textColor="?attr/colorSecondary"
+			android:textStyle="bold"
+			android:layout_marginStart="@dimen/list_item_spacing_medium"
+			android:layout_marginTop="@dimen/list_item_spacing_small"
+			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/fecha"
 			app:layout_constraintStart_toEndOf="@+id/imagen"
-			tools:text="Keyword1, keyword2, keyword3" />
+			tools:text="Keyword1, Keyword2" />
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

@@ -31,7 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/list_padding_top"
+        android:paddingBottom="@dimen/list_padding_bottom"
         tools:listitem="@layout/item_list_noticias"
-        tools:context=".ui.MainActivity" />
+        tools:context=".MainActivity" />
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
