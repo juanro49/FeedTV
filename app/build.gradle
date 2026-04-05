@@ -13,9 +13,6 @@ android {
         versionCode 20260404
         versionName '4.0.0'
 
-        // Asegura que el nombre del APK de salida sea consistente para F-Droid
-        project.archivesBaseName = "org.juanro.feedtv_$versionCode"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // Optimización: Solo incluir los idiomas soportados por la app para reducir el tamaño del APK
