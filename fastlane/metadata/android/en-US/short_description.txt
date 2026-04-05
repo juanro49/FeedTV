@@ -1,1 +1,1 @@
-read news from any media via RSS and watch public TV channels anywhere
+TV, radio and RSS news. Supports custom M3U lists.

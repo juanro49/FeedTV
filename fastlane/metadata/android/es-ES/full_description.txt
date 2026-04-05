@@ -1,0 +1,9 @@
+FeedTV es tu centro de noticias y entretenimiento personal, diseñado para ser rápido, ligero y privado. Lee tus medios favoritos mediante RSS y disfruta de una amplia selección de canales de televisión y emisoras de radio pública y comunitaria en abierto.
+
+Características principales:
+- Lector de noticias RSS moderno y eficiente.
+- Streaming de TV y radio pública y comunitaria integrado.
+- Soporte completo para listas M3U personalizadas: añade tus propias fuentes de streaming fácilmente.
+- Basado en proyectos de código abierto como RSS-Parser, M3U-Parser y TDTChannels.
+
+Nota: La mayoría de las emisoras preconfiguradas son de España. Los logotipos se cargan de fuentes externas.

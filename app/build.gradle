@@ -79,6 +79,15 @@ android {
     }
 }
 
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.outputs.each { output ->
+            // Usamos el versionCode del output de la variante
+            output.outputFileName.set("org.juanro.feedtv_${output.versionCode.get()}.apk")
+        }
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     
