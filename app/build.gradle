@@ -4,14 +4,14 @@ plugins {
 
 android {
     namespace 'org.juanro.feedtv'
-    compileSdk 37
+    compileSdk 36
 
     defaultConfig {
         applicationId "org.juanro.feedtv"
         minSdkVersion 24
-        targetSdk 37
-        versionCode 20260404
-        versionName '4.0.0'
+        targetSdk 36
+        versionCode 20260405
+        versionName '4.0.1'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -51,6 +51,13 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             vcsInfo.include = true
+
+            dependenciesInfo {
+                // Disables dependency metadata when building APKs.
+                includeInApk = false
+                // Disables dependency metadata when building Android App Bundles.
+                includeInBundle = false
+            }
         }
     }
 
@@ -82,8 +89,8 @@ android {
 androidComponents {
     onVariants(selector().all()) { variant ->
         variant.outputs.each { output ->
-            // Usamos el versionCode del output de la variante
-            output.outputFileName.set("org.juanro.feedtv_${output.versionCode.get()}.apk")
+            // Usamos el versionCode de la configuración por defecto
+            output.outputFileName.set("org.juanro.feedtv_${android.defaultConfig.versionCode}.apk")
         }
     }
 }

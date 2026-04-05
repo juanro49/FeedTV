@@ -1,14 +1,14 @@
 Categories:
-  - News
   - Multimedia
+  - News
 License: Apache-2.0
 AuthorName: Juanro49
 AuthorEmail: juanro49+git@getgoogleoff.me
 WebSite: https://github.com/Juanro49/FeedTV
 SourceCode: https://github.com/Juanro49/FeedTV
 IssueTracker: https://github.com/Juanro49/FeedTV/issues
-Changelog: https://github.com/Juanro49/FeedTV/releases
 Translation: https://hosted.weblate.org/projects/feedtv/
+Changelog: https://github.com/Juanro49/FeedTV/releases
 Donate: https://coindrop.to/juanro49
 Liberapay: juanro49
 
@@ -18,20 +18,18 @@ RepoType: git
 Repo: https://github.com/Juanro49/FeedTV
 Binaries: https://github.com/juanro49/FeedTV/releases/download/%v/org.juanro.feedtv_%c.apk
 
-
 Builds:
-  - versionName: 4.0.0
-    versionCode: 20260404
-    commit: 4.0.0
+  - versionName: 4.0.1
+    versionCode: 20260405
+    commit: 4.0.1
     subdir: app
     gradle:
       - yes
 
-AllowedAPKSigningKeys:
-  - 01d83fd1855b65ed94b77cecbf35d237033674e0c61303f2bde02d0efda3f743
+AllowedAPKSigningKeys: 01d83fd1855b65ed94b77cecbf35d237033674e0c61303f2bde02d0efda3f743
 
-AutoUpdateMode: Version %v
+AutoUpdateMode: Version
 UpdateCheckMode: Tags
-UpdateCheckData: '[0-9].*'
-CurrentVersion: 4.0.0
-CurrentVersionCode: 20260404
+UpdateCheckData: app/build.gradle|versionCode\s+(\d+)|app/build.gradle|versionName\s+'([^']+)'
+CurrentVersion: 4.0.1
+CurrentVersionCode: 20260405
