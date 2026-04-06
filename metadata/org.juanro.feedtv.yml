@@ -19,9 +19,10 @@ Repo: https://github.com/Juanro49/FeedTV
 Binaries: https://github.com/juanro49/FeedTV/releases/download/%v/org.juanro.feedtv_%c.apk
 
 Builds:
-  - versionName: 4.0.1
-    versionCode: 20260405
-    commit: 4.0.1
+
+  - versionName: 4.0.2
+    versionCode: 20260406
+    commit: 4.0.2
     subdir: app
     gradle:
       - yes
@@ -31,5 +32,5 @@ AllowedAPKSigningKeys: 01d83fd1855b65ed94b77cecbf35d237033674e0c61303f2bde02d0ef
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
 UpdateCheckData: app/build.gradle|versionCode\s+(\d+)|app/build.gradle|versionName\s+'([^']+)'
-CurrentVersion: 4.0.1
-CurrentVersionCode: 20260405
+CurrentVersion: 4.0.2
+CurrentVersionCode: 20260406

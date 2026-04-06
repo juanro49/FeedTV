@@ -4,6 +4,5 @@
 	<dimen name="screen_padding">64dp</dimen>
 
 	<!-- Espaciado de componentes más aireado -->
-	<dimen name="item_spacing_vertical">24dp</dimen>
 	<dimen name="nav_header_vertical_spacing">32dp</dimen>
 </resources>
