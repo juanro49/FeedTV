@@ -103,4 +103,7 @@
     <string name="radio">Community radios and TVs</string>
     <string name="custom_m3u">Load custom M3U list</string>
     <string name="title_activity_custom_m3u">Custom M3U</string>
+    <string name="status_online_msg">Streaming Online</string>
+    <string name="status_offline_msg">Streaming not available at this moment</string>
+    <string name="status_pending_msg">Verifying status...</string>
 </resources>

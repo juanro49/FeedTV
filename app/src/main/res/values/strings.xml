@@ -117,6 +117,11 @@
 	<string name="error">Error: </string>
 	<string name="enter_url">Introduce una URL</string>
 
+	<!-- Status Indicator -->
+	<string name="status_online_msg">Retransmisión Online</string>
+	<string name="status_offline_msg">Retransmisión no disponible en este momento</string>
+	<string name="status_pending_msg">Verificando estado...</string>
+
 	<!-- Red -->
 	<string name="red_configuracion">Configuración de Red</string>
 	<string name="doh_title">DNS over HTTPS (DoH)</string>

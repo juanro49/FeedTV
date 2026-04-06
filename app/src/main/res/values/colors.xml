@@ -58,4 +58,9 @@
     <color name="colorBackgroundFloating">#2B2D30</color>
     <color name="colorFontWhite">#FFFFFF</color>
     <color name="colorFontBlack">#000000</color>
+
+    <!-- Status Colors -->
+    <color name="status_online">#4CAF50</color>
+    <color name="status_offline">#F44336</color>
+    <color name="status_pending">#9E9E9E</color>
 </resources>
