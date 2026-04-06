@@ -27,6 +27,17 @@ android {
         }
     }
 
+    androidResources {
+        noCompress.add("**/*.so")
+    }
+
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+        // Disables dependency metadata when building Android App Bundles.
+        includeInBundle = false
+    }
+
     packaging {
         resources {
             excludes += [
@@ -38,11 +49,22 @@ android {
                 'META-INF/ASL2.0',
                 'META-INF/*.kotlin_module',
                 'META-INF/AL2.0',
-                'META-INF/LGPL2.1'
+                'META-INF/LGPL2.1',
+                '**/app-metadata.properties',
+                '**/kotlin-tooling-metadata.json',
+                'META-INF/*.SF',
+                'META-INF/*.RSA',
+                'META-INF/*.DSA'
             ]
         }
-        // Asegura que las librerías nativas se empaqueten de forma determinista para F-Droid
-        jniLibs.useLegacyPackaging = true
+        // Asegura que las librerías nativas y el DEX se empaqueten de forma determinista
+        jniLibs {
+            useLegacyPackaging = true
+            keepDebugSymbols += ["**/*.so"]
+        }
+        dex {
+            useLegacyPackaging = true
+        }
     }
 
     buildTypes {
@@ -51,13 +73,6 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             vcsInfo.include = false
-
-            dependenciesInfo {
-                // Disables dependency metadata when building APKs.
-                includeInApk = false
-                // Disables dependency metadata when building Android App Bundles.
-                includeInBundle = false
-            }
         }
     }
 
