@@ -20,21 +20,21 @@
 -->
 
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipe_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/swipe_layout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fitsSystemWindows="true">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listaNoticias"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:clipToPadding="false"
-        android:paddingTop="@dimen/list_padding_top"
-        android:paddingBottom="@dimen/list_padding_bottom"
-        tools:listitem="@layout/item_list_noticias"
-        tools:context=".MainActivity" />
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/listaNoticias"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scrollbars="vertical"
+		android:clipToPadding="false"
+		android:paddingBottom="@dimen/spacing_medium"
+		tools:listitem="@layout/item_list_noticias" />
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -26,18 +26,16 @@
 	android:layout_height="wrap_content"
 	app:cardCornerRadius="@dimen/corner_large"
 	app:cardElevation="@dimen/elevation_none"
-	app:strokeWidth="@dimen/stroke_thin"
-	app:strokeColor="?attr/outlineVariant"
 	style="?attr/materialCardViewFilledStyle"
-	android:layout_marginHorizontal="@dimen/list_item_margin_horizontal"
-	android:layout_marginVertical="@dimen/list_item_margin_vertical"
+	android:layout_marginHorizontal="@dimen/spacing_medium"
+	android:layout_marginVertical="@dimen/spacing_small"
 	android:clickable="true"
 	android:focusable="true">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="@dimen/list_item_padding">
+		android:padding="@dimen/spacing_medium">
 
 		<!-- MINIATURA -->
 		<com.google.android.material.imageview.ShapeableImageView
@@ -60,13 +58,13 @@
 			android:textAppearance="?attr/textAppearanceTitleMedium"
 			android:textStyle="bold"
 			android:textColor="?attr/onSurface"
-			android:layout_marginStart="@dimen/list_item_spacing_medium"
+			android:layout_marginStart="@dimen/spacing_medium"
 			android:maxLines="2"
 			android:ellipsize="end"
 			app:layout_constraintStart_toEndOf="@+id/imagen"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			tools:text="Título de la noticia que puede ser largo y ocupar varias líneas" />
+			tools:text="Título de la noticia" />
 
 		<!-- FECHA -->
 		<TextView
@@ -75,8 +73,8 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?attr/textAppearanceBodySmall"
 			android:textColor="?attr/onSurfaceVariant"
-			android:layout_marginStart="@dimen/list_item_spacing_medium"
-			android:layout_marginTop="@dimen/list_item_spacing_tiny"
+			android:layout_marginStart="@dimen/spacing_medium"
+			android:layout_marginTop="@dimen/spacing_tiny"
 			app:layout_constraintTop_toBottomOf="@+id/titulo"
 			app:layout_constraintStart_toEndOf="@+id/imagen"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -90,8 +88,8 @@
 			android:textAppearance="?attr/textAppearanceLabelSmall"
 			android:textColor="?attr/colorSecondary"
 			android:textStyle="bold"
-			android:layout_marginStart="@dimen/list_item_spacing_medium"
-			android:layout_marginTop="@dimen/list_item_spacing_small"
+			android:layout_marginStart="@dimen/spacing_medium"
+			android:layout_marginTop="@dimen/spacing_small"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toStartOf="@+id/status_indicator"
 			app:layout_constraintTop_toBottomOf="@+id/fecha"
@@ -103,7 +101,7 @@
 			android:id="@+id/status_indicator"
 			android:layout_width="10dp"
 			android:layout_height="10dp"
-			android:layout_marginEnd="@dimen/list_item_padding"
+			android:layout_marginEnd="@dimen/spacing_small"
 			android:background="@drawable/status_offline"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"

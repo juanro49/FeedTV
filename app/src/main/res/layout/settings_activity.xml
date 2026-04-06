@@ -27,8 +27,9 @@
 	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		app:liftOnScroll="true"
-		android:background="?attr/colorSurface">
+		android:background="@android:color/transparent"
+		app:elevation="@dimen/elevation_none"
+		app:liftOnScroll="true">
 
 		<com.google.android.material.appbar.MaterialToolbar
 			android:id="@+id/toolbar"

@@ -17,92 +17,123 @@
 ~
 ~
 -->
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.drawerlayout.widget.DrawerLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/main"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:fitsSystemWindows="true">
 
-	<com.google.android.material.appbar.AppBarLayout
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		app:liftOnScroll="true"
-		android:background="?attr/colorSurface">
+		android:layout_height="match_parent">
 
-		<com.google.android.material.search.SearchBar
-			android:id="@+id/search_bar"
+		<com.google.android.material.appbar.AppBarLayout
+			android:id="@+id/app_bar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginHorizontal="@dimen/searchbar_margin_horizontal"
-			android:layout_marginVertical="@dimen/searchbar_margin_vertical"
-			android:hint="@string/action_search"
-			app:navigationIcon="@android:drawable/ic_menu_sort_by_size" />
+			android:background="@android:color/transparent"
+			app:elevation="@dimen/elevation_none">
 
-	</com.google.android.material.appbar.AppBarLayout>
-
-	<com.google.android.material.search.SearchView
-		android:id="@+id/search_view"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:hint="@string/action_search"
-		app:layout_anchor="@id/search_bar" />
-
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior"
-		android:padding="@dimen/spacing_medium">
-
-		<com.google.android.material.textfield.TextInputLayout
-			android:id="@+id/til_url"
-			style="?attr/textInputLayoutOutlinedStyle"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:hint="@string/hint_url_m3u"
-			app:shapeAppearanceOverlay="@style/ShapeAppearance.App.MediumComponent"
-			app:endIconMode="clear_text"
-			android:layout_marginEnd="@dimen/spacing_small"
-			app:layout_constraintEnd_toStartOf="@+id/btn_load"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent">
-
-			<com.google.android.material.textfield.TextInputEditText
-				android:id="@+id/et_url"
+			<com.google.android.material.card.MaterialCardView
+				android:id="@+id/search_bar_container"
 				android:layout_width="match_parent"
+				android:layout_height="@dimen/search_bar_height"
+				android:layout_marginHorizontal="@dimen/search_bar_margin_horizontal"
+				android:layout_marginTop="@dimen/search_bar_margin_top"
+				android:layout_marginBottom="@dimen/search_bar_margin_bottom"
+				app:cardCornerRadius="@dimen/corner_full"
+				app:cardElevation="@dimen/elevation_low"
+				app:strokeWidth="0dp">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:gravity="center_vertical"
+					android:orientation="horizontal"
+					android:paddingHorizontal="@dimen/search_bar_padding_horizontal">
+
+					<ImageButton
+						android:id="@+id/btn_back"
+						android:layout_width="48dp"
+						android:layout_height="48dp"
+						android:background="?attr/selectableItemBackgroundBorderless"
+						android:contentDescription="@string/alert_positive"
+						android:src="?attr/homeAsUpIndicator"
+						app:tint="?attr/colorOnSurfaceVariant" />
+
+					<androidx.appcompat.widget.SearchView
+						android:id="@+id/search_view"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						app:iconifiedByDefault="false"
+						app:queryHint="@string/action_search"
+						app:searchIcon="@null"
+						app:queryBackground="@android:color/transparent" />
+				</LinearLayout>
+			</com.google.android.material.card.MaterialCardView>
+		</com.google.android.material.appbar.AppBarLayout>
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_behavior="@string/appbar_scrolling_view_behavior"
+			android:padding="@dimen/spacing_medium">
+
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/til_url"
+				style="?attr/textInputLayoutOutlinedStyle"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:inputType="textUri"
-				android:importantForAutofill="no" />
-		</com.google.android.material.textfield.TextInputLayout>
+				android:hint="@string/hint_url_m3u"
+				app:shapeAppearanceOverlay="@style/ShapeAppearance.App.MediumComponent"
+				app:endIconMode="clear_text"
+				android:layout_marginEnd="@dimen/spacing_small"
+				app:layout_constraintEnd_toStartOf="@+id/btn_load"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
 
-		<com.google.android.material.button.MaterialButton
-			android:id="@+id/btn_load"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/btn_cargar"
-			app:cornerRadius="@dimen/corner_large"
-			app:layout_constraintBottom_toBottomOf="@+id/til_url"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toTopOf="@+id/til_url" />
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/et_url"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="textUri"
+					android:importantForAutofill="no" />
+			</com.google.android.material.textfield.TextInputLayout>
 
-		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-			android:id="@+id/swiperefresh"
-			android:layout_width="match_parent"
-			android:layout_height="0dp"
-			android:layout_marginTop="@dimen/spacing_medium"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/til_url">
+			<com.google.android.material.button.MaterialButton
+				android:id="@+id/btn_load"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/btn_cargar"
+				app:cornerRadius="@dimen/corner_full"
+				app:layout_constraintBottom_toBottomOf="@+id/til_url"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="@+id/til_url" />
 
-			<androidx.recyclerview.widget.RecyclerView
-				android:id="@+id/lista"
+			<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+				android:id="@+id/swiperefresh"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:scrollbars="vertical"
-				tools:listitem="@layout/item_list_noticias" />
+				android:layout_height="0dp"
+				android:layout_marginTop="@dimen/spacing_medium"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/til_url">
 
-		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/lista"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:scrollbars="vertical"
+					android:clipToPadding="false"
+					android:paddingBottom="@dimen/list_padding_bottom"
+					tools:listitem="@layout/item_list_noticias" />
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
+			</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

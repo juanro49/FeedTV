@@ -24,6 +24,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,7 +50,7 @@ public class RadioActivity extends AppCompatActivity implements M3UParser.Respon
 	{
 		super.onCreate(savedInstanceState);
 
-		// Habilitar Edge-to-Edge (Material 3 Expressive)
+		// Habilitar Edge-to-Edge
 		WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
 		binding = ActivityRadioBinding.inflate(getLayoutInflater());
@@ -59,28 +60,23 @@ public class RadioActivity extends AppCompatActivity implements M3UParser.Respon
 		binding.lista.setItemAnimator(new DefaultItemAnimator());
 		binding.lista.setHasFixedSize(true);
 
-		// Configurar SearchBar y SearchView (Material 3 Expressive)
-		binding.searchBar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+		// Configurar SearchBar persistente
+		binding.btnBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
-		binding.searchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
-			binding.searchBar.setText(binding.searchView.getText());
-			binding.searchView.hide();
-			return false;
-		});
-
-		binding.searchView.getEditText().addTextChangedListener(new android.text.TextWatcher() {
+		binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if (mAdapter != null) {
-					mAdapter.getFilter().filter(s);
-				}
+			public boolean onQueryTextSubmit(String query) {
+				binding.searchView.clearFocus();
+				return true;
 			}
 
 			@Override
-			public void afterTextChanged(android.text.Editable s) {}
+			public boolean onQueryTextChange(String newText) {
+				if (mAdapter != null) {
+					mAdapter.getFilter().filter(newText);
+				}
+				return true;
+			}
 		});
 
 		// Recargar elementos con swipe
@@ -124,6 +120,4 @@ public class RadioActivity extends AppCompatActivity implements M3UParser.Respon
 	{
 		return super.onOptionsItemSelected(item);
 	}
-
-
 }

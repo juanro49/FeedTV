@@ -32,18 +32,18 @@
 		<com.google.android.material.appbar.AppBarLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			app:liftOnScroll="true"
-			android:background="?attr/colorSurface">
+			android:background="@android:color/transparent"
+			app:elevation="@dimen/elevation_none"
+			app:liftOnScroll="true">
 
 			<com.google.android.material.appbar.MaterialToolbar
 				android:id="@+id/toolbar"
 				android:layout_width="match_parent"
 				android:layout_height="?attr/actionBarSize"
 				app:title="@string/app_name"
-				app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+				app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge"
 				app:navigationIcon="@android:drawable/ic_menu_sort_by_size"
-				app:navigationIconTint="?attr/colorOnSurface"
-				android:minHeight="80dp" />
+				app:navigationIconTint="?attr/colorOnSurface" />
 
 		</com.google.android.material.appbar.AppBarLayout>
 
@@ -59,7 +59,7 @@
 	<!-- Contenedor del Menú Lateral (Modal Navigation Drawer M3 style) -->
 	<com.google.android.material.navigation.NavigationView
 		android:id="@+id/navview"
-		android:layout_width="@dimen/nav_drawer_width"
+		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
 		android:layout_gravity="start"
 		android:fitsSystemWindows="true"

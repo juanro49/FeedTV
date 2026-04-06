@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -46,6 +48,10 @@ public class CustomM3uActivity extends AppCompatActivity implements M3UParser.Re
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+		// Habilitar Edge-to-Edge
+		WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
 		binding = ActivityCustomM3uBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
@@ -53,28 +59,23 @@ public class CustomM3uActivity extends AppCompatActivity implements M3UParser.Re
 		binding.lista.setItemAnimator(new DefaultItemAnimator());
 		binding.lista.setHasFixedSize(true);
 
-		// Configurar SearchBar y SearchView (Material 3 Expressive)
-		binding.searchBar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+		// Configurar SearchBar persistente
+		binding.btnBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
-		binding.searchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
-			binding.searchBar.setText(binding.searchView.getText());
-			binding.searchView.hide();
-			return false;
-		});
-
-		binding.searchView.getEditText().addTextChangedListener(new android.text.TextWatcher() {
+		binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if (mAdapter != null) {
-					mAdapter.getFilter().filter(s);
-				}
+			public boolean onQueryTextSubmit(String query) {
+				binding.searchView.clearFocus();
+				return true;
 			}
 
 			@Override
-			public void afterTextChanged(android.text.Editable s) {}
+			public boolean onQueryTextChange(String newText) {
+				if (mAdapter != null) {
+					mAdapter.getFilter().filter(newText);
+				}
+				return true;
+			}
 		});
 
 		binding.btnLoad.setOnClickListener(v -> cargarM3u());
@@ -123,6 +124,4 @@ public class CustomM3uActivity extends AppCompatActivity implements M3UParser.Re
 	{
 		return super.onOptionsItemSelected(item);
 	}
-
-
 }
