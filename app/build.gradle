@@ -50,7 +50,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            vcsInfo.include = true
+            vcsInfo.include = false
 
             dependenciesInfo {
                 // Disables dependency metadata when building APKs.
