@@ -17,7 +17,7 @@ Link to privacy policy of third party service providers used by the app
 *   [Facebook](https://www.facebook.com/about/privacy) (For some tv channel logos)
 *   [Google](support.google.com/news/publisher-center/answer/6204050) (For Google News RSS topics)
 *   [Microsoft](https://privacy.microsoft.com/) (For Bing News RSS topics)
-*   [Menéame](https://www.meneame.net/legal) (Main default news source)
+*   [Tardigram](https://tardigram.com/privacy-policy) (Main default news source)
 
 
 **Service Providers**

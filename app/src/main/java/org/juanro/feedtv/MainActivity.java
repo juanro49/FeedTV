@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity
 				.setPositiveButton(getString(R.string.add), (dialog, id) -> {
 					executor.execute(() -> {
 						AppDatabase db = AppDatabase.getInstance(MainActivity.this);
-						db.feedDao().insert(new RssFeed("News", "https://www.meneame.net/rss?status=all"));
+						db.feedDao().insert(new RssFeed("News", "https://tardigram.com/rss"));
 						refreshFeeds();
 					});
 					Toast.makeText(this, getString(R.string.add_feed_success), Toast.LENGTH_LONG).show();
