@@ -37,10 +37,10 @@
     <string name="tema_aplicacion">Modus</string>
     <string name="title_activity_settings">Postavke</string>
     <string name="version">Verzija</string>
-    <string name="author">&lt;br /&gt;&lt;br /&gt;Autor: Juanro49. Licenca Apache 2.0&lt;br /&gt;&lt;br /&gt;</string>
+    <string name="author">&lt;br /&gt;&lt;br /&gt; Autor: Juanro49. Licenca Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
     <string name="video">Video</string>
     <string name="alert_positive">Zatvori</string>
-    <string name="alert_message">Nije moguće dobiti podatke.\nProvjeri vezu.</string>
+    <string name="alert_message">Nije moguće dobiti podatke. \nProvjeri vezu.</string>
     <string name="alert_title">Oprez!</string>
     <string name="channel_detail">Podaci kanala</string>
     <string name="action_about">Informacije</string>
@@ -74,4 +74,9 @@
     <string name="notAdd">Nemoj dodati</string>
     <string name="radio">Javni radio i televizija</string>
     <string name="listen_radio">Gledaj televiziju/Besplatna televizija</string>
+    <string name="str_sv">Švedski</string>
+    <string name="str_ia">Interlingua</string>
+    <string name="str_zh">Kineski</string>
+    <string name="custom_m3u">Učitaj prilagođenu M3U playlistu</string>
+    <string name="title_activity_custom_m3u">Prilagođeni M3U</string>
 </resources>
