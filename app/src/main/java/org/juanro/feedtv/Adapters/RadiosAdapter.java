@@ -46,7 +46,15 @@ import org.juanro.feedtv.Videoview;
 import org.juanro.feedtv.databinding.ItemListNoticiasBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.juanro.feedtv.Http.HttpClient;
 
 /**
  * Clase que representa el adapter de la lista de canales
@@ -57,6 +65,11 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 	private List<M3uEntry> radiosFiltradas;
 	private final ItemFilter mFilter = new ItemFilter();
 	private final Context mContext;
+	private final Map<String, Integer> cacheEstados = new HashMap<>();
+
+	private static final int STATUS_PENDING = 0;
+	private static final int STATUS_ONLINE = 1;
+	private static final int STATUS_OFFLINE = 2;
 
 	public RadiosAdapter(Context context, List<M3uEntry> radios)
 	{
@@ -117,6 +130,9 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 				.build();
 		Coil.imageLoader(mContext).enqueue(request);
 
+		// Verificar estado del stream
+		verificarEstadoStream(radio.getLocation().getUrl().toString(), vh);
+
 		// Establecer categoría
 		vh.binding.categorias.setText(radio.getMetadata().get("group-title"));
 
@@ -159,6 +175,67 @@ public class RadiosAdapter extends RecyclerView.Adapter<RadiosAdapter.ViewHolder
 
 			return true;
 		});
+	}
+
+	/**
+	 * Verifica si un stream está online mediante una petición GET limitada
+	 */
+	private void verificarEstadoStream(String url, ViewHolder vh) {
+		if (cacheEstados.containsKey(url)) {
+			actualizarUIEstado(cacheEstados.get(url), vh);
+			return;
+		}
+
+		// Asegurar que el indicador es visible en radios
+		vh.binding.statusIndicator.setVisibility(android.view.View.VISIBLE);
+		actualizarUIEstado(STATUS_PENDING, vh);
+
+		Request getRequest = new Request.Builder()
+				.url(url)
+				.addHeader("Range", "bytes=0-1024") // Solo pedimos el primer KB para ahorrar datos
+				.build();
+
+		HttpClient.getInstance().newCall(getRequest).enqueue(new Callback() {
+			@Override
+			public void onFailure(@NonNull Call call, @NonNull java.io.IOException e) {
+				cacheEstados.put(url, STATUS_OFFLINE);
+				actualizarUIMainThread(STATUS_OFFLINE, vh);
+			}
+
+			@Override
+			public void onResponse(@NonNull Call call, @NonNull Response response) {
+				// Si el GET devuelve éxito (200 o 206 Partial Content), está vivo
+				int status = (response.isSuccessful() || response.code() == 206) ? STATUS_ONLINE : STATUS_OFFLINE;
+				cacheEstados.put(url, status);
+				actualizarUIMainThread(status, vh);
+				response.close();
+			}
+		});
+	}
+
+	private void actualizarUIMainThread(int status, ViewHolder vh) {
+		new android.os.Handler(android.os.Looper.getMainLooper()).post(() ->
+				actualizarUIEstado(status, vh));
+	}
+
+	private void actualizarUIEstado(int status, ViewHolder vh) {
+		int messageRes;
+		switch (status) {
+			case STATUS_ONLINE:
+				vh.binding.statusIndicator.setBackgroundResource(R.drawable.status_online);
+				messageRes = R.string.status_online_msg;
+				break;
+			case STATUS_OFFLINE:
+				vh.binding.statusIndicator.setBackgroundResource(R.drawable.status_offline);
+				messageRes = R.string.status_offline_msg;
+				break;
+			default:
+				vh.binding.statusIndicator.setBackgroundResource(R.drawable.status_pending);
+				messageRes = R.string.status_pending_msg;
+				break;
+		}
+		vh.binding.statusIndicator.setOnClickListener(v ->
+				Toast.makeText(mContext, mContext.getString(messageRes), Toast.LENGTH_SHORT).show());
 	}
 
 	/**

@@ -20,17 +20,14 @@
 package org.juanro.feedtv;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -43,28 +40,42 @@ import org.juanro.feedtv.databinding.ActivityTvBinding;
  */
 public class ChannelsActivity extends AppCompatActivity
 {
+	private ActivityTvBinding binding;
 	private ChannelsAdapter mAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		// Establecer tema de la aplicación
-		aplicarTema();
-
 		super.onCreate(savedInstanceState);
-		ActivityTvBinding binding = ActivityTvBinding.inflate(getLayoutInflater());
+
+		// Habilitar Edge-to-Edge
+		WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
+		binding = ActivityTvBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
 		binding.lista.setLayoutManager(new GridLayoutManager(this, 2));
 		binding.lista.setItemAnimator(new DefaultItemAnimator());
 		binding.lista.setHasFixedSize(true);
 
-		// Establecer botón de atrás en action bar
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null)
-		{
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
+		// Configurar SearchBar persistente
+		binding.btnBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+
+		binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				binding.searchView.clearFocus();
+				return true;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				if (mAdapter != null) {
+					mAdapter.getFilter().filter(newText);
+				}
+				return true;
+			}
+		});
 
 		// Obtener el ambito de la anterior activity que contiene sus canales
 		Intent intent = getIntent();
@@ -75,7 +86,6 @@ public class ChannelsActivity extends AppCompatActivity
 		}
 		else
 		{
-			//noinspection deprecation
 			ambito = (Ambito) intent.getSerializableExtra("Ambito");
 		}
 
@@ -85,52 +95,8 @@ public class ChannelsActivity extends AppCompatActivity
 			mAdapter = new ChannelsAdapter(getApplicationContext(), ambito.canales());
 			binding.lista.setAdapter(mAdapter);
 		}
-	}
 
-	/**
-	 * Crear menu
-	 *
-	 * @param menu El menú de opciones en el que se colocan los elementos.
-	 * @return boolean Debe devolver true para que se muestre el menú.
-	 */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.menu, menu);
-		MenuItem searchItem = menu.findItem(R.id.action_search);
-
-		if (searchItem != null)
-		{
-			// Cambiar color botón de búsqueda
-			if (searchItem.getIcon() != null)
-			{
-				searchItem.getIcon().setTint(ContextCompat.getColor(this, android.R.color.white));
-			}
-
-			// Configurar el buscador una sola vez
-			SearchView searchView = (SearchView) searchItem.getActionView();
-			if (searchView != null)
-			{
-				searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
-				{
-					@Override
-					public boolean onQueryTextSubmit(String texto) { return false; }
-
-					@Override
-					public boolean onQueryTextChange(String texto)
-					{
-						if (mAdapter != null)
-						{
-							mAdapter.getFilter().filter(texto);
-						}
-						return true;
-					}
-				});
-			}
-		}
-
-		return true;
+		binding.swiperefresh.setEnabled(false);
 	}
 
 	/**
@@ -142,29 +108,6 @@ public class ChannelsActivity extends AppCompatActivity
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item)
 	{
-		if (item.getItemId() == android.R.id.home)
-		{
-			getOnBackPressedDispatcher().onBackPressed();
-			return true;
-		}
-
 		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * Método que aplica el tema de la aplicación
-	 */
-	private void aplicarTema()
-	{
-		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
-
-		if("Claro".equals(sharedPref.getString("tema", "Claro")))
-		{
-			setTheme(R.style.TemaClaro);
-		}
-		else
-		{
-			setTheme(R.style.TemaOscuro);
-		}
 	}
 }

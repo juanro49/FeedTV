@@ -1,42 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-	<attr format="reference" name="cardStyle"/>
+	<style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
+		<!-- Colores básicos Material 3 -->
+		<item name="colorPrimary">@color/primary_light</item>
+		<item name="onPrimary">@color/onPrimary_light</item>
+		<item name="primaryContainer">@color/primaryContainer_light</item>
+		<item name="onPrimaryContainer">@color/onPrimaryContainer_light</item>
+		<item name="colorSecondary">@color/secondary_light</item>
+		<item name="onSecondary">@color/onSecondary_light</item>
+		<item name="secondaryContainer">@color/secondaryContainer_light</item>
+		<item name="onSecondaryContainer">@color/onSecondaryContainer_light</item>
+		<item name="android:colorBackground">@color/background_light</item>
+		<item name="onBackground">@color/onBackground_light</item>
+		<item name="colorSurface">@color/surface_light</item>
+		<item name="onSurface">@color/onSurface_light</item>
+		<item name="colorSurfaceVariant">@color/surfaceVariant_light</item>
+		<item name="onSurfaceVariant">@color/onSurfaceVariant_light</item>
+		<item name="outline">@color/outline_light</item>
+		<item name="outlineVariant">@color/outline_light</item>
 
-	<!-- Base application theme Light. -->
-	<style name="TemaClaro" parent="Theme.AppCompat.Light.DarkActionBar">
-		<item name="colorPrimary">@color/colorHeader</item>
-		<item name="colorPrimaryDark">@color/colorNotificationBar</item>
-		<item name="colorAccent">@color/colorAccent</item>
-	</style>
+		<!-- Formas Expressive -->
+		<item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+		<item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
 
-	<!-- Base application theme Dark. -->
-	<style name="TemaOscuro" parent="Theme.AppCompat">
-		<item name="android:colorBackground">@color/colorBackground</item>
-		<item name="colorBackgroundFloating">@color/colorBackgroundFloating</item>
-		<item name="android:colorBackgroundFloating" tools:targetApi="m">@color/colorBackgroundFloating</item>
-		<item name="actionOverflowMenuStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Menu</item>
-		<item name="android:textColor">@color/colorFontWhite</item>
-		<item name="colorPrimary">@color/colorBackgroundFloating</item>
-		<item name="colorPrimaryDark">@color/colorBackground</item>
-		<item name="colorAccent">@color/colorAccent</item>
-	</style>
-
-	<style name="TemaClaro.NoActionBar">
-		<item name="windowActionBar">false</item>
-		<item name="windowNoTitle">true</item>
+		<!-- Window components -->
 		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
 		<item name="android:statusBarColor">@android:color/transparent</item>
+		<item name="android:navigationBarColor">@android:color/transparent</item>
 	</style>
 
-	<style name="TemaOscuro.NoActionBar">
+	<style name="AppTheme.NoActionBar" parent="AppTheme">
 		<item name="windowActionBar">false</item>
 		<item name="windowNoTitle">true</item>
-		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
-		<item name="android:statusBarColor">@android:color/transparent</item>
 	</style>
 
-	<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-	<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+	<!-- Shape Styles -->
+	<style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+		<item name="cornerSize">24dp</item>
+	</style>
+
+	<style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+		<item name="cornerSize">16dp</item>
+	</style>
 
 </resources>

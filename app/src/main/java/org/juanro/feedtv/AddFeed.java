@@ -18,7 +18,6 @@
 
 package org.juanro.feedtv;
 
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -44,12 +43,10 @@ public class AddFeed extends AppCompatActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		// Establecer tema de la aplicación
-		aplicarTema();
-
 		super.onCreate(savedInstanceState);
 		binding = AddFeedBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
+		setSupportActionBar(binding.toolbar);
 
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null)
@@ -99,9 +96,13 @@ public class AddFeed extends AppCompatActivity
 	// Seguir tema de Google News o Bing News
 	public void submitSeguir(View view)
 	{
-		String topic = binding.etTema.getText().toString().replace(" ", "+");
+		String topic = "";
+		if (binding.etTema.getText() != null) {
+			topic = binding.etTema.getText().toString().replace(" ", "+");
+		}
+		int checkedId = binding.toggleGroup.getCheckedButtonId();
 
-		if(topic.isEmpty() || (!binding.rbGoogle.isChecked() && !binding.rbBing.isChecked()))
+		if(topic.isEmpty() || checkedId == View.NO_ID)
 		{
 			Toast.makeText(this, this.getString(R.string.add_feed_empty), Toast.LENGTH_LONG).show();
 		}
@@ -111,7 +112,7 @@ public class AddFeed extends AppCompatActivity
 			final String url;
 			final String finalTopic;
 
-			if(binding.rbGoogle.isChecked())
+			if(checkedId == R.id.btnGoogle)
 			{
 				if(binding.cbGN.isChecked())
 				{
@@ -142,8 +143,8 @@ public class AddFeed extends AppCompatActivity
 
 	public void addFeed()
 	{
-		final String titulo = binding.etNombre.getText().toString();
-		final String urlStr = binding.etUrl.getText().toString();
+		final String titulo = binding.etNombre.getText() != null ? binding.etNombre.getText().toString() : "";
+		final String urlStr = binding.etUrl.getText() != null ? binding.etUrl.getText().toString() : "";
 
 		if(titulo.isEmpty() || urlStr.isEmpty())
 		{
@@ -165,8 +166,8 @@ public class AddFeed extends AppCompatActivity
 
 	public void modFeed()
 	{
-		final String titulo = binding.etNombre.getText().toString();
-		final String urlStr = binding.etUrl.getText().toString();
+		final String titulo = binding.etNombre.getText() != null ? binding.etNombre.getText().toString() : "";
+		final String urlStr = binding.etUrl.getText() != null ? binding.etUrl.getText().toString() : "";
 
 		if(titulo.isEmpty() || urlStr.isEmpty())
 		{
@@ -189,22 +190,7 @@ public class AddFeed extends AppCompatActivity
 		}
 	}
 
-	/**
-	 * Método que aplica el tema de la aplicación
-	 */
-	private void aplicarTema()
-	{
-		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
-		if("Claro".equals(sharedPref.getString("tema", "Claro")))
-		{
-			setTheme(R.style.TemaClaro);
-		}
-		else
-		{
-			setTheme(R.style.TemaOscuro);
-		}
-	}
 
 	@Override
 	protected void onDestroy() {

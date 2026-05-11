@@ -146,6 +146,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
         viewHolder.binding.titulo.setText(title);
 
+        // Ocultar indicador de estado en noticias
+        viewHolder.binding.statusIndicator.setVisibility(android.view.View.GONE);
+
         // Setear imagen con Coil
         ImageRequest request = new ImageRequest.Builder(mContext)
                 .data(currentArticle.getImage())

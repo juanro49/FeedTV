@@ -30,6 +30,9 @@ public interface ArticleDao {
     @Query("SELECT * FROM articulos WHERE feedId = :feedId ORDER BY numFecha DESC")
     List<Article> getArticlesByFeed(int feedId);
 
+    @Query("SELECT link FROM articulos WHERE feedId = :feedId")
+    List<String> getExistingLinks(int feedId);
+
     /**
      * Obtiene los 20 artículos más recientes de toda la base de datos, 
      * independientemente de su fuente.

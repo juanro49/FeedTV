@@ -10,8 +10,8 @@ android {
         applicationId "org.juanro.feedtv"
         minSdkVersion 24
         targetSdk 36
-        versionCode 20250806
-        versionName '3.0.1'
+        versionCode 20260406
+        versionName '4.0.2'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -27,6 +27,17 @@ android {
         }
     }
 
+    androidResources {
+        noCompress.add("**/*.so")
+    }
+
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+        // Disables dependency metadata when building Android App Bundles.
+        includeInBundle = false
+    }
+
     packaging {
         resources {
             excludes += [
@@ -38,8 +49,21 @@ android {
                 'META-INF/ASL2.0',
                 'META-INF/*.kotlin_module',
                 'META-INF/AL2.0',
-                'META-INF/LGPL2.1'
+                'META-INF/LGPL2.1',
+                '**/app-metadata.properties',
+                '**/kotlin-tooling-metadata.json',
+                'META-INF/*.SF',
+                'META-INF/*.RSA',
+                'META-INF/*.DSA'
             ]
+        }
+        // Asegura que las librerías nativas y el DEX se empaqueten de forma determinista
+        jniLibs {
+            useLegacyPackaging = true
+            keepDebugSymbols += ["**/*.so"]
+        }
+        dex {
+            useLegacyPackaging = true
         }
     }
 
@@ -48,7 +72,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            vcsInfo.include = true
+            vcsInfo.include = false
         }
     }
 
@@ -72,8 +96,17 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.outputs.each { output ->
+            // Usamos el versionCode de la configuración por defecto
+            output.outputFileName.set("org.juanro.feedtv_${android.defaultConfig.versionCode}.apk")
+        }
     }
 }
 
@@ -110,7 +143,10 @@ dependencies {
 
     // Media & Network
     implementation 'io.coil-kt:coil:2.7.0'
-    implementation 'com.android.volley:volley:1.2.1'
+    implementation 'com.squareup.okhttp3:okhttp:5.3.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.3.2'
+    implementation 'com.squareup.okhttp3:okhttp-brotli:5.3.2'
+    implementation 'com.squareup.okhttp3:okhttp-dnsoverhttps:5.3.2'
     implementation 'androidx.media3:media3-exoplayer:1.10.0'
     implementation 'androidx.media3:media3-ui:1.10.0'
     implementation 'androidx.media3:media3-exoplayer-hls:1.10.0'

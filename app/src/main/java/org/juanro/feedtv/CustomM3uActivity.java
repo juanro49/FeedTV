@@ -17,17 +17,14 @@
 
 package org.juanro.feedtv;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -50,8 +47,11 @@ public class CustomM3uActivity extends AppCompatActivity implements M3UParser.Re
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		aplicarTema();
 		super.onCreate(savedInstanceState);
+
+		// Habilitar Edge-to-Edge
+		WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
 		binding = ActivityCustomM3uBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
 
@@ -59,11 +59,24 @@ public class CustomM3uActivity extends AppCompatActivity implements M3UParser.Re
 		binding.lista.setItemAnimator(new DefaultItemAnimator());
 		binding.lista.setHasFixedSize(true);
 
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null)
-		{
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
+		// Configurar SearchBar persistente
+		binding.btnBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+
+		binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				binding.searchView.clearFocus();
+				return true;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				if (mAdapter != null) {
+					mAdapter.getFilter().filter(newText);
+				}
+				return true;
+			}
+		});
 
 		binding.btnLoad.setOnClickListener(v -> cargarM3u());
 
@@ -72,10 +85,11 @@ public class CustomM3uActivity extends AppCompatActivity implements M3UParser.Re
 
 	private void cargarM3u()
 	{
-		String url = binding.etUrl.getText().toString().trim();
+		final String url = binding.etUrl.getText() != null ? binding.etUrl.getText().toString().trim() : "";
+
 		if (url.isEmpty())
 		{
-			Toast.makeText(this, "Introduce una URL", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, getString(R.string.enter_url), Toast.LENGTH_SHORT).show();
 			binding.swiperefresh.setRefreshing(false);
 			return;
 		}
@@ -100,51 +114,6 @@ public class CustomM3uActivity extends AppCompatActivity implements M3UParser.Re
 	}
 
 	/**
-	 * Crear menu
-	 *
-	 * @param menu El menú de opciones en el que se colocan los elementos.
-	 * @return boolean Debe devolver true para que se muestre el menú; si devuelve false, no se mostrará.
-	 */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		getMenuInflater().inflate(R.menu.menu, menu);
-		MenuItem searchItem = menu.findItem(R.id.action_search);
-
-		if (searchItem != null)
-		{
-			// Cambiar color botón de búsqueda
-			if (searchItem.getIcon() != null)
-			{
-				searchItem.getIcon().setTint(ContextCompat.getColor(this, android.R.color.white));
-			}
-
-			// Configurar el buscador una sola vez
-			SearchView searchView = (SearchView) searchItem.getActionView();
-			if (searchView != null)
-			{
-				searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
-				{
-					@Override
-					public boolean onQueryTextSubmit(String texto) { return false; }
-
-					@Override
-					public boolean onQueryTextChange(String texto)
-					{
-						if (mAdapter != null)
-						{
-							mAdapter.getFilter().filter(texto);
-						}
-						return true;
-					}
-				});
-			}
-		}
-
-		return true;
-	}
-
-	/**
 	 * Acciones botones menú
 	 *
 	 * @param item El elemento de menú que fue seleccionado.
@@ -153,29 +122,6 @@ public class CustomM3uActivity extends AppCompatActivity implements M3UParser.Re
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item)
 	{
-		if (item.getItemId() == android.R.id.home)
-		{
-			getOnBackPressedDispatcher().onBackPressed();
-			return true;
-		}
-
 		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * Método que aplica el tema de la aplicación
-	 */
-	private void aplicarTema()
-	{
-		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
-
-		if("Claro".equals(sharedPref.getString("tema", "Claro")))
-		{
-			setTheme(R.style.TemaClaro);
-		}
-		else
-		{
-			setTheme(R.style.TemaOscuro);
-		}
 	}
 }

@@ -18,28 +18,32 @@
 package org.juanro.feedtv;
 
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.LinkProperties;
+import android.net.Network;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
+import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
+import androidx.preference.SwitchPreferenceCompat;
 
 /**
  * Clase que representa la activity de ajustes
  */
 public class SettingsActivity extends AppCompatActivity {
 
-    public SettingsActivity() {
-        super(R.layout.settings_activity);
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        aplicarTema();
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.settings_activity);
+
+        setSupportActionBar(findViewById(R.id.toolbar));
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -62,6 +66,36 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            checkSystemPrivateDns();
+
+            EditTextPreference dohUrlPreference = findPreference("doh_url");
+            if (dohUrlPreference != null) {
+                dohUrlPreference.setOnBindEditTextListener(editText -> {
+                    editText.setHint(R.string.doh_default_url);
+                });
+            }
+        }
+
+        private void checkSystemPrivateDns() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && getContext() != null) {
+                ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(AppCompatActivity.CONNECTIVITY_SERVICE);
+                if (cm != null) {
+                    Network activeNetwork = cm.getActiveNetwork();
+                    LinkProperties lp = cm.getLinkProperties(activeNetwork);
+                    if (lp != null && lp.getPrivateDnsServerName() != null) {
+                        // El sistema ya usa DNS Privado
+                        SwitchPreferenceCompat dohSwitch = findPreference("doh_enabled");
+                        Preference dohUrl = findPreference("doh_url");
+                        if (dohSwitch != null) {
+                            dohSwitch.setEnabled(false);
+                            dohSwitch.setSummary(getString(R.string.doh_system_active));
+                        }
+                        if (dohUrl != null) {
+                            dohUrl.setEnabled(false);
+                        }
+                    }
+                }
+            }
         }
 
         @Override
@@ -94,6 +128,22 @@ public class SettingsActivity extends AppCompatActivity {
                     );
                     break;
                 case "tema":
+                    String theme = sharedPreferences.getString("tema", "default");
+                    switch (theme) {
+                        case "light":
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            break;
+                        case "dark":
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            break;
+                        case "default":
+                        default:
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                            break;
+                    }
+                    break;
+                case "dynamic_color":
+                    // Para Dynamic Color, recrear la actividad es suficiente si el Precondition está en Application
                     if (getActivity() != null) {
                         getActivity().recreate();
                     }
@@ -102,8 +152,5 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void aplicarTema() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme("Claro".equals(sharedPref.getString("tema", "Claro")) ? R.style.TemaClaro : R.style.TemaOscuro);
-    }
+
 }

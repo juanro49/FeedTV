@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
+		<item name="colorPrimary">@color/primary_dark</item>
+		<item name="onPrimary">@color/onPrimary_dark</item>
+		<item name="primaryContainer">@color/primaryContainer_dark</item>
+		<item name="onPrimaryContainer">@color/onPrimaryContainer_dark</item>
+		<item name="colorSecondary">@color/secondary_dark</item>
+		<item name="onSecondary">@color/onSecondary_dark</item>
+		<item name="secondaryContainer">@color/secondaryContainer_dark</item>
+		<item name="onSecondaryContainer">@color/onSecondaryContainer_dark</item>
+		<item name="android:colorBackground">@color/background_dark</item>
+		<item name="colorSurface">@color/surface_dark</item>
+		<item name="onSurface">@color/onSurface_dark</item>
+		<item name="colorSurfaceVariant">@color/surfaceVariant_dark</item>
+		<item name="onSurfaceVariant">@color/onSurfaceVariant_dark</item>
+		<item name="outline">@color/outline_dark</item>
+		<item name="outlineVariant">@color/outline_dark</item>
+
+		<!-- Formas Expressive -->
+		<item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+		<item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+
+		<!-- Window components -->
+		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
+		<item name="android:statusBarColor">@android:color/transparent</item>
+		<item name="android:navigationBarColor">@android:color/transparent</item>
+	</style>
+</resources>

@@ -19,7 +19,7 @@
 
 package org.juanro.feedtv;
 
-import android.content.Context;
+import android.app.Application;
 import android.util.Log;
 
 import com.prof18.rssparser.model.RssItem;
@@ -34,9 +34,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import org.jetbrains.annotations.NotNull;
 import org.juanro.feedtv.BBDD.AppDatabase;
@@ -50,18 +50,29 @@ import kotlinx.coroutines.Dispatchers;
 /**
  * Clase que se encarga de gestionar el parseo de los feeds de noticias
  */
-public class MainViewModel extends ViewModel
+public class MainViewModel extends AndroidViewModel
 {
 	private static final String TAG = "MainViewModel";
 	private final MutableLiveData<List<Article>> articleListLive = new MutableLiveData<>(new ArrayList<>());
 	private String urlString = "";
 	private String feedName = "";
 	private final MutableLiveData<String> snackbar = new MutableLiveData<>();
+	private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 	private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
+	public MainViewModel(@NonNull Application application)
+	{
+		super(application);
+	}
 
 	public LiveData<List<Article>> getArticleList()
 	{
 		return articleListLive;
+	}
+
+	public LiveData<Boolean> getIsLoading()
+	{
+		return isLoading;
 	}
 
 	public void setUrl(String url)
@@ -87,21 +98,30 @@ public class MainViewModel extends ViewModel
 	/**
 	 * Obtiene los 20 artículos más recientes de todas las fuentes
 	 */
-	public void fetchGlobalRecentArticles(final Context context) {
+	public void fetchGlobalRecentArticles() {
+		isLoading.postValue(true);
 		executor.execute(() -> {
-			AppDatabase db = AppDatabase.getInstance(context);
-			List<Article> recentArticles = db.articleDao().getGlobalRecentArticles();
-			articleListLive.postValue(recentArticles);
+			try {
+				AppDatabase db = AppDatabase.getInstance(getApplication());
+				List<Article> recentArticles = db.articleDao().getGlobalRecentArticles();
+				articleListLive.postValue(recentArticles);
+			} catch (Exception e) {
+				Log.e(TAG, "Error fetching global articles", e);
+			} finally {
+				isLoading.postValue(false);
+			}
 		});
 	}
 
-	public void fetchFeed(final Context context)
+	public void fetchFeed()
 	{
 		if (urlString == null || urlString.isEmpty()) {
-			snackbar.postValue(context.getString(R.string.first_start));
+			snackbar.postValue(getApplication().getString(R.string.first_start));
+			isLoading.postValue(false);
 			return;
 		}
 
+		isLoading.postValue(true);
 		RssParser parser = new RssParserBuilder().build();
 		CompletableFuture<RssChannel> future = new CompletableFuture<>();
 		
@@ -112,7 +132,7 @@ public class MainViewModel extends ViewModel
 				if (channel == null) throw new Exception("Channel is null");
 
 				List<RssItem> items = channel.getItems();
-				AppDatabase db = AppDatabase.getInstance(context);
+				AppDatabase db = AppDatabase.getInstance(getApplication());
 
 				RssFeed feed = db.feedDao().findByTitle(feedName);
 				if (feed == null) {
@@ -122,56 +142,66 @@ public class MainViewModel extends ViewModel
 				}
 				final int feedId = feed.getId();
 
+				// Obtener links ya existentes para evitar duplicados
+				List<String> existingLinks = db.articleDao().getExistingLinks(feedId);
 				List<Article> articlesToSave = new ArrayList<>();
+				
 				for (RssItem item : items) {
-					long numFecha = parsePubDate(item.getPubDate());
-					
-					String image = item.getImage();
-					if (image == null && channel.getImage() != null) {
-						image = channel.getImage().getUrl();
+					// Solo añadir si el link no existe ya en la BBDD
+					if (!existingLinks.contains(item.getLink())) {
+						long numFecha = parsePubDate(item.getPubDate());
+						
+						String image = item.getImage();
+						if (image == null && channel.getImage() != null) {
+							image = channel.getImage().getUrl();
+						}
+						
+						articlesToSave.add(new Article(
+								feedId,
+								item.getGuid(),
+								item.getTitle(),
+								item.getAuthor(),
+								item.getLink(),
+								item.getPubDate(),
+								item.getDescription(),
+								item.getContent(),
+								image,
+								item.getAudio(),
+								item.getVideo(),
+								item.getSourceName(),
+								item.getSourceUrl(),
+								item.getCommentsUrl(),
+								item.getCategories(),
+								numFecha
+						));
 					}
-					
-					articlesToSave.add(new Article(
-							feedId,
-							item.getGuid(),
-							item.getTitle(),
-							item.getAuthor(),
-							item.getLink(),
-							item.getPubDate(),
-							item.getDescription(),
-							item.getContent(),
-							image,
-							item.getAudio(),
-							item.getVideo(),
-							item.getSourceName(),
-							item.getSourceUrl(),
-							item.getCommentsUrl(),
-							item.getCategories(),
-							numFecha
-					));
 				}
 				
-				db.articleDao().insertAll(articlesToSave);
+				if (!articlesToSave.isEmpty()) {
+					db.articleDao().insertAll(articlesToSave);
+				}
 				db.articleDao().deleteOldArticles(feedId);
 
 				List<Article> listFromDb = db.articleDao().getArticlesByFeed(feedId);
 				articleListLive.postValue(listFromDb);
 				
-				snackbar.postValue(context.getString(R.string.update_feed_success));
+				snackbar.postValue(getApplication().getString(R.string.update_feed_success));
+				isLoading.postValue(false);
 
 			} catch (Exception e) {
-				handleError(context, e);
+				handleError(e);
 			}
 		}, executor).exceptionally(ex -> {
-			handleError(context, ex);
+			handleError(ex);
 			return null;
 		});
 	}
 
-	private void handleError(Context context, Throwable e) {
+	private void handleError(Throwable e) {
 		Log.e(TAG, "Error fetching feed", e);
 		articleListLive.postValue(new ArrayList<>());
-		snackbar.postValue(context.getString(R.string.update_feed_failed) + e.getMessage());
+		snackbar.postValue(getApplication().getString(R.string.update_feed_failed) + e.getMessage());
+		isLoading.postValue(false);
 	}
 
 	private long parsePubDate(String pubDate) {

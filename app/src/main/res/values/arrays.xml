@@ -2,14 +2,27 @@
 <resources>
 	<!-- Tema aplicación -->
 	<string-array name="temas">
+		<item>@string/auto</item>
 		<item>@string/claro</item>
 		<item>@string/oscuro</item>
 	</string-array>
 
-	<!-- Valores tema aplicación -->
+	<!-- Valores técnicos tema aplicación -->
 	<string-array name="tema">
-		<item>Claro</item>
-		<item>Oscuro</item>
+		<item>default</item>
+		<item>light</item>
+		<item>dark</item>
+	</string-array>
+
+	<!-- Color Dinámico (Material You) -->
+	<string-array name="dynamic_color_labels">
+		<item>@string/activado</item>
+		<item>@string/desactivado</item>
+	</string-array>
+
+	<string-array name="dynamic_color_values">
+		<item>true</item>
+		<item>false</item>
 	</string-array>
 
 	<!-- Idioma aplicación -->

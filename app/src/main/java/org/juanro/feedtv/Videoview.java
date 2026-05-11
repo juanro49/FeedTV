@@ -19,7 +19,6 @@
 package org.juanro.feedtv;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -27,6 +26,8 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.media3.common.MediaItem;
@@ -46,12 +47,28 @@ public class Videoview extends AppCompatActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		// Establecer tema de la aplicación
-		aplicarTema();
-
 		super.onCreate(savedInstanceState);
+
+		// Habilitar Edge-to-Edge (Material 3 Expressive)
+		WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
 		binding = VideoBinding.inflate(getLayoutInflater());
 		setContentView(binding.getRoot());
+		setSupportActionBar(binding.toolbar);
+
+		// Ajustar insets para que la Toolbar y los controles del vídeo no queden bloqueados por las barras del sistema
+		ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, windowInsets) -> {
+			androidx.core.graphics.Insets systemBars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+			
+			// Padding superior para la Toolbar (evitar barra de estado)
+			binding.appbar.setPadding(0, systemBars.top, 0, 0);
+			
+			// Padding para los controles del vídeo (evitar barra de navegación y laterales)
+			// Aplicamos padding al PlayerView; Media3 ajustará los controles internos
+			binding.videoPlayerView.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+			
+			return WindowInsetsCompat.CONSUMED;
+		});
 
 		WindowInsetsControllerCompat controller = new WindowInsetsControllerCompat(getWindow(), getWindow().getDecorView());
 
@@ -144,20 +161,5 @@ public class Videoview extends AppCompatActivity
 		exoPlayer.play();
 	}
 
-	/**
-	 * Método que aplica el tema de la aplicación
-	 */
-	private void aplicarTema()
-	{
-		SharedPreferences sharedPref = getSharedPreferences("org.juanro.feedtv_preferences", MODE_PRIVATE);
 
-		if("Claro".equals(sharedPref.getString("tema", "Claro")))
-		{
-			setTheme(R.style.TemaClaro);
-		}
-		else
-		{
-			setTheme(R.style.TemaOscuro);
-		}
-	}
 }
