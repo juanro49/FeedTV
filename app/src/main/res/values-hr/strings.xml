@@ -37,7 +37,7 @@
     <string name="tema_aplicacion">Modus</string>
     <string name="title_activity_settings">Postavke</string>
     <string name="version">Verzija</string>
-    <string name="author">&lt;br /&gt;&lt;br /&gt; Autor: Juanro49. Licenca Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
+    <string name="author">&lt;br&gt;&lt;br&gt; Autor: Juanro49. Licenca Apache 2.0 &lt;br&gt;&lt;br&gt;</string>
     <string name="video">Video</string>
     <string name="alert_positive">Zatvori</string>
     <string name="alert_message">Nije moguće dobiti podatke. \nProvjeri vezu.</string>
@@ -79,4 +79,16 @@
     <string name="str_zh">Kineski</string>
     <string name="custom_m3u">Učitaj prilagođenu M3U playlistu</string>
     <string name="title_activity_custom_m3u">Prilagođeni M3U</string>
+    <string name="action_settings">Postavke</string>
+    <string name="activado">Aktivirano</string>
+    <string name="desactivado">Deaktivirano</string>
+    <string name="title_dynamic_color">Dinamične boje (Material You)</string>
+    <string name="action_search">Traži …</string>
+    <string name="hint_url_m3u">URL popisa M3U ili M3U8 datoteka</string>
+    <string name="google_news">Google News</string>
+    <string name="bing_news">Bing News</string>
+    <string name="url_error">GREŠKA:</string>
+    <string name="error">Greška:</string>
+    <string name="enter_url">Upiši jedan URL</string>
+    <string name="doh_title">DNS preko HTTPS-a (DoH)</string>
 </resources>
