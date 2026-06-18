@@ -135,4 +135,20 @@
 	<string name="doh_url_summary">URL del servidor DNS over HTTPS (Por defecto: RockDNS)</string>
 	<string name="doh_default_url" translatable="false">https://dns.rocksdns.ovh/dns-query</string>
 	<string name="doh_system_active">El sistema ya usa DNS Privado. La configuración de la app se ha desactivado para evitar conflictos.</string>
+
+	<!-- Copia de seguridad -->
+	<string name="title_backup_category">Copia de Seguridad</string>
+	<string name="title_export_backup">Exportar base de datos</string>
+	<string name="summary_export_backup">Guarda una copia de seguridad de tus fuentes y artículos</string>
+	<string name="title_import_backup">Importar base de datos</string>
+	<string name="summary_import_backup">Restaura tus fuentes y artículos desde un archivo previo</string>
+	<string name="pref_title_backup_location">Ubicación de la copia de seguridad</string>
+	<string name="pref_summary_backup_location">Carpeta donde se guardarán las copias</string>
+	<string name="pref_title_restore_backup_location">Restablecer ubicación por defecto</string>
+	<string name="pref_summary_restore_backup_location">Volver a usar la carpeta interna de la app</string>
+	<string name="backup_success">Copia de seguridad guardada con éxito</string>
+	<string name="toast_backup_succeeded">Copia de seguridad guardada: %s</string>
+	<string name="backup_error">Error al realizar la copia de seguridad</string>
+	<string name="restore_success">Base de datos restaurada. La aplicación se reiniciará.</string>
+	<string name="restore_error">Error al restaurar la base de datos. El archivo puede estar corrupto.</string>
 </resources>

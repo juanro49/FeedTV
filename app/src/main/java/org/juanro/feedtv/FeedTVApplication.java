@@ -16,24 +16,88 @@
 
 package org.juanro.feedtv;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.color.DynamicColorsOptions;
+
+import org.juanro.feedtv.BBDD.AppDatabase;
 import org.juanro.feedtv.Http.HttpClient;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class FeedTVApplication extends Application {
+    private static final String TAG = "FeedTVApplication";
+    private static FeedTVApplication instance;
+    private final List<Activity> activities = Collections.synchronizedList(new ArrayList<>());
 
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
+
+        // Seguimiento de todas las actividades para permitir recreación "en caliente"
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+                activities.add(activity);
+            }
+            @Override
+            public void onActivityStarted(@NonNull Activity activity) {}
+            @Override
+            public void onActivityResumed(@NonNull Activity activity) {}
+            @Override
+            public void onActivityPaused(@NonNull Activity activity) {}
+            @Override
+            public void onActivityStopped(@NonNull Activity activity) {}
+            @Override
+            public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {}
+            @Override
+            public void onActivityDestroyed(@NonNull Activity activity) {
+                activities.remove(activity);
+            }
+        });
         
         // Inicializar el cliente HTTP optimizado (OkHttp + Conscrypt + Cache)
         HttpClient.init(this);
 
         aplicarConfiguracionTema();
+    }
+
+    public static FeedTVApplication getInstance() {
+        return instance;
+    }
+
+    /**
+     * Cierra la base de datos para permitir operaciones de archivo (backup/restore).
+     */
+    public static void closeDatabases() {
+        Log.i(TAG, "Cerrando base de datos...");
+        AppDatabase.resetInstance();
+    }
+
+    /**
+     * Recrea todas las actividades abiertas para refrescar datos tras una restauración.
+     */
+    public static void recreateAllActivities() {
+        if (instance != null) {
+            Log.i(TAG, "Recreando todas las actividades para refrescar datos.");
+            synchronized (instance.activities) {
+                for (Activity activity : new ArrayList<>(instance.activities)) {
+                    activity.recreate();
+                }
+            }
+        }
     }
 
     private void aplicarConfiguracionTema() {

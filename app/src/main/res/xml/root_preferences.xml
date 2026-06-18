@@ -75,4 +75,29 @@
 
 	</PreferenceCategory>
 
+	<PreferenceCategory
+		app:title="@string/title_backup_category">
+
+		<Preference
+			app:key="export_backup"
+			app:summary="@string/summary_export_backup"
+			app:title="@string/title_export_backup" />
+
+		<Preference
+			app:key="import_backup"
+			app:summary="@string/summary_import_backup"
+			app:title="@string/title_import_backup" />
+
+		<Preference
+			app:key="backup_folder"
+			app:summary="@string/pref_summary_backup_location"
+			app:title="@string/pref_title_backup_location" />
+
+		<Preference
+			app:key="backup_folder_default"
+			app:summary="@string/pref_summary_restore_backup_location"
+			app:title="@string/pref_title_restore_backup_location" />
+
+	</PreferenceCategory>
+
 </androidx.preference.PreferenceScreen>

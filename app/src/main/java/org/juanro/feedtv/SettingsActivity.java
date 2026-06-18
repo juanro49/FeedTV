@@ -17,21 +17,30 @@
 
 package org.juanro.feedtv;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
+
+import org.juanro.feedtv.util.Preferences;
+import org.juanro.feedtv.viewmodel.BackupViewModel;
 
 /**
  * Clase que representa la activity de ajustes
@@ -63,9 +72,79 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+        private BackupViewModel backupViewModel;
+        private Preferences prefs;
+        
+        private final ActivityResultLauncher<String> exportLauncher = registerForActivityResult(
+                new ActivityResultContracts.CreateDocument("application/x-sqlite3"),
+                uri -> {
+                    if (uri != null) {
+                        backupViewModel.runBackup(uri,
+                                () -> {
+                                    if (getActivity() != null) {
+                                        getActivity().runOnUiThread(() ->
+                                                Toast.makeText(getContext(), R.string.backup_success, Toast.LENGTH_SHORT).show());
+                                    }
+                                },
+                                () -> {
+                                    if (getActivity() != null) {
+                                        getActivity().runOnUiThread(() ->
+                                                Toast.makeText(getContext(), R.string.backup_error, Toast.LENGTH_SHORT).show());
+                                    }
+                                }
+                        );
+                    }
+                }
+        );
+
+        private final ActivityResultLauncher<String[]> importLauncher = registerForActivityResult(
+                new ActivityResultContracts.OpenDocument(),
+                uri -> {
+                    if (uri != null) {
+                        backupViewModel.runRestore(uri,
+                                () -> {
+                                    if (getActivity() != null) {
+                                        getActivity().runOnUiThread(() -> {
+                                            Toast.makeText(getContext(), R.string.restore_success, Toast.LENGTH_LONG).show();
+                                            FeedTVApplication.recreateAllActivities();
+                                            getActivity().finish();
+                                        });
+                                    }
+                                },
+                                () -> {
+                                    if (getActivity() != null) {
+                                        getActivity().runOnUiThread(() ->
+                                                Toast.makeText(getContext(), R.string.restore_error, Toast.LENGTH_SHORT).show());
+                                    }
+                                }
+                        );
+                    }
+                }
+        );
+
+        private final ActivityResultLauncher<Intent> mOpenDocumentTreeLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == android.app.Activity.RESULT_OK && result.getData() != null) {
+                        Uri uri = result.getData().getData();
+                        if (uri != null && getContext() != null) {
+                            getContext().getContentResolver().takePersistableUriPermission(uri,
+                                    Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                            prefs.setBackupPath(uri.toString());
+                            updateBackupPathSummary();
+                        }
+                    }
+                }
+        );
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            backupViewModel = new ViewModelProvider(this).get(BackupViewModel.class);
+            if (getContext() != null) {
+                prefs = new Preferences(getContext());
+            }
+
             checkSystemPrivateDns();
 
             EditTextPreference dohUrlPreference = findPreference("doh_url");
@@ -85,6 +164,70 @@ public class SettingsActivity extends AppCompatActivity {
                         return false;
                     }
                 });
+            }
+
+            Preference exportBackup = findPreference("export_backup");
+            if (exportBackup != null) {
+                exportBackup.setOnPreferenceClickListener(preference -> {
+                    if (prefs.getBackupPath().startsWith("content://")) {
+                        backupViewModel.runBackup(
+                                fileName -> {
+                                    if (getActivity() != null) {
+                                        getActivity().runOnUiThread(() ->
+                                                Toast.makeText(getContext(), getString(R.string.toast_backup_succeeded, fileName), Toast.LENGTH_SHORT).show());
+                                    }
+                                },
+                                () -> {
+                                    if (getActivity() != null) {
+                                        getActivity().runOnUiThread(() ->
+                                                Toast.makeText(getContext(), R.string.backup_error, Toast.LENGTH_SHORT).show());
+                                    }
+                                }
+                        );
+                    } else {
+                        exportLauncher.launch(backupViewModel.getDefaultFileName());
+                    }
+                    return true;
+                });
+            }
+
+            Preference importBackup = findPreference("import_backup");
+            if (importBackup != null) {
+                importBackup.setOnPreferenceClickListener(preference -> {
+                    importLauncher.launch(new String[]{"*/*"});
+                    return true;
+                });
+            }
+
+            Preference backupFolder = findPreference("backup_folder");
+            if (backupFolder != null) {
+                backupFolder.setOnPreferenceClickListener(preference -> {
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                    mOpenDocumentTreeLauncher.launch(intent);
+                    return true;
+                });
+            }
+
+            Preference backupFolderDefault = findPreference("backup_folder_default");
+            if (backupFolderDefault != null) {
+                backupFolderDefault.setOnPreferenceClickListener(preference -> {
+                    prefs.restoreDefaultBackupPath();
+                    updateBackupPathSummary();
+                    return true;
+                });
+            }
+
+            updateBackupPathSummary();
+        }
+
+        private void updateBackupPathSummary() {
+            Preference backupFolder = findPreference("backup_folder");
+            if (backupFolder != null && prefs != null) {
+                backupFolder.setSummary(prefs.getBackupPath());
+            }
+            Preference backupFolderDefault = findPreference("backup_folder_default");
+            if (backupFolderDefault != null && prefs != null) {
+                backupFolderDefault.setSummary(prefs.getDefaultBackupPath());
             }
         }
 

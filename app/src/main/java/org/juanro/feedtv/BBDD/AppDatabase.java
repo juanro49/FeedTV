@@ -20,10 +20,15 @@ package org.juanro.feedtv.BBDD;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -31,18 +36,27 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Serial;
+import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
-@Database(entities = {RssFeed.class, Article.class}, version = 2)
+@Database(entities = {RssFeed.class, Article.class}, version = AppDatabase.VERSION)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static final String TAG = "AppDatabase";
+    public static final String DATABASE_NAME = "FeedTV.db";
+    public static final int VERSION = 2;
+
     private static volatile AppDatabase INSTANCE;
 
     public abstract FeedDao feedDao();
@@ -52,24 +66,139 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    AppDatabase.class, "FeedTV.db")
+                    INSTANCE = Room.databaseBuilder(context,
+                                    AppDatabase.class, DATABASE_NAME)
                             .addCallback(new RoomDatabase.Callback() {
                                 @Override
                                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
                                     super.onCreate(db);
                                     // La migración legada se hace de forma síncrona aquí para asegurar 
                                     // que los datos estén listos en el primer inicio de la app tras actualizar.
-                                    migrateLegacyData(context.getApplicationContext(), db);
+                                    migrateLegacyData(context, db);
                                 }
                             })
                             .addMigrations(new AssetFileBasedMigration(context, 2))
                             .fallbackToDestructiveMigration(true)
                             .build();
+
+                    // Perform a sanity check to ensure migrations and schema validation are successful.
+                    try {
+                        INSTANCE.getOpenHelper().getWritableDatabase();
+                    } catch (DatabaseMigrationException e) {
+                        Log.e(TAG, "Critical migration error detected. Attempting recovery...", e);
+                        handleMigrationFailure(context, e.getVersion());
+                        throw e;
+                    } catch (IllegalStateException e) {
+                        Log.e(TAG, "Database schema mismatch detected. Attempting recovery...", e);
+                        handleMigrationFailure(context, VERSION);
+                        throw e;
+                    }
                 }
             }
         }
         return INSTANCE;
+    }
+
+    /**
+     * Attempts to recover from a failed migration by backing up the database file
+     * and downgrading the database version so that the migration can be retried after fixes.
+     */
+    private static void handleMigrationFailure(Context context, int failedVersion) {
+        try {
+            var dbPath = context.getDatabasePath(DATABASE_NAME);
+            if (dbPath.exists()) {
+                // 1. Auto-export/backup the database before rollback to allow manual recovery
+                exportFailedDatabase(context, dbPath, failedVersion);
+
+                // 2. Perform rollback
+                try (var db = SQLiteDatabase.openDatabase(
+                        dbPath.getAbsolutePath(), null, SQLiteDatabase.OPEN_READWRITE)) {
+                    int currentVersion = db.getVersion();
+                    int targetVersion = failedVersion - 1;
+                    if (currentVersion >= failedVersion) {
+                        Log.w(TAG, String.format(Locale.US, "Rolling back database version from %d to %d to allow retry.", currentVersion, targetVersion));
+                        db.setVersion(targetVersion);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to perform migration rollback", e);
+        }
+    }
+
+    /**
+     * Copies the database file to a location accessible by the user for recovery purposes.
+     * Uses MediaStore on Android 10+ for better visibility.
+     */
+    private static void exportFailedDatabase(Context context, File source, int version) {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        String fileName = String.format(Locale.US, "FeedTV_failed_migration_v%d_%s.db", version, timeStamp);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            exportToDownloads(context, source, fileName);
+        } else {
+            exportToExternalFiles(context, source, fileName);
+        }
+    }
+
+    /**
+     * Exports the database to the public Downloads folder using MediaStore (Android 10+).
+     */
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private static void exportToDownloads(Context context, File source, String fileName) {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
+        values.put(MediaStore.Downloads.MIME_TYPE, "application/x-sqlite3");
+        values.put(MediaStore.Downloads.RELATIVE_PATH, "Download/FeedTV_Recovery");
+
+        Uri externalUri = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
+        Uri fileUri = context.getContentResolver().insert(externalUri, values);
+
+        if (fileUri != null) {
+            try (InputStream is = new FileInputStream(source);
+                 OutputStream os = context.getContentResolver().openOutputStream(fileUri)) {
+                if (os != null) {
+                    byte[] buffer = new byte[8192];
+                    int len;
+                    while ((len = is.read(buffer)) > 0) {
+                        os.write(buffer, 0, len);
+                    }
+                    Log.i(TAG, "Database successfully backed up for recovery at Download/FeedTV_Recovery/" + fileName);
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to export database to Downloads", e);
+            }
+        }
+    }
+
+    /**
+     * Fallback for Android < 10: Exports to app-specific external files directory.
+     */
+    private static void exportToExternalFiles(Context context, File source, String fileName) {
+        try {
+            File externalDir = context.getExternalFilesDir(null);
+            if (externalDir != null) {
+                File destination = new File(externalDir, fileName);
+                try (FileInputStream fis = new FileInputStream(source);
+                     FileOutputStream fos = new FileOutputStream(destination);
+                     FileChannel sourceChannel = fis.getChannel();
+                     FileChannel destChannel = fos.getChannel()) {
+                    destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+                    Log.i(TAG, "Database successfully backed up for recovery at: " + destination.getAbsolutePath());
+                }
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to export database to external files", e);
+        }
+    }
+
+    public static void resetInstance() {
+        synchronized (AppDatabase.class) {
+            if (INSTANCE != null) {
+                INSTANCE.close();
+                INSTANCE = null;
+            }
+        }
     }
 
     /**
@@ -88,39 +217,62 @@ public abstract class AppDatabase extends RoomDatabase {
 
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.beginTransaction();
-            try {
-                InputStream migrationInput = mContext.getAssets().open(String.format(Locale.US,
-                        "migrations/%d.sql", mNewVersion));
-                byte[] binaryMigration = new byte[migrationInput.available()];
-                //noinspection ResultOfMethodCallIgnored
-                migrationInput.read(binaryMigration);
-                migrationInput.close();
+            Log.i(TAG, String.format(Locale.US, "Migrating database to version %d...", mNewVersion));
+            try (var reader = new BufferedReader(new InputStreamReader(
+                    mContext.getAssets().open(String.format(Locale.US, "migrations/%d.sql", mNewVersion))))) {
 
-                String sqlScript = new String(binaryMigration, StandardCharsets.UTF_8);
-                for (String preparedStatement : prepareSqlStatements(sqlScript)) {
-                    database.execSQL(preparedStatement);
+                var statement = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Remove SQL comments (--)
+                    int commentIndex = line.indexOf("--");
+                    if (commentIndex != -1) {
+                        line = line.substring(0, commentIndex);
+                    }
+
+                    var trimmedLine = line.trim();
+                    if (trimmedLine.isEmpty()) {
+                        continue;
+                    }
+
+                    statement.append(line);
+                    if (trimmedLine.endsWith(";")) {
+                        try {
+                            database.execSQL(statement.toString());
+                        } catch (SQLException e) {
+                            var message = e.getMessage();
+                            if (message != null && message.contains("duplicate column name")) {
+                                Log.w(TAG, "Ignoring duplicate column error during migration: " + message);
+                            } else {
+                                throw e;
+                            }
+                        }
+                        statement.setLength(0);
+                    } else {
+                        statement.append(" ");
+                    }
                 }
-                database.setTransactionSuccessful();
-
-                Log.i(TAG, String.format(Locale.US, "Migrated to new version %d.", mNewVersion));
+                Log.i(TAG, String.format(Locale.US, "Migration to version %d completed successfully.", mNewVersion));
             } catch (IOException e) {
-                Log.e(TAG, String.format(Locale.US, "File based Migration failed for new version %d.", mNewVersion), e);
-            } finally {
-                database.endTransaction();
+                Log.e(TAG, String.format(Locale.US, "Error during migration to version %d.", mNewVersion), e);
+                throw new DatabaseMigrationException(mNewVersion, e);
             }
         }
+    }
 
-        private static List<String> prepareSqlStatements(String rawSql) {
-            String[] rawCommands = rawSql.replaceAll("[\r\n]", " ").split(";");
-            List<String> commands = new ArrayList<>(rawCommands.length);
-            for (String rawCommand : rawCommands) {
-                String cmd = rawCommand.trim();
-                if (!cmd.isEmpty()) {
-                    commands.add(cmd);
-                }
-            }
-            return commands;
+    public static class DatabaseMigrationException extends RuntimeException {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        private final int version;
+
+        public DatabaseMigrationException(int version, Throwable cause) {
+            super("Critical error during database migration to version " + version, cause);
+            this.version = version;
+        }
+
+        public int getVersion() {
+            return version;
         }
     }
 
