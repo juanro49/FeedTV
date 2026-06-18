@@ -34,11 +34,11 @@ public interface ArticleDao {
     List<String> getExistingLinks(int feedId);
 
     /**
-     * Obtiene los 20 artículos más recientes de toda la base de datos, 
+     * Obtiene los artículos más recientes de toda la base de datos, 
      * independientemente de su fuente.
      */
-    @Query("SELECT * FROM articulos ORDER BY numFecha DESC LIMIT 20")
-    List<Article> getGlobalRecentArticles();
+    @Query("SELECT * FROM articulos ORDER BY numFecha DESC LIMIT :limit")
+    List<Article> getGlobalRecentArticles(int limit);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Article> articles);
@@ -49,6 +49,6 @@ public interface ArticleDao {
     @Update
     void update(Article article);
 
-    @Query("DELETE FROM articulos WHERE id IN (SELECT id FROM articulos WHERE feedId = :feedId ORDER BY numFecha DESC LIMIT 999 OFFSET 20)")
-    void deleteOldArticles(int feedId);
+    @Query("DELETE FROM articulos WHERE id IN (SELECT id FROM articulos WHERE feedId = :feedId ORDER BY numFecha DESC LIMIT 999 OFFSET :limit)")
+    void deleteOldArticles(int feedId, int limit);
 }

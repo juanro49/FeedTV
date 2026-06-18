@@ -16,6 +16,7 @@
   -->
 
 <androidx.preference.PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<ListPreference
@@ -45,6 +46,15 @@
 		app:key="lang"
 		app:title="@string/idioma_aplicacion"
 		app:useSimpleSummaryProvider="true" />
+
+	<EditTextPreference
+		app:defaultValue="100"
+		app:dialogTitle="@string/dialog_article_limit"
+		app:key="article_limit"
+		app:summary="@string/summary_article_limit"
+		app:title="@string/title_article_limit"
+		app:useSimpleSummaryProvider="true"
+		android:inputType="number" />
 
 	<PreferenceCategory
 		app:title="Red y Privacidad">

@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity
 					}
 				}
 
-				// Cargar los 20 artículos más recientes globales al inicio si no hay nada seleccionado
+				// Cargar los artículos más recientes globales al inicio si no hay nada seleccionado
 				if (viewModel.getArticleList().getValue() == null || viewModel.getArticleList().getValue().isEmpty()) {
 					viewModel.fetchGlobalRecentArticles();
 				}

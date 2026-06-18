@@ -105,4 +105,9 @@
     <string name="status_online_msg">Streaming Online</string>
     <string name="status_offline_msg">Streaming not available at this moment</string>
     <string name="status_pending_msg">Verifying status...</string>
+
+    <!-- Articles -->
+    <string name="title_article_limit">Article limit</string>
+    <string name="summary_article_limit">Maximum number of articles to store and display per feed</string>
+    <string name="dialog_article_limit">Enter the maximum number of articles</string>
 </resources>

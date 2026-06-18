@@ -74,6 +74,18 @@ public class SettingsActivity extends AppCompatActivity {
                     editText.setHint(R.string.doh_default_url);
                 });
             }
+
+            EditTextPreference articleLimitPreference = findPreference("article_limit");
+            if (articleLimitPreference != null) {
+                articleLimitPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                    try {
+                        int val = Integer.parseInt((String) newValue);
+                        return val > 0;
+                    } catch (NumberFormatException e) {
+                        return false;
+                    }
+                });
+            }
         }
 
         private void checkSystemPrivateDns() {

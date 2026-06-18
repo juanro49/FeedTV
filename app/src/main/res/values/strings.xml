@@ -117,6 +117,11 @@
 	<string name="error">Error: </string>
 	<string name="enter_url">Introduce una URL</string>
 
+	<!-- Artículos -->
+	<string name="title_article_limit">Límite de artículos</string>
+	<string name="summary_article_limit">Número máximo de artículos a almacenar y mostrar por feed</string>
+	<string name="dialog_article_limit">Introduce el número máximo de artículos</string>
+
 	<!-- Status Indicator -->
 	<string name="status_online_msg">Retransmisión Online</string>
 	<string name="status_offline_msg">Retransmisión no disponible en este momento</string>

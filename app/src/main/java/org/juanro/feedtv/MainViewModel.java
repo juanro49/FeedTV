@@ -20,7 +20,10 @@
 package org.juanro.feedtv;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.util.Log;
+
+import androidx.preference.PreferenceManager;
 
 import com.prof18.rssparser.model.RssItem;
 import com.prof18.rssparser.model.RssChannel;
@@ -96,14 +99,14 @@ public class MainViewModel extends AndroidViewModel
 	}
 
 	/**
-	 * Obtiene los 20 artículos más recientes de todas las fuentes
+	 * Obtiene los artículos más recientes de todas las fuentes
 	 */
 	public void fetchGlobalRecentArticles() {
 		isLoading.postValue(true);
 		executor.execute(() -> {
 			try {
 				AppDatabase db = AppDatabase.getInstance(getApplication());
-				List<Article> recentArticles = db.articleDao().getGlobalRecentArticles();
+				List<Article> recentArticles = db.articleDao().getGlobalRecentArticles(getArticleLimit());
 				articleListLive.postValue(recentArticles);
 			} catch (Exception e) {
 				Log.e(TAG, "Error fetching global articles", e);
@@ -111,6 +114,16 @@ public class MainViewModel extends AndroidViewModel
 				isLoading.postValue(false);
 			}
 		});
+	}
+
+	private int getArticleLimit() {
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplication());
+		String limitStr = sp.getString("article_limit", "100");
+		try {
+			return Integer.parseInt(limitStr);
+		} catch (NumberFormatException e) {
+			return 100;
+		}
 	}
 
 	public void fetchFeed()
@@ -180,7 +193,7 @@ public class MainViewModel extends AndroidViewModel
 				if (!articlesToSave.isEmpty()) {
 					db.articleDao().insertAll(articlesToSave);
 				}
-				db.articleDao().deleteOldArticles(feedId);
+				db.articleDao().deleteOldArticles(feedId, getArticleLimit());
 
 				List<Article> listFromDb = db.articleDao().getArticlesByFeed(feedId);
 				articleListLive.postValue(listFromDb);
