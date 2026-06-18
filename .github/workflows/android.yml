@@ -52,7 +52,7 @@ jobs:
           export LANG=en_US.UTF-8
 
           # 1. Obtener versionCode actual del código
-          VERSION_CODE=$(grep "versionCode =" app/build.gradle | grep -oE '[0-9]+' | head -n 1)
+          VERSION_CODE=$(grep -E "versionCode[[:space:]]+[=[:space:]]*[0-9]+" app/build.gradle | grep -oE '[0-9]+' | head -n 1)
           echo "Construyendo versionCode: $VERSION_CODE"
 
           # 2. Estructura para F-Droid (Copia física completa, incluyendo .git)
