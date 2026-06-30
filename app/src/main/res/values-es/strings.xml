@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ The MIT License (MIT)
+  ~
+  ~    Copyright (c) 2019 Juanro49
+  ~
+  ~    Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~    of this software and associated documentation files (the "Software"), to deal
+  ~    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~    copies of the Software, and to permit persons to whom the Software is
+  ~    furnished to do so, subject to the following conditions:
+  ~
+  ~    The above copyright notice and this permission notice shall be included in all
+  ~    copies or substantial portions of the Software.
+  ~
+  ~    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+  ~    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~    SOFTWARE.
+  ~
+  -->
+
+<resources>
+	<string name="app_name" translatable="false">FeedTV</string>
+	<string name="search">Buscar</string>
+	<string name="add_feed">Añadir Feed</string>
+	<string name="watch_tv">Ver TV</string>
+	<string name="listen_radio">Ver radio/TV libres</string>
+	<string name="settings">Ajustes</string>
+	<string name="action_settings">Ajustes</string>
+	<string name="action_about">Acerca de</string>
+	<string name="television">FeedTV Televisión</string>
+	<string name="channel_detail">Detalles del canal</string>
+	<string name="alert_title">¡Atención!</string>
+	<string name="alert_message">Imposible obtener datos. \nCompruebe su conexión.</string>
+	<string name="alert_positive">Cerrar</string>
+	<string name="video">Video</string>
+	<string name="about">FeedTV es una aplicación que te permite leer noticias de cualquier medio mediante RSS además de poder ver canales públicos de TV en cualquier lugar.</string>
+	<string name="agradecimientos">&lt;br /&gt;&lt;br /&gt; FeedTV es posible gracias a &lt;a href=\'http://github.com/prof18/RSS-Parser\'&gt;RSS Parser&lt;/a&gt;, &lt;a href=\'https://github.com/BjoernPetersen/m3u-parser\'&gt;M3U Parser&lt;/a&gt;, al repositorio de canales de &lt;a href=\'https://github.com/LaQuay/TDTChannels\'&gt;TDTChannels&lt;/a&gt; y recopilación de radios libres de &lt;a href=\'https://libertalia.world/@enjey/106982718007217691\'&gt;enjey&lt;/a&gt;.</string>
+	<string name="author">&lt;br /&gt;&lt;br /&gt; Creada por Juanro49 bajo licencia Apache 2.0 &lt;br /&gt;&lt;br /&gt;</string>
+	<string name="version">Versión</string>
+	<string name="title_activity_settings">Ajustes</string>
+	<string name="tema_aplicacion">Tema de la aplicación</string>
+    <string name="reproductor">Utilizar reproductor externo</string>
+	<string name="reproductor_externo_on">Está usando un reproductor externo para reproducir los canales</string>
+	<string name="reproductor_externo_off">Está usando el reproductor interno para reproducir los canales</string>
+	<string name="add">Añadir</string>
+	<string name="notAdd">No añadir</string>
+	<string name="title_recentNews">Añadir noticias recientes</string>
+	<string name="recentNews">No tiene feeds añadidos, ¿Desea añadir el feed de noticias recientes?</string>
+    <string name="edit_feed">Modificar</string>
+	<string name="add_feed_empty">Ambos campos son obligatorios</string>
+	<string name="add_feed_success">Fuente añadida correctamente</string>
+    <string name="mod_feed_success">Fuente modificada correctamente</string>
+	<string name="url_ejemplo">https://www.ejemplo.com/feed</string>
+	<string name="nombre_feed">Nombre de la fuente de noticias</string>
+	<string name="url_feed">URL:</string>
+	<string name="name_feed">Nombre:</string>
+	<string name="titulo_addfeed">Introduce el nombre y la dirección del Feed RSS</string>
+	<string name="enlaces_disponibles">Enlaces disponibles</string>
+	<string name="url_detail">URL</string>
+	<string name="nombre_canal_detalle">Nombre canal</string>
+	<string name="titulo_lista_noticias">Título</string>
+	<string name="fecha_lista_noticias">Fecha</string>
+	<string name="title_dialog_rss_list">Modificar fuente</string>
+	<string name="dialog_rss_list">¿Qué acción desea realizar con </string>
+	<string name="delete">Eliminar</string>
+	<string name="edit">Editar</string>
+	<string name="delete_feed_success">Fuente eliminada</string>
+	<string name="no_feeds">No se han obtenido artículos</string>
+	<string name="no_connection">La conexión a internet no está disponible</string>
+	<string name="first_start">Añade fuentes desde el menú lateral izquierdo para comenzar</string>
+	<string name="update_feed_success">Artículos actualizados correctamente</string>
+	<string name="update_feed_failed">Ha ocurrido un error al obtener elementos del Feed. || </string>
+	<string name="url_clipboard">URL copiada al portapapeles</string>
+	<string name="seguir">Seguir</string>
+	<string name="tema_seguir">Tema a seguir</string>
+	<string name="topic">Tema</string>
+	<string name="titulo_seguir">Introduce el tema a seguir y su origen</string>
+	<string name="unlock_gn">Marcar si Google News no está disponible en su país</string>
+	<string name="idioma_aplicacion">Idioma aplicación</string>
+	<string name="idioma_establecido">Idioma establecido: </string>
+	<string name="claro">Claro</string>
+	<string name="oscuro">Oscuro</string>
+	<string name="auto">Automático</string>
+	<string name="activado">Activado</string>
+	<string name="desactivado">Desactivado</string>
+	<string name="title_dynamic_color">Color Dinámico (Material You)</string>
+	<string name="summary_dynamic_color">Usa los colores de tu fondo de pantalla (Android 12+)</string>
+	<string name="str_es">Español</string>
+	<string name="str_ext">Extremeño</string>
+	<string name="str_en">Inglés</string>
+	<string name="str_nb">Noruego</string>
+	<string name="str_de">Alemán</string>
+	<string name="str_ca">Catalán</string>
+	<string name="str_pl">Polaco</string>
+	<string name="str_fr">Francés</string>
+	<string name="str_it">Italiano</string>
+	<string name="str_nl">Neerlandés</string>
+	<string name="str_hr">Croata</string>
+	<string name="str_ru">Ruso</string>
+	<string name="str_sv">Sueco</string>
+	<string name="str_ia">Interlingua</string>
+	<string name="str_zh">Chino</string>
+	<string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Ver en Github&lt;/a&gt;</string>
+    <string name="radio">Radios y TVs comunitarias</string>
+	<string name="custom_m3u">Cargar lista M3U personalizada</string>
+	<string name="title_activity_custom_m3u">M3U Personalizado</string>
+	<string name="action_search">Buscar...</string>
+	<string name="hint_url_m3u">URL de lista M3U o M3U8</string>
+	<string name="btn_cargar">Cargar</string>
+	<string name="google_news">Google News</string>
+	<string name="bing_news">Bing News</string>
+	<string name="url_error">ERROR: </string>
+	<string name="error">Error: </string>
+	<string name="enter_url">Introduce una URL</string>
+
+	<!-- Artículos -->
+	<string name="title_article_limit">Límite de artículos</string>
+	<string name="summary_article_limit">Número máximo de artículos a almacenar y mostrar por feed</string>
+	<string name="dialog_article_limit">Introduce el número máximo de artículos</string>
+
+	<!-- Status Indicator -->
+	<string name="status_online_msg">Retransmisión Online</string>
+	<string name="status_offline_msg">Retransmisión no disponible en este momento</string>
+	<string name="status_pending_msg">Verificando estado...</string>
+
+	<!-- Red -->
+	<string name="red_configuracion">Configuración de Red</string>
+	<string name="doh_title">DNS over HTTPS (DoH)</string>
+	<string name="doh_summary">Cifrar las consultas DNS para mejorar la privacidad y evitar bloqueos</string>
+	<string name="doh_url_title">URL del servidor DoH</string>
+	<string name="doh_url_summary">URL del servidor DNS over HTTPS (Por defecto: RockDNS)</string>
+	<string name="doh_system_active">El sistema ya usa DNS Privado. La configuración de la app se ha desactivado para evitar conflictos.</string>
+
+	<!-- Copia de seguridad -->
+	<string name="title_backup_category">Copia de Seguridad</string>
+	<string name="title_export_backup">Exportar base de datos</string>
+	<string name="summary_export_backup">Guarda una copia de seguridad de tus fuentes y artículos</string>
+	<string name="title_import_backup">Importar base de datos</string>
+	<string name="summary_import_backup">Restaura tus fuentes y artículos desde un archivo previo</string>
+	<string name="pref_title_backup_location">Ubicación de la copia de seguridad</string>
+	<string name="pref_summary_backup_location">Carpeta donde se guardarán las copias</string>
+	<string name="pref_title_restore_backup_location">Restablecer ubicación por defecto</string>
+	<string name="pref_summary_restore_backup_location">Volver a usar la carpeta interna de la app</string>
+	<string name="backup_success">Copia de seguridad guardada con éxito</string>
+	<string name="toast_backup_succeeded">Copia de seguridad guardada: %s</string>
+	<string name="backup_error">Error al realizar la copia de seguridad</string>
+	<string name="restore_success">Base de datos restaurada. La aplicación se reiniciará.</string>
+	<string name="restore_error">Error al restaurar la base de datos. El archivo puede estar corrupto.</string>
+</resources>
