@@ -11,4 +11,7 @@
     <string name="about">FeedTV是一个让您通过RSS订阅阅读任意媒体新闻，并且随时随地观看公共TV频道的移动应用。</string>
     <string name="television">FeedTV 电视</string>
     <string name="action_about">关于</string>
+    <string name="watch_tv">看电视</string>
+    <string name="version">版本</string>
+    <string name="title_activity_settings">设置</string>
 </resources>
