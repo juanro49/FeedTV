@@ -80,6 +80,9 @@
     <string name="str_sv">ສະວີເດນ</string>
     <string name="str_ia">ອິນເຕີລິງກົວ</string>
     <string name="str_zh">ຈີນ</string>
+    <string name="str_lo">ລາວ</string>
+    <string name="str_ta">ທະມິນ</string>
+    <string name="str_cs">ເຊັກ</string>
     <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;ເບິ່ງໃນ Github&lt;/a&gt;</string>
     <string name="radio">ວິທະຍຸ ແລະ ທີວີຊຸມຊົນ</string>
     <string name="custom_m3u">ໂຫຼດລາຍການ M3U ທີ່ກຳນົດເອງ</string>

@@ -105,6 +105,9 @@
 	<string name="str_sv">Sueco</string>
 	<string name="str_ia">Interlingua</string>
 	<string name="str_zh">Chino</string>
+	<string name="str_lo">Lao</string>
+	<string name="str_ta">Tamil</string>
+	<string name="str_cs">Checo</string>
 	<string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;Ver en Github&lt;/a&gt;</string>
     <string name="radio">Radios y TVs comunitarias</string>
 	<string name="custom_m3u">Cargar lista M3U personalizada</string>

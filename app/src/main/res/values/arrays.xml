@@ -43,6 +43,9 @@
 		<item>@string/str_sv</item>
 		<item>@string/str_ia</item>
 		<item>@string/str_zh</item>
+		<item>@string/str_lo</item>
+		<item>@string/str_ta</item>
+		<item>@string/str_cs</item>
 	</string-array>
 
 	<!-- Valores idioma aplicación -->
@@ -63,5 +66,8 @@
 		<item>sv</item>
 		<item>ia</item>
 		<item>zh</item>
+		<item>lo</item>
+		<item>ta</item>
+		<item>cs</item>
 	</string-array>
 </resources>

@@ -77,6 +77,9 @@
     <string name="str_sv">Suiedese</string>
     <string name="str_ia">Interlingua</string>
     <string name="str_zh">Cinese</string>
+    <string name="str_lo">லாவோ</string>
+    <string name="str_ta">தமிழ்</string>
+    <string name="str_cs">செக்</string>
     <string name="custom_m3u">தனிப்பயன் M3U பட்டியலை ஏற்றவும்</string>
     <string name="title_activity_custom_m3u">தனிப்பயன் M3U</string>
 </resources>

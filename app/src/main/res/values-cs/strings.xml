@@ -18,6 +18,9 @@
     <string name="claro">Světlý</string>
     <string name="oscuro">Tmavý</string>
     <string name="auto">Automaticky</string>
+    <string name="str_lo">Laosky</string>
+    <string name="str_ta">Tamilsky</string>
+    <string name="str_cs">Čeština</string>
     <string name="radio">Komunitní rádio a TV</string>
     <string name="custom_m3u">Načíst vlastní seznam M3U</string>
     <string name="title_activity_custom_m3u">Vlastní M3U</string>

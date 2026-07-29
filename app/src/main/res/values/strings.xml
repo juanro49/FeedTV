@@ -105,6 +105,9 @@
     <string name="str_sv">Swedish</string>
     <string name="str_ia">Interlingua</string>
     <string name="str_zh">Chinese</string>
+    <string name="str_lo">Lao</string>
+    <string name="str_ta">Tamil</string>
+    <string name="str_cs">Czech</string>
     <string name="github">&lt;a href=\'https://github.com/juanro49/FeedTV/blob/master/README.md\'&gt;View on Github&lt;/a&gt;</string>
     <string name="radio">Community radios and TVs</string>
     <string name="custom_m3u">Load custom M3U list</string>
