@@ -10,8 +10,8 @@ android {
         applicationId "org.juanro.feedtv"
         minSdkVersion 24
         targetSdk 37
-        versionCode 20260406
-        versionName '4.0.2'
+        versionCode 20260729
+        versionName '4.0.3'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         
@@ -111,7 +111,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     
     // RSS Parser
-    implementation 'com.prof18.rssparser:rssparser:6.1.5'
+    implementation 'com.prof18.rssparser:rssparser:6.1.7'
 
     // M3U parser
     implementation "com.github.bjoernpetersen:m3u-parser:1.4.0"
@@ -121,7 +121,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.14.0'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.2'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.browser:browser:1.10.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'
@@ -151,7 +151,7 @@ dependencies {
     implementation 'androidx.media3:media3-exoplayer-dash:1.10.1'
     
     // Others
-    implementation 'org.conscrypt:conscrypt-android:2.5.3'
+    implementation 'org.conscrypt:conscrypt-android:2.6.1'
     implementation 'org.jetbrains:annotations:26.1.0'
     implementation 'androidx.activity:activity:1.13.0'
     implementation 'androidx.fragment:fragment:1.8.9'
